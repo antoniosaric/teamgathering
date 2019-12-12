@@ -1,10 +1,9 @@
 <?php
 
-    function get_tabel_info_single_row( $table, $target = " ", $clauseArray, $param_string ){
-        //e.g. 'account', 'email', 'a@a.com', 's'
+    function get_tabel_info_single_row( $table, $target = " ", $param_string, $clauseArray ){
         global $conn;
 
-        $sql = "SELECT * FROM ".$table.$target;
+        $sql = "SELECT * FROM ".$table." ".$target;
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param( $param_string, ...$clauseArray);
@@ -13,7 +12,7 @@
         $row = mysqli_fetch_assoc($result);
         $stmt->close();    
 
-        if(!!isset($row['id'])){
+        if(!!isset($row['created_date'])){
             return $row;
         }else{
             return false;

@@ -3,7 +3,7 @@ include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
 include_once '../_general/functions.php';
-include '../_crud_functions/read.php';
+include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);

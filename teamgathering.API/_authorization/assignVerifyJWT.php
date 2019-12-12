@@ -1,5 +1,4 @@
 <?php
-include_once('../databaseApi/confi.php');
 
 function assignToken( $profile_id, $first_name = NULL, $last_name = NULL, $email = NULL ){
 

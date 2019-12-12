@@ -2,8 +2,8 @@
 ob_start();
 header('Access-Control-Allow-Origin: http://localhost:4200', false);
 include_once('../_database/confi.php');
-include_once '../_general/status_returns.php';
-include_once '../_general/functions.php';
+include '../_general/status_returns.php';
+include '../_general/functions.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);

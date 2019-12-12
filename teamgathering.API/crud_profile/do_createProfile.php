@@ -1,11 +1,13 @@
 <?php
+ob_start();
+header('Access-Control-Allow-Origin: http://localhost:4200', false);
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
-include_once '../_general/status_returns.php';
-include_once '../_general/functions.php';
+include '../_general/status_returns.php';
+include '../_general/functions.php';
 include '../_authorization/do_passwordHash.php';
-include '../_crud_functions/create.php';
-include '../_crud_functions/read.php';
+include '../_crud/create.php';
+include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
@@ -25,7 +27,7 @@ try {
 
         // generate the salt
         $salt=substr(base64_encode(openssl_random_pseudo_bytes(17)),0,22);
-        $hash_password = generate_hash($password, 12, $salt);
+        $hash_password = generate_hash($password, 11, $salt);
 
         $return_profile_id = create_profile( $email , $hash_password, $salt, $image );
         $data->message = "profile created";
