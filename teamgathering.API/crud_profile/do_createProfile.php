@@ -11,8 +11,9 @@ include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$email = trim(strtolower($request->email));
-$password = trim($request->password);
+$email = isset($request->email) && strlen($request->email) > 0 ? trim(strtolower($request->email)) : status_return(401);
+$pass = isset($request->password) && strlen($request->password) > 0 ? trim($request->password) : status_return(401);
+
 $data = new stdClass();
 $image = 'default.jpg';
 

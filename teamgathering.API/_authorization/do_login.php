@@ -10,21 +10,36 @@ include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-// $pass = isset($request->password) ? trim($request->password) : status_return(401);
-// $email = isset($request->email) ? trim($request->email) : status_return(401);
-
-$pass = 'asdf';
-$email = 1;
-$authenticationVerified = false;
 $data = new stdClass();
+
+if( isset( $request->email ) && ( strlen($request->email) > 4 && strlen( $request->email ) < 255 ) ){
+  $email = trim(strtolower($request->email));
+}else{
+  $data->message = "email specifications not met";
+  status_return(401);
+  echo json_encode($data);
+  return;
+}
+if( isset( $request->password ) && ( strlen( $request->password ) > 0 && strlen( $request->password ) < 24 ) ){
+  $pass = trim($request->password);
+}else{
+  $data->message = "password specifications not met";
+  status_return(401);
+  echo json_encode($data);
+  return;
+}
+
+// $pass = 'asdf';
+// $email = 'a@a.com';
+$authenticationVerified = false;
 
 try {
   global $conn;
   mysqli_check();
  
   $clauseArray = [ $email ];
-  $row_profile = get_tabel_info_single_row( 'profiles', 'WHERE profile_id=?', 'i', $clauseArray );
-var_dump($row_profile); 
+  $row_profile = get_tabel_info_single_row( 'profiles', 'WHERE email=?', 's', $clauseArray );
+
   if( !!$row_profile['profile_id'] && validate_pw($pass, $row_profile["password"]) ){
     $set_first_name = isset($row_profile['first_name']) ? (string)$row_profile['first_name'] : NULL;
     $set_last_name = isset($row_profile['last_name']) ? (string)$row_profile['last_name'] : NULL;
