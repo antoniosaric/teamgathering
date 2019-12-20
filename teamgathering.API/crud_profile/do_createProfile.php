@@ -1,6 +1,6 @@
 <?php
 ob_start();
-header('Access-Control-Allow-Origin: http://localhost:4200', false);
+include '../_general/cors.php';
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include '../_general/status_returns.php';
@@ -11,8 +11,24 @@ include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$email = isset($request->email) && strlen($request->email) > 0 ? trim(strtolower($request->email)) : status_return(401);
-$pass = isset($request->password) && strlen($request->password) > 0 ? trim($request->password) : status_return(401);
+$email = isset($request->email) && strlen($request->email) > 0 ? trim(strtolower($request->email)) : false;
+$pass = isset($request->password) && strlen($request->password) > 0 ? trim($request->password) : false;
+
+// $email = 'b@b.com';
+// $pass = 'asdf';
+
+if( !$email ){
+    $data->message = "email specifications not met";
+    status_return(401);
+    echo json_encode($data);
+    return;
+}
+if( !$pass ){
+    $data->message = "password specifications not met";
+    status_return(401);
+    echo json_encode($data);
+    return;
+}
 
 $data = new stdClass();
 $image = 'default.jpg';
@@ -26,11 +42,9 @@ try {
 
     if( !isset( $row_profile["email"]) ){
 
-        // generate the salt
-        $salt=substr(base64_encode(openssl_random_pseudo_bytes(17)),0,22);
-        $hash_password = generate_hash($password, 11, $salt);
+        $hash_password_object = generate_hash( $pass );
 
-        $return_profile_id = create_profile( $email , $hash_password, $salt, $image );
+        $return_profile_id = create_profile( $email, $hash_password_object->hash_pass, $hash_password_object->salt, $image );
         $data->message = "profile created";
         status_return(200);
     }else{

@@ -24,5 +24,16 @@ function mysqli_check(){
     }   
   } 
 
+  function check_post_data($postdata){
+    if(isset($postdata) && !empty($postdata)){
+      return true;
+    }else{
+      $data = new stdClass();
+      $data->message = "data not set";
+      status_return(400);
+      echo json_encode($data);
+      die();
+    }
+  }
 
 ?>

@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+      <a class="navbar-brand" [routerLink]="['/home']">Team Gathering</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active" >
+          <a class="nav-link" [routerLink]="['/profiles']">Profiles</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/projects']">Projects</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link"  [routerLink]="['/teams']">Teams</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link"  [routerLink]="['/explore']">Explore</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link"  (click)='logout()'>logout</a>
+          </li>
+      </ul>
+      <div *ngIf="loggedIn()" class="dropdown" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>
+          welcome user
+          <!-- Welcome {{authService.decodedToken?.first_name | titlecase}} -->
+        </a>
+        <div class="dropdown-menu mt-3" *dropdownMenu>
+          <a class="dropdown-item" [routerLink]="['/profile']"><i class="fa fa-user"></i>View Profile</a>
+          <a class="dropdown-item" [routerLink]="['/profile/edit']"><i class="fa fa-cog"></i>Edit Profile</a>
+          <a class="dropdown-item" [routerLink]="['/profile-project']"><i class="fa fa-users"></i>Your Projects</a>
+          <a class="dropdown-item" [routerLink]="['/messages']"><i class="fa fa-envelope "></i>Messages</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>   Log out</a>
+        </div>
+      </div>
+      
+      <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+        <input class="form-control mr-sm-2" type="text" name="email" placeholder="Email" required [(ngModel)]="model.email">
+        <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="model.password">
+        <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+      </form>
+  </div>
+</nav>

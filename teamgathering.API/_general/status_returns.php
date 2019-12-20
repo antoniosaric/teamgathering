@@ -9,7 +9,7 @@ function status_return($status){
 			http_response_code(200);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Status: 200 OK');
+			header('HTTP/1.1 200 OK');
             break;
 
         case 204;
@@ -17,7 +17,7 @@ function status_return($status){
 			http_response_code(204);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('HTTP/1.0 204 No Content');
+			header('HTTP/1.1 204 No Content');
             break;   
 
         case 400;
@@ -25,7 +25,7 @@ function status_return($status){
 			http_response_code(400);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('HTTP/1.0 400 Bad Request');
+			header('HTTP/1.1 400 Bad Request');
             break;
 
         case 401;
@@ -33,7 +33,7 @@ function status_return($status){
 			http_response_code(401);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('HTTP/1.0 401 Unauthorized');
+			header('HTTP/1.1 401 Unauthorized');
             break;   
 
         case 403;
@@ -41,7 +41,7 @@ function status_return($status){
 			http_response_code(403);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('HTTP/1.0 403 Forbidden');
+			header('HTTP/1.1 403 Forbidden');
             break;
             
         case 404;
@@ -49,7 +49,7 @@ function status_return($status){
 			http_response_code(404);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('HTTP/1.0 404 Page Not Found');
+			header('HTTP/1.1 404 Page Not Found');
             break;
 
         case 500;
@@ -57,18 +57,35 @@ function status_return($status){
 			http_response_code(500);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('HTTP/1.0 500 Internal Server Error');
+			header('HTTP/1.1 500 Internal Server Error');
+			break;   
+			
+		case 501;
+			header_remove();
+			http_response_code(500);
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header('Content-Type: application/json');
+			header('HTTP/1.1 501 Not implemented');
             break;   
+
 
         default:
             header_remove();
-			http_response_code(501);
-			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
-			header('Content-Type: application/json');
-			header('HTTP/1.0 501 Not implemented');
+			http_response_code(200);
     }
 
-    header('Access-Control-Allow-Origin: http://localhost:4200', false);
+	header('Access-Control-Allow-Origin: http://localhost:4200', false);
+	header('Access-Control-Max-Age: 86400');  
+	header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+	header('HTTP/1.1 200 OK');
+	header("Access-Control-Allow-Methods: POST, OPTIONS");
+	header("Access-Control-Allow-Headers: content-type");			
+	// header('Content-Type: multipart/form-data');
+	header("Accept: */*");
+	header("Accept-Encoding: gzip, deflate, br");
+	header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+	header("Accept-Language:en-US,en;q=0.9");
+
 }
 
 

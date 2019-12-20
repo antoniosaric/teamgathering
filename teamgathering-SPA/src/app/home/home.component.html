@@ -1,3 +1,23 @@
-<p *ngFor="let x of projects">
+<div class="container mt-5" style="height: 400px;" *ngIf="!loggedIn()">
+  <div *ngIf="!registerMode" style="text-align: center">
+    <h1>Create Or Join A Project</h1>
+    <p class="lead"> Want to change the world? Sign up!</p>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
+      <button class="btn btn-info btn-lg">Learn More</button>
+    </div>
+  </div>
+
+  <div *ngIf="registerMode" class="container">
+    <div class="row justify-content-center">
+        <div class="col-4"> 
+          <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
+        </div>
+    </div>
+  </div>
+</div>
+<h1 *ngFor="let x of projects">
   {{x.project_name}}
-</p>
+</h1>
+  
+
