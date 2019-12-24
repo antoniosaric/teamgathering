@@ -1,30 +1,22 @@
 <?php
 ob_start();
-include '../_general/cors.php';
 include_once('../_database/confi.php');
 include_once('assignVerifyJWT.php');
 include '../_general/status_returns.php';
 include '../_general/functions.php';
 include 'do_passwordHash.php';
+include '../_crud/create.php';
 include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$email = isset( $request->email ) && ( strlen($request->email) > 4 && strlen( $request->email ) < 255 ) ? trim(strtolower($request->email)) : false;
-$pass = isset( $request->password ) && ( strlen( $request->password ) > 0 && strlen( $request->password ) < 24 ) ? trim($request->password) : false;
+$email = trim(strtolower($request->email));
+$pass = trim($request->password);
 $data = new stdClass();
 
-if( !$email ){
-  $data->message = "email specifications not met";
-  status_return(401);
-  echo json_encode($data);
-  return;
-}
-if( !$pass ){
-  $data->message = "password specifications not met";
-  status_return(401);
-  echo json_encode($data);
-  return;
+if(!$email && !$pass ){
+  include '../_general/cors.php';
+  die();
 }
 
 // $pass = 'asdf';
@@ -57,37 +49,8 @@ try {
   }
   $conn->close();
 }catch (Exception $e ){
-  status_return(500);
-  echo($e->message);
-  return;
+    status_return(500);
+    echo($e->message);
+    return;
 }
 ?>
-
-
-<!-- 
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Charset: utf-8;q=0.7,*;q=0.3
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Access-Control-Allow-Headers: content-type
-Access-Control-Allow-Origin: http://localhost:4200
-Cache-Control: no-transform,public,max-age=300,s-maxage=900
-Connection: keep-alive, close
-Content-Length: 26
-Content-Type: text/html; charset=UTF-8
-Date: Thu, 19 Dec 2019 05:03:47 GMT
-Server: Apache/2.4.37 (Unix) OpenSSL/1.0.2q PHP/5.6.40 mod_perl/2.0.8-dev Perl/v5.16.3
-
-Accept: */*
-Accept-Encoding: gzip, deflate, br
-Accept-Language: en-US,en;q=0.9
-Access-Control-Request-Headers: content-type
-Access-Control-Request-Method: POST
-Connection: keep-alive
-Host: localhost:5001
-Origin: http://localhost:4200
-Referer: http://localhost:4200/
-Sec-Fetch-Mode: cors
-Sec-Fetch-Site: same-site
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.79 Safari/537.36
--->

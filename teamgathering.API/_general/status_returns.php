@@ -9,6 +9,15 @@ function status_return($status){
 			http_response_code(200);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 200 OK');
             break;
 
@@ -17,6 +26,15 @@ function status_return($status){
 			http_response_code(204);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 204 No Content');
             break;   
 
@@ -25,6 +43,15 @@ function status_return($status){
 			http_response_code(400);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 400 Bad Request');
             break;
 
@@ -33,6 +60,15 @@ function status_return($status){
 			http_response_code(401);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 401 Unauthorized');
             break;   
 
@@ -41,6 +77,15 @@ function status_return($status){
 			http_response_code(403);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 403 Forbidden');
             break;
             
@@ -49,6 +94,15 @@ function status_return($status){
 			http_response_code(404);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 404 Page Not Found');
             break;
 
@@ -57,6 +111,15 @@ function status_return($status){
 			http_response_code(500);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 500 Internal Server Error');
 			break;   
 			
@@ -65,6 +128,15 @@ function status_return($status){
 			http_response_code(500);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
 			header('HTTP/1.1 501 Not implemented');
             break;   
 
@@ -72,20 +144,19 @@ function status_return($status){
         default:
             header_remove();
 			http_response_code(200);
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header('Content-Type: application/json');
+			header('Access-Control-Allow-Origin: http://localhost:4200', false);
+			header('Access-Control-Max-Age: 86400');  
+			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+			header("Access-Control-Allow-Methods: POST, OPTIONS");
+			header("Access-Control-Allow-Headers: content-type");			
+			header("Accept: */*");
+			header("Accept-Encoding: gzip, deflate, br");
+			header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
+			header("Accept-Language:en-US,en;q=0.9");
+			header('HTTP/1.1 200 OK');
     }
-
-	header('Access-Control-Allow-Origin: http://localhost:4200', false);
-	header('Access-Control-Max-Age: 86400');  
-	header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
-	header('HTTP/1.1 200 OK');
-	header("Access-Control-Allow-Methods: POST, OPTIONS");
-	header("Access-Control-Allow-Headers: content-type");			
-	// header('Content-Type: multipart/form-data');
-	header("Accept: */*");
-	header("Accept-Encoding: gzip, deflate, br");
-	header("Accept-Charset: utf-8;q=0.7,*;q=0.3");
-	header("Accept-Language:en-US,en;q=0.9");
-
 }
 
 

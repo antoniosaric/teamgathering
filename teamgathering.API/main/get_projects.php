@@ -36,6 +36,7 @@ try {
     status_return(401);
     return;
   }
+  
   $conn->close();
 }catch (Exception $e ){
   status_return(500);

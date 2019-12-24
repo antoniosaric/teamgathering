@@ -1,34 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   baseUrl = 'http://localhost:5001/teamtest/teamgathering.API/';
-  name = true ? 'xxxx' : 'user';
+  name = '';
+  jwtHelper = new JwtHelperService();
+  decodedToken: any = {};
 
   constructor(private http: HttpClient) { }
 
   login(model: any){
-    console.log(model);
+
     return this.http.post(this.baseUrl + '_authorization/do_login.php', model).pipe(
       map((response: any) => {
-        console.log(response);
         if( !!response.JWT ){
           const user = response;
           if(user){
             localStorage.setItem('token', user.JWT);
+            this.decodedToken = this.jwtHelper.decodeToken(user.JWT);
+            this.name = !!this.decodedToken.data.first_name ? this.decodedToken.data.first_name : 'user';
           }
-        }else if( response.message == 'incorrect login info' ){
-          console.log('try again');
-        }else if( response.message == 'email specifications not met' ){
-
-        }else if( response.message == 'assword specifications not met' ){
-          
-        }else{
-          console.log('something went wrong');
         }
       })
     )
@@ -40,9 +36,15 @@ export class AuthService {
 
   loggedIn(){
     const token = !!localStorage.getItem('token') ? localStorage.getItem('token') : null;
-    console.log(token);
-    return ( !!token && token != null ) ? true : false;
-    // return !this.jwtHelper.isTokenExpired(token);
+    if(this.jwtHelper.isTokenExpired(token)){
+      localStorage.removeItem('token');
+      // this.router.navigate(['/home']);
+      return;
+    }
+    return ( !!token && token != null ) ? !this.jwtHelper.isTokenExpired(token) : false;
+    // ;
   }
+
+
 
 }

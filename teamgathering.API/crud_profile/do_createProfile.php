@@ -1,6 +1,6 @@
 <?php
 ob_start();
-include '../_general/cors.php';
+// include '../_general/cors.php';
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include '../_general/status_returns.php';
@@ -17,6 +17,9 @@ $pass = isset($request->password) && strlen($request->password) > 0 ? trim($requ
 // $email = 'b@b.com';
 // $pass = 'asdf';
 
+$data = new stdClass();
+$image = 'default.jpg';
+
 if( !$email ){
     $data->message = "email specifications not met";
     status_return(401);
@@ -29,9 +32,6 @@ if( !$pass ){
     echo json_encode($data);
     return;
 }
-
-$data = new stdClass();
-$image = 'default.jpg';
 
 try {
     mysqli_check();
@@ -49,11 +49,11 @@ try {
         status_return(200);
     }else{
         $data->message = "email already registered";
-        status_return(400); 
+        echo json_encode($data);
+        status_return(400);
+        return;
     }
-    echo json_encode($data);
     $conn->close();
-    return;
 }catch (Exception $e ){
     status_return(500);
     echo($e->message);
