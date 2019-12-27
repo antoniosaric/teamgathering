@@ -9,6 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   baseUrl = 'http://localhost:5001/teamtest/teamgathering.API/';
   name = '';
+  profile_id = '';
   jwtHelper = new JwtHelperService();
   decodedToken: any = {};
 
@@ -24,6 +25,7 @@ export class AuthService {
             localStorage.setItem('token', user.JWT);
             this.decodedToken = this.jwtHelper.decodeToken(user.JWT);
             this.name = !!this.decodedToken.data.first_name ? this.decodedToken.data.first_name : 'user';
+            this.profile_id = !!this.decodedToken.data.profile_id ? this.decodedToken.data.profile_id : '';
           }
         }
       })

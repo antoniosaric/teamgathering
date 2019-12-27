@@ -2,17 +2,23 @@
   <div class="container">
       <a class="navbar-brand" [routerLink]="['/home']">Team Gathering</a>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item" routerLinkActive="active" >
+        <!-- <li class="nav-item" routerLinkActive="active" >
           <a class="nav-link" [routerLink]="['/profiles']">Profiles</a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" [routerLink]="['/projects']">Projects</a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link"  [routerLink]="['/teams']">Teams</a>
+          <a class="nav-link" [routerLink]="['/projects']">Projects</a>
         </li> -->
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link"  [routerLink]="['/explore']">Explore</a>
+          <a class="nav-link" [routerLink]="['/explore']">Explore</a>
+        </li>
+        <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/profile-list']">Associates</a>
+        </li>
+        <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/profile-project']">Projects</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['/task-list']">tasks</a>
         </li>
       </ul>
       <div *ngIf="loggedIn()" class="dropdown" dropdown>
@@ -20,12 +26,12 @@
           Welcome {{authService.name | titlecase}}
         </a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/profile']"><i class="fa fa-user"></i>View Profile</a>
-          <a class="dropdown-item" [routerLink]="['/profile/edit']"><i class="fa fa-cog"></i>Edit Profile</a>
-          <a class="dropdown-item" [routerLink]="['/profile-project']"><i class="fa fa-users"></i>Your Projects</a>
-          <a class="dropdown-item" [routerLink]="['/messages']"><i class="fa fa-envelope "></i>Messages</a>
+          <a class="dropdown-item" [routerLink]="['/profile-info/']"><i class="fa fa-user"></i>   View Profile</a>
+          <a class="dropdown-item" [routerLink]="['/profile/edit']"><i class="fa fa-cog"></i> Edit Profile</a>
+          <a class="dropdown-item" [routerLink]="['/messages']"><i class="fa fa-envelope "></i> Messages</a>
+          <a class="dropdown-item" [routerLink]="['/requests']"><i class="fa fa-send "></i> requests</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i>   Log out</a>
+          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> Log out</a>
         </div>
       </div>
       
