@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = 'http://localhost:5001/teamtest/teamgathering.API/';
   name = '';
   profile_id = '';
   jwtHelper = new JwtHelperService();
@@ -17,7 +17,7 @@ export class AuthService {
 
   login(model: any){
 
-    return this.http.post(this.baseUrl + '_authorization/do_login.php', model).pipe(
+    return this.http.post(environment.apiUrl + '_authorization/do_login.php', model).pipe(
       map((response: any) => {
         if( !!response.JWT ){
           const user = response;
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   register(model: any){
-    return this.http.post(this.baseUrl + 'crud_profile/do_createProfile.php', model);
+    return this.http.post( environment.apiUrl  + 'crud_profile/do_createProfile.php', model);
   }
 
   loggedIn(){

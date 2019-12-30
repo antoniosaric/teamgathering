@@ -1,6 +1,5 @@
 <?php
 ob_start();
-// include '../_general/cors.php';
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include '../_general/status_returns.php';

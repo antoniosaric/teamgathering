@@ -29,6 +29,7 @@ import { BlogComponent } from './info/blog/blog.component';
 import { PressComponent } from './info/press/press.component';
 import { HelpComponent } from './info/help/help.component';
 import { BuildingComponent } from './info/building/building.component';
+import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { BuildingComponent } from './info/building/building.component';
       TermsandconditionsComponent,
       ContactComponent,
       PrivacyComponent,
+      FourOFourComponent,
       HelpComponent,
       AboutComponent,
       CareersComponent,

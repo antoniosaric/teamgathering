@@ -1,6 +1,6 @@
 <?php
   header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
-  header('Content-Type: application/json');
+  // header('Content-Type: application/json');
   header('Access-Control-Allow-Origin: http://localhost:4200', false);
   header('Access-Control-Max-Age: 86400');  
   header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");

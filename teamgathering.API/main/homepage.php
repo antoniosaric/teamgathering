@@ -7,7 +7,7 @@ include '../_general/functions.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$param = isset($request->param) ? trim($request->param) : " ORDER BY project_id ASC Limit 5";
+// $param = isset($request->param) ? trim($request->param) : " ORDER BY project_id ASC Limit 5";
 
 $data = [];
 
@@ -29,7 +29,7 @@ try {
           LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
           LEFT JOIN teams ON teams.project_id = projects.project_id
           LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-          WHERE project_status != 'private' ".$param;
+          WHERE project_status != 'private' ";
   $stmt = $conn->prepare($sql);
   $stmt->execute();
   $result = $stmt->get_result();

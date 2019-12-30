@@ -16,7 +16,7 @@ import { CareersComponent } from './info/careers/careers.component';
 import { BlogComponent } from './info/blog/blog.component';
 import { PressComponent } from './info/press/press.component';
 import { AuthGuard } from './_guards/auth.guard';
-// import { AuthGuard } from './_guards/auth.guard';
+import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
 
 
 
@@ -51,6 +51,7 @@ const routes: Routes = [
   { path: 'careers', component: CareersComponent },
   { path: 'blog', component: BlogComponent },
   { path: 'press', component: PressComponent },
+  { path: '404', component: FourOFourComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
