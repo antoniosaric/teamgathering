@@ -25,8 +25,9 @@
         <a class="dropdown-toggle text-light" dropdownToggle>
           Welcome {{authService.name | titlecase}}
         </a>
+        <!-- +authService.profile_id -->
         <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/profile-info/']"><i class="fa fa-user"></i>   View Profile</a>
+          <a class="dropdown-item" [routerLink]="['/profile-info']"><i class="fa fa-user"></i>   View Profile</a>
           <a class="dropdown-item" [routerLink]="['/profile/edit']"><i class="fa fa-cog"></i> Edit Profile</a>
           <a class="dropdown-item" [routerLink]="['/messages']"><i class="fa fa-envelope "></i> Messages</a>
           <a class="dropdown-item" [routerLink]="['/requests']"><i class="fa fa-send "></i> requests</a>

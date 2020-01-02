@@ -33,6 +33,8 @@ try {
         $profile->last_name = $row_profile['last_name'];
         $profile->image = $row_profile['image'];
         $profile->created_date = $row_profile['created_date'];
+        $profile->looking_for = $row_profile['looking_for'];
+        $profile->description = $row_profile['description'];
         $data->profile = $profile;
         $data->message = "profile retrieved";
         status_return(200);

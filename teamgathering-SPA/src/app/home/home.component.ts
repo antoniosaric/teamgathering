@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../_services/auth.service';
-import { ProjectService } from '../_services/project.service';
-import { AlertifyService } from '../_services/alertify.service';
 
 @Component({
   selector: 'app-home',
@@ -15,21 +12,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private authService: AuthService, 
-    private projectService: ProjectService, 
-    private alertify: AlertifyService
   ) { }
 
   ngOnInit() {
-    this.getHome();
+
   }
 
-  getHome(){
-    this.projectService.getHomepage().subscribe(response => {
-      this.projects = response;
-    }, error => {
-      this.alertify.error(error);
-    })
-  }
 
   loggedIn(){
     return this.authService.loggedIn() ? true : false;

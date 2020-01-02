@@ -7,4 +7,7 @@ export interface Project {
 	image: string;
     owner_id: number;
 	created_date: Date;
+	first_name?: string;
+	last_name?: string;
+	count?: number;
 }

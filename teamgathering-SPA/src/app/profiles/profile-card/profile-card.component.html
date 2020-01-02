@@ -1,3 +1,14 @@
-<p>
-  profile-card works!
-</p>
+<div class="card mt-4">
+    <div class="card-img-wrapper">
+    <img class="card-img-top" src="{{profile?.image}}" alt="{{profile?.first_name}}" onerror="this.src='./../../../assets/profile-images/Default_user.jpg';">
+    <ul class="list-inline member-icons animate text-center">
+      <li class="list-inline-item"><button class="btn btn-primary" [routerLink]="['/profile-info/', profile.profile_id]"><i class="fa fa-user fa-lg"></i></button></li>
+      <li class="list-inline-item"><button class="btn btn-primary" [routerLink]="['/project-info/, profile.project_id']"><i class="fa fa-group fa-lg"></i></button></li>
+      <li class="list-inline-item"><button class="btn btn-primary" [routerLink]="['/messages/']"><i class="fa fa-envelope fa-lg"></i></button></li>
+    </ul>
+    </div>
+    <div class="card-body p-1">
+      <h6 class="card-title">{{profile?.first_name || "member" }}  {{profile?.last_name || "" }}</h6>
+      <a class="card-link" [routerLink]="['/profile-list/', profile.profile_id]">View profile</a>
+    </div>
+  </div>

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { BsDropdownModule } from 'ngx-bootstrap';
+import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -16,7 +16,7 @@ import { ErrorInterceptorProvider } from './_services/error.interceptor';
 import { RequestsComponent } from './requests/requests.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileInfoComponent } from './profiles/profile-info/profile-info.component';
-import { ProfileListComponent } from './profiles//profile-list/profile-list.component';
+import { ProfileListComponent } from './profiles/profile-list/profile-list.component';
 import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
 import { ProfileCardComponent } from './profiles/profile-card/profile-card.component';
 import { ExploreComponent } from './explore/explore.component';
@@ -30,7 +30,14 @@ import { PressComponent } from './info/press/press.component';
 import { HelpComponent } from './info/help/help.component';
 import { BuildingComponent } from './info/building/building.component';
 import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
+import { ProjectCardComponent } from './projects/project-card/project-card.component';
+import { ProjectInfoComponent } from './projects/project-info/project-info.component';
+import { ProjectListComponent } from './projects/project-list/project-list.component';
+import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 
+export function tokenGetter() {
+   return localStorage.getItem("token");
+ }
 
 @NgModule({
    declarations: [
@@ -45,6 +52,10 @@ import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
       ProfileListComponent,
       ProfileInfoComponent,
       ProfileCardComponent,
+      ProjectCardComponent,
+      ProjectInfoComponent,
+      ProjectListComponent,
+      ProjectEditComponent,
       RequestsComponent,
       ExploreComponent,
       TermsandconditionsComponent,
@@ -65,7 +76,15 @@ import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
       HttpClientModule,
       FormsModule,
       BsDropdownModule.forRoot(),
-      RouterModule
+      TabsModule.forRoot(),
+      RouterModule,
+      // JwtModule.forRoot({
+      //    config:{
+      //       tokenGetter: tokenGetter,
+      //       whitelistedDomains: ['localhost:5001'],
+      //       blacklistedRoutes: ['localhost:5001/teamtest/teamgathering.API/_authorization/do_login.php']
+      //    }
+      // }),
    ],
    providers: [
       AuthService,

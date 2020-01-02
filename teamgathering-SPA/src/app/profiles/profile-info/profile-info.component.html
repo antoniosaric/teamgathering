@@ -1,15 +1,75 @@
-<p>
-  {{profile_info?.first_name | titlecase}}
-</p>
-<p>
-  {{profile_info?.last_name | titlecase}}
-</p>
-<p>
-  {{profile_info?.email | titlecase}}
-</p>
-<p>
-  {{profile_info?.image | titlecase}}
-</p>
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <img class="card-img-top img-thumbnail" src="{{profile_info?.image}}" alt="{{profile_info?.first_name}}" onerror="this.src='./../../../assets/profile-images/Default_user.jpg';">
+          <div class="card-body">
+            <div>
+              <strong>Name:</strong>
+              <p>{{profile_info?.first_name | titlecase}} {{profile_info?.last_name | titlecase}}</p>
+            </div>
+
+            <!-- <div>
+              <strong>Location:</strong>
+              <p>{{profile_info?.city}}, {{profile_info?.country}}</p>
+            </div> -->
+
+            <!-- <div>
+              <strong>Last Active:</strong>
+              <p>{{profile_info?.lastActive}}</p>
+            </div>   -->
+            <div>
+              <strong>Created:</strong>
+              <p>{{profile_info?.created_date}}</p>
+            </div>  
+          </div>
+          <div class="card-footer">
+            <div class="btn-group d-flex">
+              <button class="btn-secondary w-100">Like</button>
+              <button class="btn-secondary w-100">Message</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="tab-panel">
+          <tabset class="profile-tabset">
+            <tab heading="About {{profile_info?.profile_infoname}}">
+              <h4>About Me</h4>
+              <p>{{profile_info?.description}}</p>
+              <h4>Looking For</h4>
+              <p>{{profile_info?.looking_for}}</p>
+              <h4>Skills</h4>
+              <p>{{profile_info?.skills}}</p>
+            </tab> 
+            <tab heading="Projects">
+                <div *ngFor="let project of projects">
+                  <hr>
+                  <h4><a [routerLink]="['/projects/' + project.id]">Title</a></h4>
+                  <p>{{project?.title}}</p>
+                  <h4>Summary</h4>
+                  <p>{{project?.summary}}</p>
+                  <h4>Created</h4>
+                  <p>{{project?.created}}</p>
+                  <hr>
+                </div>
+              </tab> 
+            <tab heading="Teams">
+              <div *ngFor="let team of teams">
+                <hr>
+                <h4>{{team?.name}}</h4>
+                <p>Joined: {{team?.joined}}</p>
+                <hr>
+              </div>
+            </tab> 
+            <tab heading="Messages">
+                <h4>Messages</h4>
+            </tab> 
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 

@@ -8,8 +8,13 @@ export interface Profile {
     first_name: string;
     last_name: string;
     image: string;
+    description?: string;
     created_date: Date;
     projects?: Project[];
     teams?: Team[];
+    team_name?: string;
+    team_id?: number;
+    project_name?: string;
+    project_id?: number;
     
 }
