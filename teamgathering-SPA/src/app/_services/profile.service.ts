@@ -5,8 +5,6 @@ import { Observable } from 'rxjs';
 import { Profile } from '../_models/profile';
 import { map } from 'rxjs/operators';
 
-const token = { 'token': localStorage.getItem('token') };
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +24,7 @@ constructor( private http: HttpClient ) { }
     )
   }
 
-  getAssociateProfiles(): Observable<Profile[]> {
+  getAssociateProfiles(token): Observable<Profile[]> {
     return this.http.post(environment.apiUrl + 'main/get_associateProfiles.php', token).pipe(
       map((response: any) => {
         if( !!response.profiles ){

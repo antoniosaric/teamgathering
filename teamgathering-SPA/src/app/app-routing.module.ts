@@ -17,11 +17,13 @@ import { BlogComponent } from './info/blog/blog.component';
 import { PressComponent } from './info/press/press.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
-
-
+import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
+import { ProjectListResolver } from './_resolvers/project-list.resolver';
+import { ProfileListResolver } from './_resolvers/profile-list.resolver';
+import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, resolve: {projects: ProjectListResolver} },
   { path: 'explore', component: ExploreComponent },
   {
     path: '',
@@ -32,12 +34,12 @@ const routes: Routes = [
       // { path: 'profiles', component: ProfileListComponent, resolve: {users: ProfileListResolver} },
       { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
       { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard] },
-      { path: 'profile-info/:id', component: ProfileInfoComponent },
+      { path: 'profile-info/:id', component: ProfileInfoComponent, resolve: {profile: ProfileInfoResolver} },
       // { path: 'profile/edit', component: ProfileEditComponent, resolve: {user: ProfileEditResolver}, canDeactivate: [PreventUnsavedChanges] },
-      { path: 'profile/edit', component: ProfileEditComponent },
+      { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard] },
       // { path: 'profile-project', component: ProfileProjectListComponent },
       // { path: 'project-list', component: ProjectListComponent },
-      { path: 'profile-list', component: ProfileListComponent }
+      { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] }
     ]
   },
   // { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },

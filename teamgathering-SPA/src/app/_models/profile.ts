@@ -7,9 +7,9 @@ export interface Profile {
     email: string;
     first_name: string;
     last_name: string;
-    image: string;
+    image?: string;
     description?: string;
-    created_date: Date;
+    created_date?: Date;
     projects?: Project[];
     teams?: Team[];
     team_name?: string;

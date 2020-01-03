@@ -20,21 +20,12 @@ export class ProfileInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getProfile();
-  }
-
-  getProfile(){
-
-    const params = {'profile_id': this.route.snapshot.paramMap.get('id')};
-
-    this.profileService.getProfile(params).subscribe(response => {
-        this.profile_info = response;
-    }, error => {
-      (error == 'page not found') ? this.router.navigate(['/404']) : null ;
-      this.alertify.error(error);
-    }, () => {
+    this.route.data.subscribe(data => {
+      this.profile_info = data['profile'];
     })
   }
 
 
+
+  
 }

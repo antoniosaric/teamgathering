@@ -7,8 +7,9 @@
       <li class="list-inline-item"><button class="btn btn-primary" [routerLink]="['/messages/']"><i class="fa fa-envelope fa-lg"></i></button></li>
     </ul>
     </div>
-    <div class="card-body p-1">
+    <div class="card-body p-1 text-center">
       <h6 class="card-title">{{profile?.first_name || "member" }}  {{profile?.last_name || "" }}</h6>
-      <a class="card-link" [routerLink]="['/profile-list/', profile.profile_id]">View profile</a>
+      <!-- <a class="card-link" [routerLink]="['/profile-list/', profile.profile_id]">View profile</a> -->
     </div>
-  </div>
+</div>
+<div class="mb-4"></div>

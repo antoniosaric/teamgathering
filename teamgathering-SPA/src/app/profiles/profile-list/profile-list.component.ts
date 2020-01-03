@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../../_services/profile.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Profile } from 'src/app/_models/profile';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-list',
@@ -13,19 +14,24 @@ export class ProfileListComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService, 
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.getAssociateProfiles();
+    this.route.data.subscribe(data => {
+      console.log(data)
+      this.profiles = data['profiles'];
+    })
+    // this.getAssociateProfiles();
   }
 
-  getAssociateProfiles(){
-    this.profileService.getAssociateProfiles().subscribe(response => {
-      this.profiles = response;
-    }, error => {
-      this.alertify.error(error);
-    })
-  }
+  // getAssociateProfiles(){
+  //   this.profileService.getAssociateProfiles().subscribe(response => {
+  //     this.profiles = response;
+  //   }, error => {
+  //     this.alertify.error(error);
+  //   })
+  // }
 
 }

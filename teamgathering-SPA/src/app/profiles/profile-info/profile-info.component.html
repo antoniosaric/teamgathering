@@ -35,41 +35,50 @@
         <div class="tab-panel">
           <tabset class="profile-tabset">
             <tab heading="About {{profile_info?.profile_infoname}}">
+              <hr>
               <h4>About Me</h4>
               <p>{{profile_info?.description}}</p>
               <h4>Looking For</h4>
               <p>{{profile_info?.looking_for}}</p>
               <h4>Skills</h4>
               <p>{{profile_info?.skills}}</p>
+              <hr>
             </tab> 
             <tab heading="Projects">
-                <div *ngFor="let project of projects">
+                <div *ngFor="let project of profile_info?.projects">
                   <hr>
-                  <h4><a [routerLink]="['/projects/' + project.id]">Title</a></h4>
-                  <p>{{project?.title}}</p>
-                  <h4>Summary</h4>
-                  <p>{{project?.summary}}</p>
-                  <h4>Created</h4>
-                  <p>{{project?.created}}</p>
+                  <h4><a [routerLink]="['/projects/', project.project_id]">{{project.project_name}}</a></h4>
+                  <h5>Roll</h5>
+                  <p>{{project.project_roll}}</p>
+                  <h5>Status</h5>
+                  <p>{{project.project_status}}</p>
+                  <h5>Created</h5>
+                  <p>{{project.created_date}}</p>
                   <hr>
                 </div>
               </tab> 
             <tab heading="Teams">
-              <div *ngFor="let team of teams">
+              <div *ngFor="let team of profile_info?.teams">
                 <hr>
-                <h4>{{team?.name}}</h4>
-                <p>Joined: {{team?.joined}}</p>
+                <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+                <h5>role</h5>
+                <p>{{team.role}}</p>
+                <h5>Joined</h5>
+                <p>{{team.joined_date}}</p>
+                <h5>Status</h5>
+                <p>{{team.profile_team_status}}</p>
                 <hr>
               </div>
             </tab> 
             <tab heading="Messages">
-                <h4>Messages</h4>
+                <h5>Messages</h5>
             </tab> 
           </tabset>
         </div>
       </div>
     </div>
-  </div>
+</div>
+<div class="container mb-4"></div>
 
 
 

@@ -4,9 +4,9 @@ export interface Project {
 	description?: string;
 	short_description?: string;
 	project_status?: string;
-	image: string;
-    owner_id: number;
-	created_date: Date;
+	image?: string;
+    owner_id?: number;
+	created_date?: Date;
 	first_name?: string;
 	last_name?: string;
 	count?: number;

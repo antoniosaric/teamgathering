@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../../_services/project.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Project } from 'src/app/_models/project';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-project-list',
@@ -13,21 +14,24 @@ export class ProjectListComponent implements OnInit {
 
   constructor(
     private projectService: ProjectService, 
-    private alertify: AlertifyService
-  ) { }
+    private alertify: AlertifyService,
+    private route: ActivatedRoute ) { }
 
   ngOnInit() {
-    this.getProjects();
+    this.route.data.subscribe(data=> {
+      this.projects = data['projects'];
+    })
+    // this.getProjects();
   }
 
-  getProjects(){
-    this.projectService.getHomepage().subscribe(response => {
-      this.projects = response;
-      console.log(response)
-    }, error => {
-      this.alertify.error(error);
-    })
-  }
+  // getProjects(){
+  //   this.projectService.getHomepage().subscribe(response => {
+  //     this.projects = response;
+  //     console.log(response)
+  //   }, error => {
+  //     this.alertify.error(error);
+  //   })
+  // }
 
 
 }

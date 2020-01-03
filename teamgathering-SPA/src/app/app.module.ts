@@ -34,10 +34,17 @@ import { ProjectCardComponent } from './projects/project-card/project-card.compo
 import { ProjectInfoComponent } from './projects/project-info/project-info.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { AlertifyService } from './_services/alertify.service';
+import { AuthGuard } from './_guards/auth.guard';
+import { ProfileService } from './_services/profile.service';
+import { ProjectListResolver } from './_resolvers/project-list.resolver';
+import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
+import { ProfileListResolver } from './_resolvers/profile-list.resolver';
+import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
 
-export function tokenGetter() {
-   return localStorage.getItem("token");
- }
+// export function tokenGetter() {
+//    return localStorage.getItem("token");
+//  }
 
 @NgModule({
    declarations: [
@@ -88,7 +95,14 @@ export function tokenGetter() {
    ],
    providers: [
       AuthService,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider, 
+      AlertifyService,
+      AuthGuard,
+      ProjectListResolver,
+      ProfileService,
+      ProfileInfoResolver,
+      ProfileListResolver,
+      ProfileEditResolver
    ],
    bootstrap: [
       AppComponent
