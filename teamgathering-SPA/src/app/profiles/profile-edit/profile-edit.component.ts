@@ -13,10 +13,10 @@ import { Profile } from 'selenium-webdriver/firefox';
 })
 export class ProfileEditComponent implements OnInit {
   @ViewChild('editForm', {static:true}) editForm: NgForm;
-  profile: Profile;
   profile_info: any;
   state = 'profile';
   image:string = '';
+  page = 'profile';
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if(this.editForm.dirty) {

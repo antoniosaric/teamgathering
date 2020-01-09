@@ -55,7 +55,8 @@
       <div class="card">
         <app-photos [image]="profile_info.image" 
         (onPhotoSaveSetPhoto)="setPhoto($event)" 
-        (onPhotoSaveSetState)="changeState($event)"></app-photos>
+        (onPhotoSaveSetState)="changeState($event)"
+        [page]="page" ></app-photos>
       </div>
     </div>
     <div class="col-sm-8">

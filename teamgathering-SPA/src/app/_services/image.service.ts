@@ -11,7 +11,6 @@ constructor(private http: HttpClient) { }
 
   saveProfileImage( token: any, image: any ){
     const params = {...token, ...image };
-    console.log(params)
     return this.http.post( environment.apiUrl + 'crud_image/do_addUpdateProfileImage.php', params )
   }
 
@@ -19,5 +18,16 @@ constructor(private http: HttpClient) { }
     const params = {...token, ...image };
     return this.http.post( environment.apiUrl + 'crud_image/do_addUpdateProjectImage.php', params )
   }
+
+  deleteProfileImage(token: any){
+    const params = {...token };
+    return this.http.post( environment.apiUrl + 'crud_image/do_deleteProfileImage.php', params )
+  }
+
+  deleteProjectImage(token: any, project_id: any ){
+    const params = {...token, ...project_id };
+    return this.http.post( environment.apiUrl + 'crud_image/do_deleteProjectImage.php', params )
+  }
+
 
 }

@@ -17,7 +17,7 @@ $pass = isset($request->password) && strlen($request->password) > 0 ? trim($requ
 // $pass = 'asdf';
 
 $data = new stdClass();
-$image = 'default.jpg';
+$image = 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578601905/default_user.png';
 
 if( !$email ){
     $data->message = "email specifications not met";

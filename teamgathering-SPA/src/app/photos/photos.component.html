@@ -7,7 +7,7 @@
     </div>
     <div style="margin-top: 5%;">
         <div class="col-md-11">
-            <h5>Crop Image</h5>
+            <h6>Crop Image</h6>
             <image-cropper 
             [imageChangedEvent]="imageChangedEvent" 
             [maintainAspectRatio]="true" 
@@ -20,15 +20,28 @@
             (loadImageFailed)="loadImageFailed()"></image-cropper>
         </div>
         <div class="col-md-4">
-            <h5>Preview</h5>
+            <h6>Current/Preview</h6>
             <img [src]="croppedImage" />
         </div>
     </div>
     <div class="card-footer">
-        <div>
+        <div class="btn-group d-flex">
             <input type="file" hidden id="file">
-            <button class="btn btn-success btn-block" [disabled]="!croppedImage">Save Image</button>
+            <button class="btn btn-success w-100" [disabled]="!imageSubmitted" type="submit">Save Image</button>
+            <button class="w-100" (click)='deleteProfileImage()' type="button" *ngIf="page == 'profile'"><i class="fa fa-trash"></i></button>
+            <button class="w-100" (click)='deleteProjectImage()' type="button" *ngIf="page == 'project'"><i class="fa fa-trash"></i></button>
         </div>
     </div>
+<!-- 
+    <div class="card-footer">
+        <div class="btn-group d-flex">
+          <button class="btn-secondary w-100">Like</button>
+          <button class="btn-secondary w-100">Message</button>
+        </div>
+      </div> -->
+
+
+
+
   </form>
 </div>

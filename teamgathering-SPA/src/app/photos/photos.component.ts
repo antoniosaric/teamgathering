@@ -14,12 +14,15 @@ import { Router } from '@angular/router';
 export class PhotosComponent implements OnInit {
   @ViewChild('submitImage', {static:true}) submitImage: NgForm;
   @Input() image: string; 
+  @Input() page: string; 
   @Output() onPhotoSaveSetPhoto = new EventEmitter<object>();
   @Output() onPhotoSaveSetState = new EventEmitter<string>();
   imageChangedEvent: any = '';
   croppedImage: any = '';
   cropper:ImageCropperModule;
   fileData: File = null;
+  imageSubmitted: boolean = false;
+
   constructor(
     private alertify: AlertifyService, 
     private imageService: ImageService, 
@@ -38,6 +41,7 @@ export class PhotosComponent implements OnInit {
   }
   imageCropped(event: ImageCroppedEvent) {
       this.croppedImage = event.base64;
+      this.imageSubmitted = true;
   }
   imageLoaded() {
       // show cropper
@@ -51,12 +55,11 @@ export class PhotosComponent implements OnInit {
 
   saveProfileImage(event: any){
     this.imageService.saveProfileImage({ 'token': localStorage.getItem('token') }, { 'image': this.croppedImage } ).subscribe(next => {
-      console.log(next);
       this.alertify.success('imaged update successful');
       this.onPhotoSaveSetPhoto.emit(next);
       this.onPhotoSaveSetState.emit('profile');
+      this.imageSubmitted = false;
       this.submitImage.reset(this.saveProfileImage);
-      // this.router.navigate(['/profile/edit/']);
     }, error => {
       this.alertify.error(error);
     })
@@ -67,6 +70,22 @@ export class PhotosComponent implements OnInit {
     return $event;
   }
 
+  deleteProfileImage(){
+    this.imageService.deleteProfileImage({'token': localStorage.getItem('token') } ).subscribe(next => {
+      this.alertify.success('imaged deleted');
+      this.onPhotoSaveSetPhoto.emit(next);
+      this.onPhotoSaveSetState.emit('profile');
+      this.imageSubmitted = false;
+      this.submitImage.reset(this.saveProfileImage);
+    })
+  }
+
+  deleteProjectImage(project_id: number){
+    this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id ': project_id } ).subscribe(next => {
+      console.log('complete');
+      return true;
+    })
+  }
 
 }
 
