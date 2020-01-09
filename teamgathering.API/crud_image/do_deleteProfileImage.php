@@ -43,7 +43,7 @@ try {
         $return_update_profiles = update_table( 'profiles', $set, 'profile_id', 'si', $clauseArray );
 
         if(!!$return_update_profiles){
-            $data->message = "profile image saved";
+            $data->message = "profile image deleted";
             $data->image = $image_url;
             status_return(200);
             echo json_encode($data);
