@@ -71,12 +71,14 @@ export class PhotosComponent implements OnInit {
   }
 
   deleteProfileImage(){
-    this.imageService.deleteProfileImage({'token': localStorage.getItem('token') } ).subscribe(next => {
-      this.alertify.success('imaged deleted');
-      this.onPhotoSaveSetPhoto.emit(next);
-      this.onPhotoSaveSetState.emit('profile');
-      this.imageSubmitted = false;
-      this.submitImage.reset(this.saveProfileImage);
+    this.alertify.confirm('Are you suer you want to delete your photo?', () => {
+      this.imageService.deleteProfileImage({'token': localStorage.getItem('token') } ).subscribe(next => {
+        this.alertify.success('imaged deleted');
+        this.onPhotoSaveSetPhoto.emit(next);
+        this.onPhotoSaveSetState.emit('profile');
+        this.imageSubmitted = false;
+        this.submitImage.reset(this.saveProfileImage);
+      })
     })
   }
 
