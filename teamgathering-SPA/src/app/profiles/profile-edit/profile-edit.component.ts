@@ -4,6 +4,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm } from '@angular/forms';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { Profile } from 'selenium-webdriver/firefox';
 
 @Component({
   selector: 'app-profile-edit',
@@ -12,8 +13,10 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class ProfileEditComponent implements OnInit {
   @ViewChild('editForm', {static:true}) editForm: NgForm;
+  profile: Profile;
   profile_info: any;
   state = 'profile';
+  image:string = '';
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if(this.editForm.dirty) {
@@ -26,6 +29,7 @@ export class ProfileEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.profile_info = data['profile'];
+      this.image = this.profile_info.image;
     })
   }
 
@@ -41,6 +45,11 @@ export class ProfileEditComponent implements OnInit {
 
   changeState(state){
     this.state = state;
+  }
+
+  setPhoto(data){
+    this.profile_info.image = data.image;
+    this.image = data.image;
   }
 
 }

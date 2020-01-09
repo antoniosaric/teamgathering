@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, HostListener, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ImageService } from 'src/app/_services/image.service';
 import { NgForm } from '@angular/forms';
-import { Profile } from '../_models/profile';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 
@@ -14,14 +13,25 @@ import { Router } from '@angular/router';
 })
 export class PhotosComponent implements OnInit {
   @ViewChild('submitImage', {static:true}) submitImage: NgForm;
+  @Input() image: string; 
+  @Output() onPhotoSaveSetPhoto = new EventEmitter<object>();
+  @Output() onPhotoSaveSetState = new EventEmitter<string>();
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
   cropper:ImageCropperModule;
   fileData: File = null;
-  constructor(private alertify: AlertifyService, private imageService: ImageService, private authService: AuthService, private router: Router) { }
+  constructor(
+    private alertify: AlertifyService, 
+    private imageService: ImageService, 
+    private authService: AuthService, 
+    private router: Router
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.croppedImage = this.image;
+  }
 
-  imageChangedEvent: any = '';
-  croppedImage: any = "https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578555306/profile_"+this.authService.profile_id;
+ 
 
   fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
@@ -41,7 +51,10 @@ export class PhotosComponent implements OnInit {
 
   saveProfileImage(event: any){
     this.imageService.saveProfileImage({ 'token': localStorage.getItem('token') }, { 'image': this.croppedImage } ).subscribe(next => {
+      console.log(next);
       this.alertify.success('imaged update successful');
+      this.onPhotoSaveSetPhoto.emit(next);
+      this.onPhotoSaveSetState.emit('profile');
       this.submitImage.reset(this.saveProfileImage);
       // this.router.navigate(['/profile/edit/']);
     }, error => {

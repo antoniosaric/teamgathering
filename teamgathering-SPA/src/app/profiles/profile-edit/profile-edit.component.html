@@ -53,7 +53,9 @@
     </div>
     <div class="col-sm-4" *ngIf="state=='photo'">
       <div class="card">
-        <app-photos></app-photos>
+        <app-photos [image]="profile_info.image" 
+        (onPhotoSaveSetPhoto)="setPhoto($event)" 
+        (onPhotoSaveSetState)="changeState($event)"></app-photos>
       </div>
     </div>
     <div class="col-sm-8">

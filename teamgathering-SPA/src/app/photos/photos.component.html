@@ -6,7 +6,7 @@
         </div>
     </div>
     <div style="margin-top: 5%;">
-        <div class="text-center col-md-8">
+        <div class="col-md-11">
             <h5>Crop Image</h5>
             <image-cropper 
             [imageChangedEvent]="imageChangedEvent" 
@@ -19,7 +19,7 @@
             (cropperReady)="cropperReady()" 
             (loadImageFailed)="loadImageFailed()"></image-cropper>
         </div>
-        <div class="text-center col-md-4">
+        <div class="col-md-4">
             <h5>Preview</h5>
             <img [src]="croppedImage" />
         </div>
