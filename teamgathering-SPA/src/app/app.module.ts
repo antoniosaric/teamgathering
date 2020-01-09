@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +19,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ProfileInfoComponent } from './profiles/profile-info/profile-info.component';
 import { ProfileListComponent } from './profiles/profile-list/profile-list.component';
 import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
+import { ProfileEditAccountComponent } from './profiles/profile-edit-account/profile-edit-account.component';
 import { ProfileCardComponent } from './profiles/profile-card/profile-card.component';
 import { ExploreComponent } from './explore/explore.component';
 import { TermsandconditionsComponent } from './info/termsandconditions/termsandconditions.component';
@@ -41,6 +43,10 @@ import { ProjectListResolver } from './_resolvers/project-list.resolver';
 import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
 import { ProfileListResolver } from './_resolvers/profile-list.resolver';
 import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
+import { ProfileEditAccountResolver } from './_resolvers/profile-edit-account.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { PhotosComponent } from './photos/photos.component';
+
 
 // export function tokenGetter() {
 //    return localStorage.getItem("token");
@@ -63,6 +69,7 @@ import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
       ProjectInfoComponent,
       ProjectListComponent,
       ProjectEditComponent,
+      ProfileEditAccountComponent,
       RequestsComponent,
       ExploreComponent,
       TermsandconditionsComponent,
@@ -75,7 +82,8 @@ import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
       BlogComponent,
       PressComponent,
       RequestsComponent,
-      BuildingComponent
+      BuildingComponent,
+      PhotosComponent
    ],
    imports: [
       BrowserModule,
@@ -85,6 +93,7 @@ import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule,
+      ImageCropperModule
       // JwtModule.forRoot({
       //    config:{
       //       tokenGetter: tokenGetter,
@@ -102,7 +111,9 @@ import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
       ProfileService,
       ProfileInfoResolver,
       ProfileListResolver,
-      ProfileEditResolver
+      ProfileEditResolver,
+      ProfileEditAccountResolver,
+      PreventUnsavedChanges
    ],
    bootstrap: [
       AppComponent

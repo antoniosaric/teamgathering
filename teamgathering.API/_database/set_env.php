@@ -27,5 +27,9 @@ if ( $is_local ){
 	$db_name = $configTG['db_nameprod'];
 }
 
+$cloud_name = $configTG['cloud_name'];
+$api_key = $configTG['api_key'];
+$api_secret = $configTG['api_secret'];
+
 
 ?>

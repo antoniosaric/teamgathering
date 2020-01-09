@@ -20,7 +20,6 @@ export class ProfileListComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(data => {
-      console.log(data)
       this.profiles = data['profiles'];
     })
     // this.getAssociateProfiles();

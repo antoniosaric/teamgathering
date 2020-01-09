@@ -13,7 +13,7 @@ $request = json_decode($postdata);
 if( !isset($request->profile_id) ){
     include '../_general/cors.php';
     die();
-  }
+}
 
 $profile_id = (int)$request->profile_id;
 $profile = new stdClass(); 

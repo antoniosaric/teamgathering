@@ -14,7 +14,7 @@ $token = $request->token;
 // $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzYyMDMyNzksImp0aSI6IkxQTDM3RkN3d1IzOUp3ZnpBc3dPTEswQ1FpXC9FSzV2WU10NXdteDlvSEdVPSIsImlzcyI6Imh0dHBzOlwvXC93d3cudGVhbWdhdGhlcmluZy5jb20iLCJpYXVkc3MiOiJodHRwczpcL1wvdGVhbWdhdGhlcmluZy5jb20iLCJuYmYiOjE1NzYyMDMyNzksImV4cCI6MTU3ODYyMjQ3OSwiZGF0YSI6eyJwcm9maWxlX2lkIjoiMSIsImZpcnN0X25hbWUiOiJUb255IiwibGFzdF9uYW1lIjoiU2FyaWMiLCJlbWFpbCI6ImFAYS5jb20ifX0.FhrsKJ5FznokE0EXK3XM5JP3wzFLmBQxYjfUoIi7VWg";
 $data = new stdClass();
 
-if(!$profile_id ){
+if( !$profile_id ){
     include '../_general/cors.php';
     die();
 }

@@ -12,7 +12,7 @@ export class ProfileService {
 
 constructor( private http: HttpClient ) { }
 
-  getProfile(params): Observable<Profile> {
+  getProfile(params: any): Observable<Profile> {
     return this.http.post(environment.apiUrl + 'main/get_profile.php', params).pipe(
       map((response: any) => {
         if( !!response.profile ){
@@ -24,12 +24,18 @@ constructor( private http: HttpClient ) { }
     )
   }
 
-  getAssociateProfiles(token): Observable<Profile[]> {
+  getAssociateProfiles(token: any): Observable<Profile[]> {
     return this.http.post(environment.apiUrl + 'main/get_associateProfiles.php', token).pipe(
       map((response: any) => {
         if( !!response.profiles ){
             return response.profiles;
         }
       })
-    )  }
+    ) 
+  }
+
+  updateProfile( token: any, profile: Profile ){
+    const params = {...token, ...profile }
+    return this.http.post( environment.apiUrl + 'crud_profile/do_updateProfile.php', params )
+  }
 }

@@ -21,6 +21,10 @@ import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
 import { ProjectListResolver } from './_resolvers/project-list.resolver';
 import { ProfileListResolver } from './_resolvers/profile-list.resolver';
 import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
+import { ProfileEditAccountComponent } from './profiles/profile-edit-account/profile-edit-account.component';
+import { ProfileEditAccountResolver } from './_resolvers/profile-edit-account.resolver';
+import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent, resolve: {projects: ProjectListResolver} },
@@ -30,15 +34,13 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-      // { path: 'projects/:id', component: ProjectDetailComponent, resolve: {project: ProjectDetailResolver} },
       // { path: 'profiles', component: ProfileListComponent, resolve: {users: ProfileListResolver} },
       { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
       { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard] },
       { path: 'profile-info/:id', component: ProfileInfoComponent, resolve: {profile: ProfileInfoResolver} },
-      // { path: 'profile/edit', component: ProfileEditComponent, resolve: {user: ProfileEditResolver}, canDeactivate: [PreventUnsavedChanges] },
-      { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard] },
+      { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChanges] },
+      { path: 'profile/edit-account', component: ProfileEditAccountComponent, resolve: {profile: ProfileEditAccountResolver}, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChanges] },
       // { path: 'profile-project', component: ProfileProjectListComponent },
-      // { path: 'project-list', component: ProjectListComponent },
       { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] }
     ]
   },
