@@ -78,14 +78,23 @@ export class PhotosComponent implements OnInit {
         this.onPhotoSaveSetState.emit('profile');
         this.imageSubmitted = false;
         this.submitImage.reset(this.saveProfileImage);
+      }, error => {
+        this.alertify.error('failed to delete the photo');
       })
     })
   }
 
   deleteProjectImage(project_id: number){
-    this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id ': project_id } ).subscribe(next => {
-      console.log('complete');
-      return true;
+    this.alertify.confirm('Are you suer you want to delete your photo?', () => {
+      this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id ': project_id } ).subscribe(next => {
+        this.alertify.success('imaged deleted');
+        this.onPhotoSaveSetPhoto.emit(next);
+        this.onPhotoSaveSetState.emit('project');
+        this.imageSubmitted = false;
+        this.submitImage.reset(this.saveProfileImage);
+      }, error => {
+        this.alertify.error('failed to delete the photo');
+      })
     })
   }
 

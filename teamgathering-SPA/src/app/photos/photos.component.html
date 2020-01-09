@@ -28,8 +28,8 @@
         <div class="btn-group d-flex">
             <input type="file" hidden id="file">
             <button class="btn btn-success w-100" [disabled]="!imageSubmitted" type="submit">Save Image</button>
-            <button class="w-100" (click)='deleteProfileImage()' type="button" *ngIf="page == 'profile'"><i class="fa fa-trash"></i></button>
-            <button class="w-100" (click)='deleteProjectImage()' type="button" *ngIf="page == 'project'"><i class="fa fa-trash"></i></button>
+            <button class="w-100" (click)='deleteProfileImage()' type="button" *ngIf="page == 'profile'" [disabled]="image == 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578609526/default_user.png'"><i class="fa fa-trash fa-lg"></i></button>
+            <button class="w-100" (click)='deleteProjectImage()' type="button" *ngIf="page == 'project'" [disabled]="image == 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578609526/default_project.png'"><i class="fa fa-trash fa-lg"></i></button>
         </div>
     </div>
 <!-- 
