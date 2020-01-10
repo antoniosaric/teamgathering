@@ -1,12 +1,8 @@
-.change{
-    text-align: center; 
-    color: white;
+
+.size-250px {
+    height: 250px;
 }
 
-.padding4em{
-    padding: 4em;
-}
-
-.padding1em{
-    padding: 1em;
+.size-500px {
+    height: 500px;
 }

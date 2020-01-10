@@ -1,44 +1,95 @@
-<form [formGroup]="registerForm" (ngSubmit)="register()">
-    <h2 class="text-center text-primary"> Sign Up</h2>
-    <hr>
-  
-    <div class="form-group">
-      <input type="text" 
-      [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched }"
-      class="form-control" 
-      formControlName="email" 
-      placeholder="email">
-      <div class="invalid-feedback" *ngIf="registerForm.get('email').errors && registerForm.get('email').touched">Please enter an email</div>
-    </div> 
-  
-    <div class="form-group">
-      <input type="password" 
-      [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched }"
-      class="form-control" 
-      formControlName="password" 
-      placeholder="password">
-      <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">Password is required</div>
-      <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">password must be at least 4 characters</div>
-      <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">password must be less than 16 characters</div>
-    </div> 
+<div *ngIf="!registerMode" id="register-div" class="change padding4em">
+    <h1>Create Or Join A Project</h1>
+    <p> Want to change the world? Sign up!</p>
+    <div class="text-center">
+      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
+      <a [routerLink]="['/about']" routerLinkActive="router-link-active" ><button class="btn btn-info btn-lg">Learn More</button></a>
+    </div>
+  </div>
 
-    <div class="form-group">
-      <input type="password" 
-      [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
-      && registerForm.get('confirmPassword').touched
-      || registerForm.get('confirmPassword').touched
-      && registerForm.hasError('mismatch') }"
-      class="form-control" 
-      formControlName="confirmPassword" 
-      placeholder=" confirm password">
-      <div class="invalid-feedback">
-        <span *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched">passwords is required</span>
-        <span *ngIf="registerForm.hasError('mismatch')">passwords do not match</span>
-      </div>
-    </div> 
-  
-    <div class="form-group text-center">
-      <button class="btn btn-success" type="submit">Register</button>
-      <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
-    </div> 
-</form>
+  <div *ngIf="registerMode" class="change container padding1em">
+    <div class="row justify-content-center">
+        <div class="col-4"> 
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <h2 class="text-center text-primary"> Sign Up</h2>
+                <hr>
+
+                <div class="form-group">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': registerForm.get('first_name').errors && registerForm.get('first_name').touched }"
+                  class="form-control" 
+                  formControlName="first_name" 
+                  placeholder="first name">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('first_name').hasError('required') && registerForm.get('first_name').touched">Please enter a first name</div>
+                </div> 
+
+                <div class="form-group">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': registerForm.get('last_name').errors && registerForm.get('last_name').touched }"
+                  class="form-control" 
+                  formControlName="last_name" 
+                  placeholder="last name">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('last_name').hasError('required') && registerForm.get('last_name').touched">Please enter a last name</div>
+                </div> 
+
+                <div class="form-group">
+                    <input type="text" 
+                    [ngClass]="{'is-invalid': registerForm.get('zip_code').errors && registerForm.get('zip_code').touched }"
+                    class="form-control" 
+                    formControlName="zip_code" 
+                    placeholder="zip code">
+                    <div class="invalid-feedback" *ngIf="registerForm.get('zip_code').hasError('required') && registerForm.get('zip_code').touched">Please enter a zip code</div>
+                    <div class="invalid-feedback" *ngIf="( registerForm.get('zip_code').hasError('minlength') ) || ( registerForm.get('zip_code').hasError('maxlength') || registerForm.get('zip_code').hasError('pattern') )">please enter correct zip code</div>
+                </div> 
+
+                <div class="form-group">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched }"
+                  class="form-control" 
+                  formControlName="email" 
+                  placeholder="email">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('email').errors && registerForm.get('email').touched">Please enter an email</div>
+                </div> 
+              
+                <div class="form-group">
+                  <input type="password" 
+                  [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched }"
+                  class="form-control" 
+                  formControlName="password" 
+                  placeholder="password">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">Password is required &nbsp;</div>
+                  <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">password must be at least 4 characters</div>
+                  <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">password must be less than 16 characters</div>
+                </div> 
+            
+                <div class="form-group">
+                  <input type="password" 
+                  [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
+                  && registerForm.get('confirmPassword').touched
+                  || registerForm.get('confirmPassword').touched
+                  && registerForm.hasError('mismatch') }"
+                  class="form-control" 
+                  formControlName="confirmPassword" 
+                  placeholder=" confirm password">
+                  <div class="invalid-feedback">
+                    <span *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched">passwords is required &nbsp;</span>
+                    <span *ngIf="registerForm.hasError('mismatch')">passwords do not match</span>
+                  </div>
+                </div> 
+              
+                <div class="form-group text-center">
+                  <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Register</button>
+                  <button class="btn btn-default" type="button" (click)="cancelRegisterMode(false)">Cancel</button>
+                </div> 
+            </form>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+

@@ -1,20 +1,5 @@
-<div class="bg-secondary" style="height: 300px;" *ngIf="!loggedIn()">
-  <div *ngIf="!registerMode" id="register-div" class="change padding4em">
-    <h1>Create Or Join A Project</h1>
-    <p> Want to change the world? Sign up!</p>
-    <div class="text-center">
-      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
-      <a [routerLink]="['/about']" routerLinkActive="router-link-active" ><button class="btn btn-info btn-lg">Learn More</button></a>
-    </div>
-  </div>
-
-  <div *ngIf="registerMode" class="change container padding1em">
-    <div class="row justify-content-center">
-        <div class="col-4"> 
-          <app-register (cancelRegister)="cancelRegisterMode($event)"></app-register>
-        </div>
-    </div>
-  </div>
+<div class="bg-secondary" [ngClass]="{'size-250px': registerMode==false, 'size-500px':registerMode==true }" *ngIf="!loggedIn()">
+  <app-register (registerToggleSize)="changeRegisterMode($event)"></app-register>
 </div>
 
 <app-project-list></app-project-list>

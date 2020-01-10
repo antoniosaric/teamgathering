@@ -23,12 +23,9 @@ export class HomeComponent implements OnInit {
     return this.authService.loggedIn() ? true : false;
   }
 
-  registerToggle(){
-    this.registerMode = true;
+  changeRegisterMode(event){
+    this.registerMode = event;
   }
 
-  cancelRegisterMode(registerMode: boolean){
-    this.registerMode = registerMode;
-  }
 
 }
