@@ -7,6 +7,9 @@ export interface Profile {
     email: string;
     first_name: string;
     last_name: string;
+    zip_code?: string;
+    city?: string;
+    state?: string;
     image?: string;
     description?: string;
     created_date?: Date;

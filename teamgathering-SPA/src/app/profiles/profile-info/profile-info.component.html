@@ -9,10 +9,10 @@
               <p>{{profile_info?.first_name | titlecase}} {{profile_info?.last_name | titlecase}}</p>
             </div>
 
-            <!-- <div>
+            <div *ngIf="!!profile_info?.city && !!profile_info?.state">
               <strong>Location:</strong>
-              <p>{{profile_info?.city}}, {{profile_info?.country}}</p>
-            </div> -->
+              <p>{{profile_info?.city}}, {{profile_info?.state}}</p>
+            </div>
 
             <!-- <div>
               <strong>Last Active:</strong>

@@ -28,8 +28,10 @@
         <div class="btn-group d-flex">
             <input type="file" hidden id="file">
             <button class="btn btn-success w-100" [disabled]="!imageSubmitted" type="submit">Save Image</button>
-            <button class="w-100" (click)='deleteProfileImage()' type="button" *ngIf="page == 'profile'" [disabled]="image == 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578609526/default_user.png'"><i class="fa fa-trash fa-lg"></i></button>
-            <button class="w-100" (click)='deleteProjectImage()' type="button" *ngIf="page == 'project'" [disabled]="image == 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578609526/default_project.png'"><i class="fa fa-trash fa-lg"></i></button>
+            <button class="w-100 btn-danger" (click)='deleteProfileImage()' type="button" *ngIf="page == 'profile'" [disabled]="image == 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578609526/default_user.png'"><i class="fa fa-trash fa-lg"></i></button>
+            <button class="w-100 btn-secondary" (click)='goBackProfile()' type="button" *ngIf="page == 'profile'">go back</button>
+            <button class="w-100 btn-danger" (click)='deleteProjectImage()' type="button" *ngIf="page == 'project'" [disabled]="image == 'https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578609526/default_project.png'"><i class="fa fa-trash fa-lg"></i></button>
+            <button class="w-100 btn-secondary" (click)='goBackProject()' type="button" *ngIf="page == 'project'">go back</button>
         </div>
     </div>
 <!-- 

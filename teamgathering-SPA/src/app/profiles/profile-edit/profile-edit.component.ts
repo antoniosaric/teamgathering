@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm } from '@angular/forms';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { AuthService } from 'src/app/_services/auth.service';
-import { Profile } from 'selenium-webdriver/firefox';
 
 @Component({
   selector: 'app-profile-edit',
@@ -24,7 +23,13 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  constructor(private route: ActivatedRoute, private alertify: AlertifyService, private profileService: ProfileService, private authService: AuthService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private alertify: AlertifyService, 
+    private profileService: ProfileService, 
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {

@@ -98,6 +98,14 @@ export class PhotosComponent implements OnInit {
     })
   }
 
+  goBackProfile(){
+    this.onPhotoSaveSetState.emit('profile');
+  }
+
+  goBackProject(){
+    this.onPhotoSaveSetState.emit('project');
+  }
+
 }
 
 

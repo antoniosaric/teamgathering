@@ -35,6 +35,9 @@ try {
         $profile->email = $row_profile['email'];
         $profile->first_name = $row_profile['first_name'];
         $profile->last_name = $row_profile['last_name'];
+        $profile->zip_code = $row_profile['zip_code'];
+        $profile->city = $row_profile['city'];
+        $profile->state = $row_profile['state'];
         $profile->image = $row_profile['image'];
         $profile->created_date = $row_profile['created_date'];
         $data->profile = $profile;

@@ -75,6 +75,9 @@ try {
         $profile->first_name = $row_profile['first_name'];
         $profile->last_name = $row_profile['last_name'];
         $profile->image = $row_profile['image'];
+        $profile->city = $row_profile['city'];
+        $profile->zip_code = $row_profile['zip_code'];
+        $profile->state = $row_profile['state'];
         $profile->created_date = $row_profile['created_date'];
         $profile->looking_for = $row_profile['looking_for'];
         $profile->description = $row_profile['description'];

@@ -12,7 +12,17 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $email = isset($request->email) && strlen($request->email) > 0 ? trim(strtolower($request->email)) : false;
 $pass = isset($request->password) && strlen($request->password) > 0 ? trim($request->password) : false;
+$zip_code = trim($request->password);
+$first_name = trim($request->first_name);
+$last_name = trim($request->last_name);
 
+$zip_url = "http://api.zippopotam.us/us/" . $zip_code;
+
+$address_info = file_get_contents($zip_url);
+$json = json_decode($address_info);
+
+$city = $json->places[0]->{'place name'};
+$state = $json->places[0]->{'state abbreviation'};
 // $email = 'b@b.com';
 // $pass = 'asdf';
 
@@ -43,7 +53,7 @@ try {
 
         $hash_password_object = generate_hash( $pass );
 
-        $return_profile_id = create_profile( $email, $hash_password_object->hash_pass, $hash_password_object->salt, $image );
+        $return_profile_id = create_profile( $email, $hash_password_object->hash_pass, $hash_password_object->salt, $image, $zip_code, $city, $state );
         $data->message = "profile created";
         status_return(200);
     }else{
