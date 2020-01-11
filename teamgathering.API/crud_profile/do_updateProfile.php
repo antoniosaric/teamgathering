@@ -14,14 +14,21 @@ if( !isset($request->token) ){
     include '../_general/cors.php';
     die();
 }
+$zip_code = isset($request->zip_code) && strlen($request->zip_code) > 0 ? trim($request->zip_code) : false;
+$first_name = isset($request->first_name) && strlen($request->first_name) > 0 ? trim($request->first_name) : false;
+$last_name = isset($request->last_name) && strlen($request->last_name) > 0 ? trim($request->last_name) : false;
 
-$first_name = trim($request->first_name);
-$last_name = trim($request->last_name);
-$zip_code = trim($request->zip_code);
+if( !$zip_code || !$first_name || !$last_name ){
+    $data->message = "form specifications not met";
+    status_return(401);
+    echo json_encode($data);
+    return; 
+}
+
 $looking_for = trim($request->looking_for);
 $description = trim($request->description);
 
-$zip_url = "http://api.zippopotam.us/us/" . $zip_code;
+$zip_url = "http://api.zippopotam.us/us/" . (int)$zip_code;
 
 $address_info = file_get_contents($zip_url);
 $json = json_decode($address_info);

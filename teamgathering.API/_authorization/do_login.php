@@ -10,16 +10,17 @@ include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$email = trim(strtolower($request->email));
-$pass = trim($request->password);
+$email = isset($request->email) && strlen($request->email) > 0 ? trim(strtolower($request->email)) : false;
+$password = isset($request->password) && strlen($request->password) > 0 ? trim($request->password) : false;
+
 $data = new stdClass();
 
-if(!$email && !$pass ){
+if(!$email && !$password ){
   include '../_general/cors.php';
   die();
 }
 
-// $pass = 'asdf';
+// $password = 'asdf';
 // $email = 'a@a.com';
 $authenticationVerified = false;
 
@@ -30,7 +31,7 @@ try {
   $clauseArray = [ $email ];
   $row_profile = get_tabel_info_single_row( 'profiles', 'WHERE email=?', 's', $clauseArray );
 
-  if( !!$row_profile['profile_id'] && validate_pw($pass, $row_profile["password"]) ){
+  if( !!$row_profile['profile_id'] && validate_pw($password, $row_profile["password"]) ){
     $set_first_name = isset($row_profile['first_name']) ? (string)$row_profile['first_name'] : NULL;
     $set_last_name = isset($row_profile['last_name']) ? (string)$row_profile['last_name'] : NULL;
     $set_email = (string)$row_profile['email'];

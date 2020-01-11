@@ -2,6 +2,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { AlertifyService } from '../_services/alertify.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Profile } from '../_models/profile';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,21 +11,21 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  model: any = {};
+  profile_info: Profile;
   registerMode = false;
   registerForm: FormGroup;
   @Output() registerToggleSize = new EventEmitter<boolean>();
 
 
-  constructor(private authService: AuthService, private alertify: AlertifyService, private fb: FormBuilder) { }
+  constructor(
+    private authService: AuthService, 
+    private alertify: AlertifyService, 
+    private fb: FormBuilder,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.createRegisterForm();
-    // this.registerForm = new FormGroup({
-    //   email: new FormControl('', Validators.required),
-    //   password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]),
-    //   confirmPassword: new FormControl('', Validators.required)
-    // }, this.passwordMatchValidator);
   }
 
   createRegisterForm(){
@@ -42,13 +44,19 @@ export class RegisterComponent implements OnInit {
   }
 
   register(){
-    console.log(this.registerForm.value);
-    // this.authService.register(this.model).subscribe(() => {
-    //   this.alertify.success('registration successful');
-    // }, error => {
-    //   this.alertify.error(error);
-    // });
-    
+    if( this.registerForm.valid ){
+      this.profile_info = Object.assign( {}, this.registerForm.value );
+
+      this.authService.register(this.profile_info).subscribe(() => {
+        this.alertify.success('registration successful');
+      }, error => {
+        this.alertify.error(error);
+      }, () =>{
+        this.authService.login(this.profile_info).subscribe(() => {
+          this.router.navigate(['/profile/edit'])
+        });
+      });
+    }
   }
 
   // cancel(){

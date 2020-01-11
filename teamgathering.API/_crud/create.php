@@ -4,13 +4,13 @@
 //  MAIN TABLES
 // ======================================================================
 
-function create_profile( $email, $password, $salt, $image, $zip_code, $city, $state ){
+function create_profile( $email, $password, $salt, $image, $zip_code, $city, $state, $first_name, $last_name ){
 
     global $conn;
 
-    $sql = "INSERT INTO `profiles` ( `email`, `password`, `salt`, `image`, `zip_code`, `city`, `state` ) VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `profiles` ( `email`, `password`, `salt`, `image`, `zip_code`, `city`, `state`, `first_name`, `last_name` ) VALUES (?,?,?,?,?,?,?,?,?)";
 	$stmt = $conn->prepare($sql);
-	$stmt->bind_param("ssss", $email, $password, $salt, $image, $zip_code, $city, $state );
+	$stmt->bind_param("sssssssss", $email, $password, $salt, $image, $zip_code, $city, $state, $first_name, $last_name );
 
     if ($stmt->execute()) {
     	$return_id = $conn->insert_id;

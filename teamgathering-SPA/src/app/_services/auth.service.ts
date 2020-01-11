@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
+import { Profile } from '../_models/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,8 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  login(model: any){
-
-    return this.http.post(environment.apiUrl + '_authorization/do_login.php', model).pipe(
+  login(profile_info: Profile){
+    return this.http.post(environment.apiUrl + '_authorization/do_login.php', profile_info).pipe(
       map((response: any) => {
         if( !!response.JWT ){
           const user = response;
@@ -32,8 +32,10 @@ export class AuthService {
     )
   }
 
-  register(model: any){
-    return this.http.post( environment.apiUrl  + 'crud_profile/do_createProfile.php', model);
+  register(profile_info: Profile){
+    console.log('********')
+    console.log(profile_info);
+    return this.http.post( environment.apiUrl  + 'crud_profile/do_createProfile.php', profile_info);
   }
 
   loggedIn(){
