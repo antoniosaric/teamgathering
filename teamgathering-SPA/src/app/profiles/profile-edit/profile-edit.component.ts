@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertifyService } from 'src/app/_services/alertify.service';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { AuthService } from 'src/app/_services/auth.service';
 
@@ -11,11 +11,12 @@ import { AuthService } from 'src/app/_services/auth.service';
   styleUrls: ['./profile-edit.component.css']
 })
 export class ProfileEditComponent implements OnInit {
-  @ViewChild('editForm', {static:true}) editForm: NgForm;
+  @ViewChild('editForm', {static:true}) editForm: FormGroup;
   profile_info: any;
   state = 'profile';
   image:string = '';
   page = 'profile';
+  
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
     if(this.editForm.dirty) {
@@ -28,24 +29,42 @@ export class ProfileEditComponent implements OnInit {
     private alertify: AlertifyService, 
     private profileService: ProfileService, 
     private authService: AuthService,
+    private fb: FormBuilder,
     private router: Router
   ) { }
 
   ngOnInit() {
+    
     this.route.data.subscribe(data => {
       this.profile_info = data['profile'];
       this.image = this.profile_info.image;
     })
+    this.createEditForm();
+  }
+
+  createEditForm(){
+    this.editForm = this.fb.group({
+      first_name: [this.profile_info.first_name, Validators.required],
+      last_name: [this.profile_info.last_name, Validators.required],
+      zip_code: [this.profile_info.zip_code, [ Validators.required, Validators.minLength(5), Validators.maxLength(7), Validators.pattern('[0-9]{5}') ] ],
+      description: [this.profile_info.description, ],
+      looking_for: [this.profile_info.looking_for, ]
+    })
   }
 
   updateProfile(){
-    this.profileService.updateProfile({ 'token': localStorage.getItem('token') }, this.profile_info).subscribe(next => {
-      this.alertify.success('Profile update successful');
-      this.editForm.reset(this.profile_info);
-    }, error => {
-      this.alertify.error(error);
-    })
+    if( this.editForm.valid ){
+      this.profile_info = Object.assign( {}, this.editForm.value );
 
+      this.profileService.updateProfile({ 'token': localStorage.getItem('token') }, this.profile_info).subscribe(next => {
+        this.alertify.success('Profile update successful');
+        this.editForm.reset(this.profile_info);
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+          this.router.navigate(['/profile/edit'])
+      })
+    }
   }
 
   changeState(state){

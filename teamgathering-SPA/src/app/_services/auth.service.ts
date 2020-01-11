@@ -33,8 +33,6 @@ export class AuthService {
   }
 
   register(profile_info: Profile){
-    console.log('********')
-    console.log(profile_info);
     return this.http.post( environment.apiUrl  + 'crud_profile/do_createProfile.php', profile_info);
   }
 

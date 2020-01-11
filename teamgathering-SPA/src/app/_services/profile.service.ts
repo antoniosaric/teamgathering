@@ -34,8 +34,8 @@ constructor( private http: HttpClient ) { }
     ) 
   }
 
-  updateProfile( token: any, profile: Profile ){
-    const params = {...token, ...profile }
+  updateProfile( token: any, profile_info: Profile ){
+    const params = {...token, ...profile_info }
     return this.http.post( environment.apiUrl + 'crud_profile/do_updateProfile.php', params )
   }
 }
