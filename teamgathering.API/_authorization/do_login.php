@@ -38,7 +38,7 @@ try {
     $set_profile_id = (string)$row_profile['profile_id'];
 
     $data->message = "logged in";
-    $data->JWT = assignToken( $set_profile_id, $set_first_name, $set_last_name, $set_email );
+    $data->token = assignToken( $set_profile_id, $set_first_name, $set_last_name, $set_email );
     status_return(200);
     echo json_encode($data);
     return;

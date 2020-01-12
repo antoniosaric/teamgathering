@@ -48,6 +48,7 @@ try {
         if(!!$return_update_profiles){
             $data->message = "profile image saved";
             $data->image = $image_url;
+            $data->token = exchangeToken($token);
             status_return(200);
             echo json_encode($data);
             return;

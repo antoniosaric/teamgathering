@@ -13,23 +13,10 @@
   <div class="row">
     <div class="col-sm-4" *ngIf="state=='profile'">
       <div class="card">
-        <img class="card-img-top img-thumbnail" src="{{profile_info?.image}}" alt="{{profile_info?.first_name}}" onerror="this.src='./../../../assets/profile-images/Default_user.jpg';">
+        <img class="card-img-top img-thumbnail" src="{{profile_info?.image}}" alt="{{profile_info?.first_name}}">
         <p class="text-center"><button (click)="changeState('photo')">edit image</button>
-          <!-- <input
-            style="display: none"
-            type="file" (change)="onFileChanged($event)"
-            #fileInput>
-          <button (click)="fileInput.click()">Select File</button>
-          <button (click)="onUpload()">Upload!</button> -->
         </p>
         <div class="card-body">
-
-
-
-
-
-
-
             <div class="form-group mb-4">
                 <input type="text" 
                 [ngClass]="{'is-invalid': editForm.get('first_name').errors && editForm.get('first_name').touched }"

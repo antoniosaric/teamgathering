@@ -32,6 +32,7 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit() {
     this.croppedImage = this.image;
+    console.log(this.image)
   }
 
  

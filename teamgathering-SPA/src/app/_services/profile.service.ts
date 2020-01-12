@@ -16,6 +16,7 @@ constructor( private http: HttpClient ) { }
     return this.http.post(environment.apiUrl + 'main/get_profile.php', params).pipe(
       map((response: any) => {
         if( !!response.profile ){
+          console.log(response.profile)
           return response.profile;
         }else{
           return false;

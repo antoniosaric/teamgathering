@@ -34,9 +34,9 @@ export class ProfileEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
     this.route.data.subscribe(data => {
       this.profile_info = data['profile'];
+      console.log(this.profile_info.image)
       this.image = this.profile_info.image;
     })
     this.createEditForm();
@@ -53,16 +53,19 @@ export class ProfileEditComponent implements OnInit {
   }
 
   updateProfile(){
+    this.authService.checkToken();
     if( this.editForm.valid ){
-      this.profile_info = Object.assign( {}, this.editForm.value );
-
+      this.profile_info = Object.assign( {}, {...this.editForm.value, ...{ image: this.profile_info.image} } );
       this.profileService.updateProfile({ 'token': localStorage.getItem('token') }, this.profile_info).subscribe(next => {
+        this.authService.setProfileName(this.profile_info);
+        this.authService.setToken(next);
         this.alertify.success('Profile update successful');
         this.editForm.reset(this.profile_info);
       }, error => {
         this.alertify.error(error);
       }, () => {
-          this.router.navigate(['/profile/edit'])
+        // this.ngOnInit();
+        this.router.navigate(['/profile/edit']);
       })
     }
   }

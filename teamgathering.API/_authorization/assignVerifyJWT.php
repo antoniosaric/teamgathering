@@ -58,7 +58,7 @@ function varifyToken($token){
     $timeCheck = $decoded->iat + 3600; //One hour renew token
 
     if( isset($decoded->data) ){
-
+        
         $set_first_name = isset($decoded->data->first_name) ? $decoded->data->first_name : NULL;
         $set_last_name = isset($decoded->data->last_name) ? $decoded->data->last_name : NULL;
         $set_email = isset($decoded->data->email) ? $decoded->data->email : NULL;
@@ -83,6 +83,44 @@ function varifyToken($token){
     }
 }
 
+
+function exchangeToken($token){
+    $configTG = parse_ini_file("../../config.ini");
+    $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
+    $newTime = time();
+    $timeCheck = $decoded->iat + 3600; //One hour renew token
+
+    if( isset($decoded->data) ){
+
+        $clauseArray = [ $decoded->data->profile_id ];
+        $row_profile = get_tabel_info_single_row( 'profiles', 'WHERE profile_id=?', 'i', $clauseArray );
+        
+        if( isset($row_profile['profile_id']) ){
+            $set_first_name = isset($row_profile['first_name']) ? $row_profile['first_name'] : NULL;
+            $set_last_name = isset($row_profile['last_name']) ? $row_profile['last_name'] : NULL;
+            $set_email = isset($row_profile['email']) ? $row_profile['email'] : NULL;
+            $set_profile_id = isset($row_profile['profile_id']) ? $row_profile['profile_id'] : NULL;
+        }else{
+            $set_first_name = isset($decoded->data->first_name) ? $decoded->data->first_name : NULL;
+            $set_last_name = isset($decoded->data->last_name) ? $decoded->data->last_name : NULL;
+            $set_email = isset($decoded->data->email) ? $decoded->data->email : NULL;
+            $set_profile_id = isset($decoded->data->profile_id) ? $decoded->data->profile_id : NULL;
+        }
+
+        if( $newTime < $decoded->exp ){
+            $new_token = assignToken( $set_profile_id, $set_first_name, $set_last_name, $set_email );
+            return $new_token;
+        }else{
+            status_return(401);
+            return;
+            exit;
+        }
+    }else{
+        status_return(401);
+        return;
+        exit;
+    }
+}
 
 
 /**

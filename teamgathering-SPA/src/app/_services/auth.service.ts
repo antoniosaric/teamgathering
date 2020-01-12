@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { Profile } from '../_models/profile';
+import { AlertifyService } from './alertify.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +16,20 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any = {};
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private alertify: AlertifyService,
+    private router: Router
+    ) { }
 
   login(profile_info: Profile){
     return this.http.post(environment.apiUrl + '_authorization/do_login.php', profile_info).pipe(
       map((response: any) => {
-        if( !!response.JWT ){
+        if( !!response.token ){
           const user = response;
           if(user){
-            localStorage.setItem('token', user.JWT);
-            this.decodedToken = this.jwtHelper.decodeToken(user.JWT);
+            localStorage.setItem('token', user.token);
+            this.decodedToken = this.jwtHelper.decodeToken(user.token);
             this.name = !!this.decodedToken.data.first_name ? this.decodedToken.data.first_name : 'user';
             this.profile_id = !!this.decodedToken.data.profile_id ? this.decodedToken.data.profile_id : '';
           }
@@ -47,6 +53,28 @@ export class AuthService {
     // ;
   }
 
+  checkToken(){
+    if(this.jwtHelper.isTokenExpired(localStorage.getItem('token'))){
+      this.logout();
+      this.alertify.success('session expired, please relog');
+    }
+  }
 
+  setProfileName(data){
+    this.name = !!data.first_name ? data.first_name : 'user';
+  }
+
+  setToken(data){
+    localStorage.setItem('token', data.token);
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+    this.name = '';
+    this.profile_id = '';
+    this.decodedToken = {};
+    this.alertify.success('logged out');
+    this.router.navigate(['/home']);
+  }
 
 }
