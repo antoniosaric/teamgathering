@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-sm-4" *ngIf="state=='profile'">
       <div class="card">
-        <img class="card-img-top img-thumbnail" src="{{profile_info?.image}}" alt="{{profile_info?.first_name}}">
+        <img class="card-img-top img-thumbnail" src="{{profile_info?.image || './../../../assets/profile-images/Default_user.jpg' }}" alt="{{profile_info?.first_name}}">
         <p class="text-center"><button (click)="changeState('photo')">edit image</button>
         </p>
         <div class="card-body">
@@ -49,7 +49,7 @@
               </div> 
           <div>
             <strong>Created:</strong>
-            <p>{{profile_info?.created_date}}</p>
+            <p>{{profile_info?.created_date | date: 'mediumDate'}}</p>
           </div>  
         </div>
         <div class="card-footer">
@@ -92,7 +92,7 @@
                 <h5>Status</h5>
                 <p>{{project.project_status}}</p>
                 <h5>Created</h5>
-                <p>{{project.created_date}}</p>
+                <p>{{project.created_date | date: 'mediumDate'}}</p>
                 <hr>
               </div>
             </tab> 
@@ -103,7 +103,7 @@
               <h5>role</h5>
               <p>{{team.role}}</p>
               <h5>Joined</h5>
-              <p>{{team.joined_date}}</p>
+              <p>{{team.joined_date | date: 'mediumDate'}}</p>
               <h5>Status</h5>
               <p>{{team.profile_team_status}}</p>
               <hr>

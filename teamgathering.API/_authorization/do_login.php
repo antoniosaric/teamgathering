@@ -22,7 +22,6 @@ if(!$email && !$password ){
 
 // $password = 'asdf';
 // $email = 'a@a.com';
-$authenticationVerified = false;
 
 try {
   global $conn;

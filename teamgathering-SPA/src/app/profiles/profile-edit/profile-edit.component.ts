@@ -36,7 +36,6 @@ export class ProfileEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.profile_info = data['profile'];
-      console.log(this.profile_info.image)
       this.image = this.profile_info.image;
     })
     this.createEditForm();
