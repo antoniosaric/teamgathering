@@ -3,7 +3,15 @@
       <div class="col-sm-4">
         <h1>Your Account</h1>
       </div>
+      <div class="col-sm-8">
+        <div class="alert alert-info" *ngIf="emailForm.dirty || passwordForm.dirty || deleteAccountForm.dirty">
+          <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
+        </div>
+      </div>
     </div>
+    <p >{{emailForm.dirty}}</p>
+    <p >{{passwordForm.dirty}}</p>
+    <p >{{deleteAccountForm.dirty}}</p>
     <div class="panel panel-default">
       <div class="col-sm-4">
         <p>email: {{email}}</p>
@@ -102,4 +110,5 @@
       </div>
     </div>
   </div>
+
   <div class="container mb-4"></div>

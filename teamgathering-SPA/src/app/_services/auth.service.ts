@@ -60,6 +60,15 @@ export class AuthService {
     }
   }
 
+  checkTokenExists(){
+    console.log('$$$$$$$$$$');
+    if( localStorage.hasOwnProperty('token') ){
+      return localStorage.getItem('token');
+  }else{
+      return null;
+  }
+  }
+
   setProfileName(data){
     this.name = !!data.first_name ? data.first_name : 'user';
   }

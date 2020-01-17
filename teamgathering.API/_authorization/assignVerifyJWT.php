@@ -51,6 +51,21 @@ function returnTokenProfileId($token){
     }
 }
 
+function justReturnTokenProfileId($token){
+    $configTG = parse_ini_file("../../config.ini");
+    $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
+
+    $return = new stdClass();
+
+    $return->profile_id = isset($decoded->data->profile_id) ? $decoded->data->profile_id : NULL;
+
+    if(isset($return->profile_id)){
+        return $return;
+    }else{
+        return false;
+    }
+}
+
 function varifyToken($token){
     $configTG = parse_ini_file("../../config.ini");
     $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
@@ -58,7 +73,7 @@ function varifyToken($token){
     $timeCheck = $decoded->iat + 3600; //One hour renew token
 
     if( isset($decoded->data) ){
-        
+
         $set_first_name = isset($decoded->data->first_name) ? $decoded->data->first_name : NULL;
         $set_last_name = isset($decoded->data->last_name) ? $decoded->data->last_name : NULL;
         $set_email = isset($decoded->data->email) ? $decoded->data->email : NULL;

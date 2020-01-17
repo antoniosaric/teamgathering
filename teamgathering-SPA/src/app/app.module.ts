@@ -40,10 +40,10 @@ import { AlertifyService } from './_services/alertify.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { ProfileService } from './_services/profile.service';
 import { ProjectListResolver } from './_resolvers/project-list.resolver';
+import { ProjectInfoResolver } from './_resolvers/project-info.resolver';
 import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
 import { ProfileListResolver } from './_resolvers/profile-list.resolver';
 import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
-import { ProfileEditAccountResolver } from './_resolvers/profile-edit-account.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotosComponent } from './photos/photos.component';
 
@@ -113,7 +113,7 @@ import { PhotosComponent } from './photos/photos.component';
       ProfileInfoResolver,
       ProfileListResolver,
       ProfileEditResolver,
-      ProfileEditAccountResolver,
+      ProjectInfoResolver,
       PreventUnsavedChanges
    ],
    bootstrap: [

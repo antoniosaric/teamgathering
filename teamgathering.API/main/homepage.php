@@ -29,7 +29,7 @@ try {
           LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
           LEFT JOIN teams ON teams.project_id = projects.project_id
           LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-          WHERE project_status != 'private' ";
+          WHERE project_status != 'private' AND profiles_team.role != 'Owner'";
   $stmt = $conn->prepare($sql);
   $stmt->execute();
   $result = $stmt->get_result();

@@ -1,3 +1,87 @@
-<p>
-  project-info works!
-</p>
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="card">
+          <img class="card-img-top img-thumbnail" src="{{project_info?.image}}" alt="{{project_info?.project_name}}">
+          <div class="card-body">
+            <div>
+              <strong>Title:</strong>
+              <p>{{project_info?.project_name | titlecase}} </p>
+            </div>
+            <div *ngIf="project_info?.view_status == 'authorized'">
+              <strong>Number of Members:</strong>
+              <p>{{project_info?.count}}</p>
+            </div>  
+            <div>
+              <strong>Created:</strong>
+              <p>{{project_info?.created_date | date: 'mediumDate' }}</p>
+            </div>  
+          </div>
+          <div class="card-footer">
+            <div class="btn-group d-flex">
+              <button class="btn-secondary w-100">Follow</button>
+              <button class="btn-secondary w-100">Request Join</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="tab-panel">
+          <tabset class="project-tabset">
+            <tab heading="About">
+              <hr>
+              <h4>About</h4>
+              <p *ngIf="project_info?.view_status == 'authorized'">{{project_info?.description}}</p>
+              <p *ngIf="project_info?.view_status == 'unathorized'">{{project_info?.short_description}}</p>
+              <hr>
+            </tab> 
+            <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
+              <div *ngFor="let team of project_info?.teams">
+                <hr>
+                <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+                <div *ngFor="let profile of team.profiles">
+                  <div *ngIf="profile.profile_team_status == 'active'">
+                    <hr>
+                    <h5>Role</h5>
+                    <p>{{profile.role}}</p>
+                    <h5>Name</h5>
+                    <p><a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></p>
+                    <h5>Joined</h5>
+                    <p>{{profile.joined_date | date: 'mediumDate'}}</p>
+                    <h5>Status</h5>
+                    <p class="green">{{profile.profile_team_status}}</p>
+                    <hr>
+                  </div>
+                  <div *ngIf="profile.profile_team_status == 'inactive'">           
+                    <hr>
+                    <h5>Role</h5>
+                    <p>{{profile.role}}</p>
+                    <h5>Name</h5>
+                    <p><a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></p>
+                    <h5>Joined</h5>
+                    <p>{{profile.joined_date | date: 'mediumDate'}}</p>
+                    <h5>Status</h5>
+                    <p class="red">{{profile.profile_team_status}}</p>
+                    <hr>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </tab> 
+            <tab heading="Additional">
+                <div>
+                  <hr>                    
+                  <h4>Looking For</h4>
+                  <p>{{project_info?.looking_for}}</p>
+                  <h4>Stacks</h4>
+                  <p>{{project_info?.skills}}</p>
+                  <hr>
+                </div>
+            </tab> 
+          </tabset>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="container mb-4"></div>
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -11,14 +11,23 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
   styleUrls: ['./profile-edit-account.component.css']
 })
 export class ProfileEditAccountComponent implements OnInit {
-  @ViewChild('emailForm', {static:true}) emailForm: FormGroup;
-  @ViewChild('passwordForm', {static:true}) passwordForm: FormGroup;
-  @ViewChild('deleteAccountForm', {static:true}) deleteAccountForm: FormGroup;
+  emailForm: FormGroup;
+  passwordForm: FormGroup;
+  deleteAccountForm: FormGroup;
   emailState = false;
   passwordState = false;
   deleteState = false;
-
+  emailObject: any;
+  passwordObject: any;
+  deleteAccountObject: any;
   email: '';
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if(this.emailForm.dirty || this.passwordForm.dirty || this.deleteAccountForm.dirty ) {
+      $event.returnValue = true;
+    }
+  }
 
   constructor(
     private fb: FormBuilder, 
@@ -26,11 +35,15 @@ export class ProfileEditAccountComponent implements OnInit {
     private authService: AuthService,
     private alertify: AlertifyService,
     private router: Router,
-    private accountService: AccountService) { }
+    private accountService: AccountService
+  ) { }
 
   ngOnInit() {
-    this.email = this.authService.decodedToken.data.email;
+    this.emailObject = {};
+    this.passwordObject = {};
+    this.deleteAccountObject = {};
     this.createEditForm();
+    this.email = this.authService.decodedToken.data.email;
   }
 
   createEditForm(){
@@ -57,11 +70,12 @@ export class ProfileEditAccountComponent implements OnInit {
   
   updateEmail(){
     if( this.emailForm.valid ){
-      this.accountService.updateEmail( { 'token': localStorage.getItem('token') }, this.emailForm.value).subscribe(next => {
+      this.emailObject = Object.assign( {}, {...this.emailForm.value } );
+      this.accountService.updateEmail( { 'token': localStorage.getItem('token') }, this.emailObject).subscribe(next => {
         this.authService.setToken(next);
         this.email = this.emailForm.value.email;
         this.alertify.success('update email successful');
-        this.emailForm.reset();
+        this.emailForm.reset(this.emailObject);
       }, error => {
         this.alertify.error(error);
       }, () =>{
@@ -71,10 +85,11 @@ export class ProfileEditAccountComponent implements OnInit {
 
   updatePassword(){
     if( this.passwordForm.valid ){
-      this.accountService.updatePassword( { 'token': localStorage.getItem('token') }, this.passwordForm.value).subscribe(next => {
+      this.passwordObject = Object.assign( {}, {...this.passwordForm.value } );
+      this.accountService.updatePassword( { 'token': localStorage.getItem('token') }, this.passwordObject).subscribe(next => {
         this.authService.setToken(next);
         this.alertify.success('update password successful');
-        this.passwordForm.reset();
+        this.passwordForm.reset(this.passwordObject);
       }, error => {
         this.alertify.error(error);
       }, () =>{
@@ -84,9 +99,10 @@ export class ProfileEditAccountComponent implements OnInit {
 
   deleteAccount(){
     if( this.deleteAccountForm.valid ){
-      this.accountService.updatePassword( { 'token': localStorage.getItem('token') }, this.deleteAccountForm.value).subscribe(() => {
+      this.deleteAccountObject = Object.assign( {}, {...this.deleteAccountForm.value } );
+      this.accountService.updatePassword( { 'token': localStorage.getItem('token') }, this.deleteAccountObject).subscribe(() => {
         this.alertify.success('account deleted');
-        this.deleteAccountForm.reset();
+        this.deleteAccountForm.reset(this.deleteAccountObject);
       }, error => {
         this.alertify.error(error);
       }, () =>{
@@ -96,17 +112,17 @@ export class ProfileEditAccountComponent implements OnInit {
   }
 
   changePasswordState(event){
-    this.passwordForm.reset();
+    this.passwordForm.reset(this.passwordState);
     this.passwordState = event;
   }
 
   changeEmailState(event){
-    this.emailForm.reset();
+    this.emailForm.reset(this.emailState);
     this.emailState = event;
   }
 
   changeDeleteState(event){
-    this.deleteAccountForm.reset();
+    this.deleteAccountForm.reset(this.deleteAccountObject);
     this.deleteState = event;
   }
 

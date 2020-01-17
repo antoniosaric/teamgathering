@@ -1,3 +1,5 @@
+import { Team } from './team';
+
 export interface Project {
     project_id: number;
 	project_name: string;
@@ -10,4 +12,6 @@ export interface Project {
 	first_name?: string;
 	last_name?: string;
 	count?: number;
+	teams?: Team[];
+	view_tatus?: string;
 }

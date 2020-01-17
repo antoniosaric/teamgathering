@@ -19,10 +19,12 @@ import { AuthGuard } from './_guards/auth.guard';
 import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
 import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
 import { ProjectListResolver } from './_resolvers/project-list.resolver';
+import { ProjectInfoResolver } from './_resolvers/project-info.resolver';
 import { ProfileListResolver } from './_resolvers/profile-list.resolver';
 import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
 import { ProfileEditAccountComponent } from './profiles/profile-edit-account/profile-edit-account.component';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
+import { ProjectInfoComponent } from './projects/project-info/project-info.component';
 
 
 const routes: Routes = [
@@ -36,11 +38,19 @@ const routes: Routes = [
       // { path: 'profiles', component: ProfileListComponent, resolve: {users: ProfileListResolver} },
       { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
       { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard] },
-      { path: 'profile-info/:id', component: ProfileInfoComponent, resolve: {profile: ProfileInfoResolver} },
       { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChanges] },
       { path: 'profile/edit-account', component: ProfileEditAccountComponent, canActivate: [AuthGuard] },
-      // { path: 'profile-project', component: ProfileProjectListComponent },
-      { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] }
+      { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] },
+      
+    ]
+  },
+  {
+    path: '',
+    runGuardsAndResolvers: 'always',
+    children: [
+      { path: 'project-info/:id', component: ProjectInfoComponent, resolve: {project: ProjectInfoResolver} },
+      { path: 'profile-info/:id', component: ProfileInfoComponent, resolve: {profile: ProfileInfoResolver} },
+      
     ]
   },
   // { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },

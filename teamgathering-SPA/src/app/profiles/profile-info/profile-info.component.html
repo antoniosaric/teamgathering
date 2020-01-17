@@ -34,7 +34,7 @@
       <div class="col-sm-8">
         <div class="tab-panel">
           <tabset class="profile-tabset">
-            <tab heading="About {{profile_info?.profile_infoname}}">
+            <tab heading="About">
               <hr>
               <h4>About Me</h4>
               <p>{{profile_info?.description}}</p>
@@ -47,7 +47,7 @@
             <tab heading="Projects">
                 <div *ngFor="let project of profile_info?.projects">
                   <hr>
-                  <h4><a [routerLink]="['/projects/', project.project_id]">{{project.project_name}}</a></h4>
+                  <h4><a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a></h4>
                   <h5>Roll</h5>
                   <p>{{project.project_roll}}</p>
                   <h5>Status</h5>
@@ -61,7 +61,7 @@
               <div *ngFor="let team of profile_info?.teams">
                 <hr>
                 <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
-                <h5>role</h5>
+                <h5>Role</h5>
                 <p>{{team.role}}</p>
                 <h5>Joined</h5>
                 <p>{{team.joined_date | date: 'mediumDate'}}</p>
