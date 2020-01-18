@@ -16,7 +16,7 @@ import { CareersComponent } from './info/careers/careers.component';
 import { BlogComponent } from './info/blog/blog.component';
 import { PressComponent } from './info/press/press.component';
 import { AuthGuard } from './_guards/auth.guard';
-import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
+import { FourOFourComponent } from './info/errors/fourOFour/fourOFour.component';
 import { ProfileInfoResolver } from './_resolvers/profile-info.resolver';
 import { ProjectListResolver } from './_resolvers/project-list.resolver';
 import { ProjectInfoResolver } from './_resolvers/project-info.resolver';
@@ -25,6 +25,8 @@ import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
 import { ProfileEditAccountComponent } from './profiles/profile-edit-account/profile-edit-account.component';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { ProjectInfoComponent } from './projects/project-info/project-info.component';
+import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 
 
 const routes: Routes = [
@@ -41,7 +43,8 @@ const routes: Routes = [
       { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChanges] },
       { path: 'profile/edit-account', component: ProfileEditAccountComponent, canActivate: [AuthGuard] },
       { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] },
-      
+      { path: 'project/edit/:id', component: ProjectEditComponent, resolve: {project: ProjectEditResolver}, canActivate: [AuthGuard] }
+
     ]
   },
   {

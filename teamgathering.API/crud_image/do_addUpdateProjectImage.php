@@ -13,13 +13,13 @@ require '../_general/autoload.php';
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-if( !isset($request->token) ){
+if( !isset($request->image) || !isset($request->project_id) ){
     // include '../_general/cors.php';
     die();
 }
 
+$project_id = $request->project_id;
 $token = $request->token;
-$project_id = $request->$project_id;
 $image = $request->image;
 $data = new stdClass();
 
@@ -37,19 +37,19 @@ try {
         "secure" => true
     ));
 
-    $files['uploaded_image'] = \Cloudinary\Uploader::upload($image, array('public_id' => 'profile_'.$profile_id ));
-
+    $files['uploaded_image'] = \Cloudinary\Uploader::upload($image, array('public_id' => 'project_'.$project_id ));
+    // https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578563539/project_1.png
   	if ( !!$files['uploaded_image'] ){
-        $return_update_profiles = false;
+        $return_update_project = false;
         $set = 'image=?';
-        $image_url = "https://res.cloudinary.com/dqd4ouqyf/image/upload/v1578555306/project_".$project_id;
-        $clauseArray = [ $image_url, $profile_id ];
-        $return_update_profiles = update_table( 'profiles', $set, 'profile_id', 'si', $clauseArray );
+        $image_url = "https://res.cloudinary.com/dqd4ouqyf/image/upload/v".$files['uploaded_image']['version']."/project_".$project_id;
+        $clauseArray = [ $image_url, $project_id ];
+        $return_update_project = update_table( 'projects', $set, 'project_id', 'si', $clauseArray );
 
-        if(!!$return_update_profiles){
-            $data->message = "profile image saved";
+        if(!!$return_update_project){
+            $data->message = "project image saved";
             $data->image = $image_url;
-            $data->token = exchangeToken($request->token);
+            $data->token = exchangeToken($token);
             status_return(200);
             echo json_encode($data);
             return;

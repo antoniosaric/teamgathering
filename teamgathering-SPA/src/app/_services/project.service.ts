@@ -30,4 +30,9 @@ constructor( private http: HttpClient ) { }
     )
   }
 
+  updateProject( token: any, project_info: Project ){
+    const params = {...token, ...project_info }
+    return this.http.post( environment.apiUrl + 'crud_project/do_updateProject.php', params )
+  }
+
 }

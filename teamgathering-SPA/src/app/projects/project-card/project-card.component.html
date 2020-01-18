@@ -6,7 +6,6 @@
     <h5 class="card-title">{{project.project_name}}</h5>
     <h6 class="card-subtitle mb-2 text-muted text-truncate"><a class="card-link" [routerLink]="['/profile-info/', project.owner_id]">{{project.first_name || 'owner'}} {{project.last_name}}</a></h6>
     <p class="card-text">{{project.short_description}}</p>
-  <p>members {{project.count}}</p>
     <a class="card-link" [routerLink]="['/project-info/', project.project_id]">View Project</a>
     <a class="card-link" [routerLink]="['/requests/', project.project_id]">Request to Join</a>
   </div>

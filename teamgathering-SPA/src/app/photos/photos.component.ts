@@ -15,6 +15,7 @@ export class PhotosComponent implements OnInit {
   @ViewChild('submitImage', {static:true}) submitImage: NgForm;
   @Input() image: string; 
   @Input() page: string; 
+  @Input() project_id: string; 
   @Output() onPhotoSaveSetPhoto = new EventEmitter<object>();
   @Output() onPhotoSaveSetState = new EventEmitter<string>();
   imageChangedEvent: any = '';
@@ -32,7 +33,6 @@ export class PhotosComponent implements OnInit {
 
   ngOnInit() {
     this.croppedImage = this.image;
-    console.log(this.image)
   }
 
  
@@ -60,15 +60,20 @@ export class PhotosComponent implements OnInit {
       this.onPhotoSaveSetPhoto.emit(next);
       this.onPhotoSaveSetState.emit('profile');
       this.imageSubmitted = false;
-      this.submitImage.reset(this.saveProfileImage);
     }, error => {
       this.alertify.error(error);
     })
-    
   }
 
   saveProjectImage($event){
-    return $event;
+    this.imageService.saveProjectImage({ 'token': localStorage.getItem('token') }, { 'image': this.croppedImage }, {'project_id': this.project_id}).subscribe(next => {
+      this.alertify.success('imaged update successful');
+      this.onPhotoSaveSetPhoto.emit(next);
+      this.onPhotoSaveSetState.emit('project');
+      this.imageSubmitted = false;
+    }, error => {
+      this.alertify.error(error);
+    })
   }
 
   deleteProfileImage(){
@@ -78,7 +83,6 @@ export class PhotosComponent implements OnInit {
         this.onPhotoSaveSetPhoto.emit(next);
         this.onPhotoSaveSetState.emit('profile');
         this.imageSubmitted = false;
-        this.submitImage.reset(this.saveProfileImage);
       }, error => {
         this.alertify.error('failed to delete the photo');
       })
@@ -87,12 +91,11 @@ export class PhotosComponent implements OnInit {
 
   deleteProjectImage(project_id: number){
     this.alertify.confirm('Are you suer you want to delete your photo?', () => {
-      this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id ': project_id } ).subscribe(next => {
+      this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id': this.project_id } ).subscribe(next => {
         this.alertify.success('imaged deleted');
         this.onPhotoSaveSetPhoto.emit(next);
         this.onPhotoSaveSetState.emit('project');
         this.imageSubmitted = false;
-        this.submitImage.reset(this.saveProfileImage);
       }, error => {
         this.alertify.error('failed to delete the photo');
       })

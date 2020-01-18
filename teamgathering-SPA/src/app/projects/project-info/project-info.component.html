@@ -18,9 +18,12 @@
             </div>  
           </div>
           <div class="card-footer">
-            <div class="btn-group d-flex">
+            <div class="btn-group d-flex" *ngIf="project_info?.owner_id != authService.profile_id">
               <button class="btn-secondary w-100">Follow</button>
               <button class="btn-secondary w-100">Request Join</button>
+            </div>
+            <div class="btn-group d-flex" *ngIf="project_info?.owner_id == authService.profile_id">
+                <a [routerLink]="['/project/edit/', project_info?.project_id]"><button class="btn-secondary w-100">Edit</button></a>
             </div>
           </div>
         </div>

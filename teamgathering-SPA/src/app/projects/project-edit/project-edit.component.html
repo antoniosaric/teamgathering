@@ -1,3 +1,119 @@
-<p>
-  project-edit works!
-</p>
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-sm-4">
+        <h1>Edit Project</h1>
+      </div>
+      <div class="col-sm-8">
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+          <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="updateProject()">
+    <div class="row">
+      <div class="col-sm-4" *ngIf="state=='project'">
+        <div class="card">
+          <img class="card-img-top img-thumbnail" src="{{project_info?.image}}" alt="{{project_info?.project_name}}">
+          <p class="text-center"><button (click)="changeState('photo')">edit image</button>
+          </p>
+          <div class="card-body">
+            <div class="form-group mb-4">
+              <input type="text" 
+              [ngClass]="{'is-invalid': editForm.get('project_name').errors && editForm.get('project_name').touched }"
+              class="form-control mb-2" 
+              formControlName="project_name" 
+              placeholder="project_name"
+              >
+              <div class="invalid-feedback" *ngIf="editForm.get('project_name').hasError('required') && editForm.get('project_name').touched">title cannot be empty</div>
+            </div> 
+            <div class="form-group mb-4">
+                <strong>Status:</strong>
+                <select formControlName="project_status">
+                  <option disabled>Select Project Status</option>
+                  <option *ngFor="let status of status_options" [ngValue]="status">{{status}}</option>
+                </select>
+              </div>  
+            <div>
+              <strong>Number of Members:</strong>
+              <p>{{project_info?.count}}</p>
+            </div>  
+            <div>
+              <strong>Created:</strong>
+              <p>{{project_info?.created_date | date: 'mediumDate'}}</p>
+            </div>  
+          </div>
+          <div class="card-footer">
+            <div>
+              <button class="btn btn-success btn-block" [disabled]="!editForm.valid">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4" *ngIf="state=='photo'">
+        <div class="card">
+          <app-photos [image]="project_info?.image" 
+          (onPhotoSaveSetPhoto)="setPhoto($event)" 
+          (onPhotoSaveSetState)="changeState($event)"
+          [page]="page" 
+          [project_id]="project_id"></app-photos>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="tab-panel">
+          <tabset class="project-tabset">
+            <tab heading="About">
+              <hr>
+              <h4>About</h4>
+              <h5 class="mt-3">description</h5>
+              <textarea name="description" id="description" cols="30" rows="10" class="form-control" formControlName="description"></textarea>
+              <h5 class="mt-3">short description</h5>
+              <textarea name="short_description" id="short_description" cols="30" rows="6" class="form-control" formControlName="short_description"></textarea>
+              <hr>
+            </tab> 
+            <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
+              <div *ngFor="let team of project_info?.teams">
+                <hr>
+                <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+                <div *ngFor="let profile of team.profiles">
+                  <div *ngIf="profile.profile_team_status == 'active'">
+                    <hr>
+                    <h5>Role: {{profile.role}}</h5>
+                    <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'member'}} {{profile.last_name}}</a></h5>
+                    <h5>Joined: {{profile.joined_date | date: 'mediumDate'}}</h5>
+                    <h5 class="green">Status: {{profile.profile_team_status}}</h5>
+                    <hr>
+                  </div>
+                  <div *ngIf="profile.profile_team_status == 'inactive'">           
+                    <hr>
+                    <h5>Role</h5>
+                    <p>{{profile.role}}</p>
+                    <h5>Name</h5>
+                    <p><a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'member'}} {{profile.last_name}}</a></p>
+                    <h5>Joined</h5>
+                    <p>{{profile.joined_date | date: 'mediumDate'}}</p>
+                    <h5>Status</h5>
+                    <p class="red">{{profile.profile_team_status}}</p>
+                    <hr>
+                  </div>
+                </div>
+                <hr>
+              </div>
+            </tab> 
+            <tab heading="Additional">
+              <div>
+                <hr>                    
+                <h4>Looking For</h4>
+                <textarea name="looking_for" id="looking_for" cols="30" rows="6" class="form-control" formControlName="looking_for"></textarea>
+                <h4>Stacks</h4>
+                <textarea name="stacks" id="stacks" cols="30" rows="6" class="form-control" formControlName="stacks"></textarea>
+                <hr>
+              </div>
+            </tab> 
+          </tabset>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+  <div class="container mb-4"></div>
+

@@ -31,7 +31,7 @@ import { BlogComponent } from './info/blog/blog.component';
 import { PressComponent } from './info/press/press.component';
 import { HelpComponent } from './info/help/help.component';
 import { BuildingComponent } from './info/building/building.component';
-import { FourOFourComponent } from './info/fourOFour/fourOFour.component';
+import { FourOFourComponent } from './info/errors/fourOFour/fourOFour.component';
 import { ProjectCardComponent } from './projects/project-card/project-card.component';
 import { ProjectInfoComponent } from './projects/project-info/project-info.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
@@ -46,6 +46,7 @@ import { ProfileListResolver } from './_resolvers/profile-list.resolver';
 import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotosComponent } from './photos/photos.component';
+import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 
 
 // export function tokenGetter() {
@@ -113,6 +114,7 @@ import { PhotosComponent } from './photos/photos.component';
       ProfileInfoResolver,
       ProfileListResolver,
       ProfileEditResolver,
+      ProjectEditResolver,
       ProjectInfoResolver,
       PreventUnsavedChanges
    ],

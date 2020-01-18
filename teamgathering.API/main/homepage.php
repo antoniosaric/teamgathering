@@ -23,8 +23,7 @@ try {
           projects.image AS image,
           projects.owner_id AS owner_id,
           profiles.first_name AS first_name,
-          profiles.last_name AS last_name,
-          (SELECT COUNT(profiles_team.profiles_team_id) FROM profiles_team WHERE profiles_team.team_id = teams.team_id) as count
+          profiles.last_name AS last_name
           FROM projects 
           LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
           LEFT JOIN teams ON teams.project_id = projects.project_id

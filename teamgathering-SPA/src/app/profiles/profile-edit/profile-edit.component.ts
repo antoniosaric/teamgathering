@@ -46,8 +46,8 @@ export class ProfileEditComponent implements OnInit {
       first_name: [this.profile_info.first_name, Validators.required],
       last_name: [this.profile_info.last_name, Validators.required],
       zip_code: [this.profile_info.zip_code, [ Validators.required, Validators.minLength(5), Validators.maxLength(7), Validators.pattern('[0-9]{5}') ] ],
-      description: [this.profile_info.description, ],
-      looking_for: [this.profile_info.looking_for, ]
+      description: [this.profile_info.description ],
+      looking_for: [this.profile_info.looking_for ]
     })
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ProjectService } from 'src/app/_services/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-project-info',
@@ -13,15 +14,23 @@ export class ProjectInfoComponent implements OnInit {
 
   constructor(
     private alertify: AlertifyService, 
-    private profileService: ProjectService,
+    private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.project_info = data['project'];
-      console.log(this.project_info)
     })
+  }
+
+  editAuthorizationCheck(){
+    if( parseInt(this.project_info.owner_id) == parseInt(this.authService.profile_id) ){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
