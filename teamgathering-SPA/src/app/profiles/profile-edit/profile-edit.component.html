@@ -84,28 +84,26 @@
             <hr>
           </tab> 
           <tab heading="Projects">
-              <div *ngFor="let project of profile_info?.projects">
-                <hr>
-                <h4><a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a><span class="ml-4">Edit</span></h4>
-                <h5>Roll</h5>
-                <p>{{project.project_roll}}</p>
-                <h5>Status</h5>
-                <p>{{project.project_status}}</p>
-                <h5>Created</h5>
-                <p>{{project.created_date | date: 'mediumDate'}}</p>
-                <hr>
-              </div>
-            </tab> 
+            <div *ngFor="let project of profile_info?.projects">
+                <a [routerLink]="['/project/add']">Add Project</a>
+              <hr>
+              <h4>
+                <a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a>
+                <a [routerLink]="['/project/edit/', project.project_id]" class="ml-4">Edit</a>
+              </h4>
+              <h5>Roll: {{project.project_roll}}</h5>
+              <h5>Status: {{project.project_status}}</h5>
+              <h5>Created: {{project.created_date | date: 'mediumDate'}}</h5>
+              <hr>
+            </div>
+          </tab> 
           <tab heading="Teams">
             <div *ngFor="let team of profile_info?.teams">
               <hr>
               <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
-              <h5>role</h5>
-              <p>{{team.role}}</p>
-              <h5>Joined</h5>
-              <p>{{team.joined_date | date: 'mediumDate'}}</p>
-              <h5>Status</h5>
-              <p>{{team.profile_team_status}}</p>
+              <h5>Role: {{team.role}}</h5>
+              <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
+              <h5>Status: {{team.profile_team_status}}</h5>
               <hr>
             </div>
           </tab> 

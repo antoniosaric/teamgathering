@@ -17,7 +17,7 @@ export class ProjectEditComponent implements OnInit {
   project_id: number = 0;
   image:string = '';
   page = 'project';
-  status_options: any = ['public', 'private']
+  status_options: any = ['public', 'private'];
   
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {

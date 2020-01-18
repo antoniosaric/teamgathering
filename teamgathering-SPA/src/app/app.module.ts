@@ -36,6 +36,7 @@ import { ProjectCardComponent } from './projects/project-card/project-card.compo
 import { ProjectInfoComponent } from './projects/project-info/project-info.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
+import { ProjectAddComponent } from './projects/project-add/project-add.component';
 import { AlertifyService } from './_services/alertify.service';
 import { AuthGuard } from './_guards/auth.guard';
 import { ProfileService } from './_services/profile.service';
@@ -70,6 +71,7 @@ import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
       ProjectInfoComponent,
       ProjectListComponent,
       ProjectEditComponent,
+      ProjectAddComponent,
       ProfileEditAccountComponent,
       RequestsComponent,
       ExploreComponent,

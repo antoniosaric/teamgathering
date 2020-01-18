@@ -27,6 +27,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { ProjectInfoComponent } from './projects/project-info/project-info.component';
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
+import { ProjectAddComponent } from './projects/project-add/project-add.component';
 
 
 const routes: Routes = [
@@ -43,7 +44,8 @@ const routes: Routes = [
       { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChanges] },
       { path: 'profile/edit-account', component: ProfileEditAccountComponent, canActivate: [AuthGuard] },
       { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] },
-      { path: 'project/edit/:id', component: ProjectEditComponent, resolve: {project: ProjectEditResolver}, canActivate: [AuthGuard] }
+      { path: 'project/edit/:id', component: ProjectEditComponent, resolve: {project: ProjectEditResolver}, canActivate: [AuthGuard] },
+      { path: 'project/add', component: ProjectAddComponent, canActivate: [AuthGuard] }
 
     ]
   },

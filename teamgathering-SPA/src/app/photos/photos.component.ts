@@ -77,7 +77,7 @@ export class PhotosComponent implements OnInit {
   }
 
   deleteProfileImage(){
-    this.alertify.confirm('Are you suer you want to delete your photo?', () => {
+    this.alertify.confirm('Are you sure you want to delete your photo?', () => {
       this.imageService.deleteProfileImage({'token': localStorage.getItem('token') } ).subscribe(next => {
         this.alertify.success('imaged deleted');
         this.onPhotoSaveSetPhoto.emit(next);
@@ -90,7 +90,7 @@ export class PhotosComponent implements OnInit {
   }
 
   deleteProjectImage(project_id: number){
-    this.alertify.confirm('Are you suer you want to delete your photo?', () => {
+    this.alertify.confirm('Are you sure you want to delete your photo?', () => {
       this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id': this.project_id } ).subscribe(next => {
         this.alertify.success('imaged deleted');
         this.onPhotoSaveSetPhoto.emit(next);
