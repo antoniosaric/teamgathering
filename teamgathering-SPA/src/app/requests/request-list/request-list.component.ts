@@ -80,12 +80,11 @@ export class RequestListComponent implements OnInit {
 
   deleteRequest(data){
     this.authService.checkToken();
-    if( this.updateRequestForm.valid ){
-      this.request_info = Object.assign( {}, {...this.updateRequestForm.value }, { 'requester_id': data.requester_id },{ 'requestee_id': data.requestee_id },{ 'request_id': data.request_id } );
-      this.requestService.deleteRequest({ 'token': localStorage.getItem('token') }, this.request_info ).subscribe(next => {
+    console.log(data)
+    if( !!data.request_id ){
+      this.requestService.deleteRequest({ 'token': localStorage.getItem('token') }, { 'request_id': data.request_id } ).subscribe(next => {
         this.authService.setToken(next);
-        this.alertify.success('request successfully made');
-        this.updateRequestForm.reset(this.request_info);
+        this.alertify.success('request successfully deleted');
       }, error => {
         this.alertify.error(error);
       }, () => {
@@ -106,18 +105,4 @@ export class RequestListComponent implements OnInit {
   // }
 
 }
-
-
-
-// "project_requests":[
-//   {"request_id":1,
-//   "request_status":"pending",
-//   "created_date":"2020-01-19 15:07:18",
-//   "updated_date":"2020-01-19 15:07:18",
-//   "requester_id":1,
-//   "requestee_id":2,
-//   "project_name":"Project Three",
-//   "profile_id":1,"first_name":"xxxjjj","last_name":"Sariccdddd"}],"profile_requests":[{"request_id":2,"request_status":"pending","created_date":"2020-01-21 19:49:30","updated_date":"2020-01-21 19:49:30","requester_id":2,"requestee_id":1,"project_name":"Project One","profile_id":1,"first_name":"xxxjjj","last_name":"Sariccdddd"}]}
-
-
 

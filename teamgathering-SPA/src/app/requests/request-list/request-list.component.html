@@ -58,7 +58,7 @@
           <div *ngIf="request.request_status == 'approved'">
             <ol>
               <li class="container">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)">
                   <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
@@ -77,7 +77,7 @@
           <div *ngIf="request.request_status == 'unapproved'">
             <ol>
               <li class="container">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)">
                   <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
@@ -102,7 +102,7 @@
           <div *ngIf="request.request_status == 'pending'">
             <ol>
               <li class="container row">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)">
                   <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <p><strong>Status:</strong> {{request.request_status}}</p>
                   <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
@@ -117,7 +117,7 @@
           <div *ngIf="request.request_status == 'approved'">
             <ol>
               <li class="container">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)">
                   <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
@@ -136,7 +136,7 @@
           <div *ngIf="request.request_status == 'unapproved'">
             <ol>
               <li class="container">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)">
                   <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">

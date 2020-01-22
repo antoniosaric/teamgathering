@@ -31,7 +31,7 @@ constructor(
 
   deleteRequest(token: any, parameters: any){
     const params = {...token, ...parameters }
-    return this.http.post( environment.apiUrl + 'crud_request/do_deleteRequests.php', params );
+    return this.http.post( environment.apiUrl + 'crud_request/do_deleteRequest.php', params );
   }
 
 
