@@ -16,7 +16,7 @@ try {
     global $conn;
 
     $pro_info = returnTokenProfileId($token);
-    $profile_id = $pro_info->profile_id;
+    $profile_id = intval($pro_info->profile_id);
 
     $sql = "SELECT DISTINCT * FROM profiles_team LEFT JOIN teams ON teams.team_id = profiles_team.team_id LEFT JOIN projects ON projects.id = teams.project_id WHERE team.id = ?";
     $stmt = $conn->prepare($sql);

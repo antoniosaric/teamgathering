@@ -48,6 +48,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotosComponent } from './photos/photos.component';
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 import { RequestListComponent } from './requests/request-list/request-list.component';
+import { TeamEditComponent } from './teams/team-edit/team-edit.component';
 
 
 // export function tokenGetter() {
@@ -72,6 +73,7 @@ import { RequestListComponent } from './requests/request-list/request-list.compo
       ProjectEditComponent,
       ProjectAddComponent,
       ProfileEditAccountComponent,
+      TeamEditComponent,
       ExploreComponent,
       TermsandconditionsComponent,
       ContactComponent,

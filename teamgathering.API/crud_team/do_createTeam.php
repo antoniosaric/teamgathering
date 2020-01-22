@@ -14,7 +14,7 @@ $team_description = trim($request->team_description);
 $project_id = (int)$request->project_id;
 $token = $request->token;
 $data = new stdClass();
-$role = 'owner';
+$role = 'Owner';
 $profile_team_status = 'approved';
 
 try {

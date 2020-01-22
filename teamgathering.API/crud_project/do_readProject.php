@@ -16,7 +16,7 @@ try {
     global $conn;
 
     $pro_info = returnTokenProfileId($token);
-    $profile_id = $pro_info->profile_id;
+    $profile_id = intval($pro_info->profile_id);
 
     $clauseArray = [ $project_id ];
     $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=?', 'i', $clauseArray );

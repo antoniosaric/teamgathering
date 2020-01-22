@@ -44,7 +44,7 @@ try {
     global $conn;
 
     $pro_info = returnTokenProfileId($token);
-    $profile_id = $pro_info->profile_id;
+    $profile_id = intval($pro_info->profile_id);
 
     if( !!$profile_id ){
         $set = 'first_name=?, last_name=?, description=?, looking_for=?, zip_code=?, city=?, state=?';

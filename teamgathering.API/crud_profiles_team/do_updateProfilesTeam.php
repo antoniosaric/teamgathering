@@ -20,7 +20,7 @@ try {
     global $conn;
 
     $pro_info = returnTokenProfileId($token);
-    $profile_id = $pro_info->profile_id;
+    $profile_id = intval($pro_info->profile_id);
 
     $sql = "SELECT DISTINCT profiles_team.profile_id AS profile_id, profiles_team.profiles_team_id AS profile_team_id FROM profiles_team WHERE profiles_team.team_id = ? AND ( profiles_team.profile_id = ? OR profiles_team.profile_id = ?";
     $stmt = $conn->prepare($sql);

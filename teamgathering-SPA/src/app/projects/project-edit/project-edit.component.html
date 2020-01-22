@@ -73,7 +73,11 @@
             <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
               <div *ngFor="let team of project_info?.teams">
                 <hr>
-                <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+                <h4>
+                  <!-- <a [routerLink]="['/team-info/', team.team_id]">{{team.team_name}}</a> -->
+                  <p>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></p>
+                  
+                </h4>
                 <div *ngFor="let profile of team.profiles">
                   <div *ngIf="profile.profile_team_status == 'active'">
                     <hr>

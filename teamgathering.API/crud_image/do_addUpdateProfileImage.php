@@ -27,7 +27,7 @@ try {
     global $conn;
 
     $pro_info = returnTokenProfileId($token);
-    $profile_id = $pro_info->profile_id;
+    $profile_id = intval($pro_info->profile_id);
 
     \Cloudinary::config(array(
         'cloud_name' => $cloud_name,

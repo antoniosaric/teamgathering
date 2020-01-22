@@ -76,7 +76,6 @@ try {
 
             $data->message = 'request updated';
             $data->token = exchangeToken($token);
-            $data->message = "project updated";
             status_return(200);
             echo json_encode($data);
             $conn->close();

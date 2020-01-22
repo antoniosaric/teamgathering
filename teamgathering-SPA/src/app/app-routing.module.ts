@@ -28,6 +28,7 @@ import { ProjectEditComponent } from './projects/project-edit/project-edit.compo
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 import { ProjectAddComponent } from './projects/project-add/project-add.component';
 import { RequestListComponent } from './requests/request-list/request-list.component';
+import { TeamEditComponent } from './teams/team-edit/team-edit.component';
 
 
 const routes: Routes = [
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: 'profile/edit-account', component: ProfileEditAccountComponent, canActivate: [AuthGuard] },
       { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] },
       { path: 'project/edit/:id', component: ProjectEditComponent, resolve: {project: ProjectEditResolver}, canActivate: [AuthGuard] },
+      { path: 'team/edit/:id', component: TeamEditComponent, canActivate: [AuthGuard] },
       { path: 'project/add', component: ProjectAddComponent, canActivate: [AuthGuard] }
 
     ]
