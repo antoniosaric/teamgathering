@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
@@ -22,7 +23,7 @@ try {
     global $conn;
 
     $pro_info = returnTokenProfileId($token);
-    $profile_id = $pro_info->profile_id;
+    $profile_id = intval($pro_info->profile_id);
 
     $clauseArray = [ $team_name, $project_id ];
     $row_team = get_tabel_info_single_row( 'teams', 'WHERE teams.project_name=? AND teams.project_id=?', 'si', $clauseArray );

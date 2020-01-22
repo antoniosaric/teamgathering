@@ -1,4 +1,5 @@
 <?php
+ob_start();
 header('Access-Control-Allow-Origin: http://localhost:4200', false);
 header("Access-Control-Allow-Headers: content-type");	
 

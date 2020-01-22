@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';

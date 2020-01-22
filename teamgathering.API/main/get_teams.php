@@ -23,7 +23,7 @@ try {
   mysqli_check();
 
   $pro_info = returnTokenProfileId($token);
-  $profile_id = $pro_info->profile_id;
+  $profile_id = intval($pro_info->profile_id);
 
   $sql = "SELECT DISTINCT teams.team_id, 
   teams.team_name, 

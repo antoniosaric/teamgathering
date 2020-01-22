@@ -29,7 +29,7 @@ try {
     mysqli_check();
 
     $pro_info = !!$token ? returnTokenProfileId($token) : false;
-    $profile_id = !!$pro_info ? (int)$pro_info->profile_id : false;
+    $profile_id = !!$pro_info ? intval($pro_info->profile_id) : false;
 
     $clauseArray = [ $project_id ];
     $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=?', 'i', $clauseArray );

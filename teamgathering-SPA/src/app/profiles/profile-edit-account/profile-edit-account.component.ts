@@ -42,13 +42,13 @@ export class ProfileEditAccountComponent implements OnInit {
     this.emailObject = {};
     this.passwordObject = {};
     this.deleteAccountObject = {};
-    this.createEditForm();
     this.email = this.authService.decodedToken.data.email;
+    this.createEditForm();
   }
 
   createEditForm(){
     this.emailForm = this.fb.group({
-      email: ['', [ Validators.required, Validators.email ] ],
+      email: [this.email, [ Validators.required, Validators.email ] ],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
     })
 

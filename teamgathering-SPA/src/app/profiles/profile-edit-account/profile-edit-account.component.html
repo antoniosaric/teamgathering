@@ -1,7 +1,7 @@
 <div class="container mt-4 justify-content-center">
     <div class="row">
-      <div class="col-sm-4">
-        <h1>Your Account</h1>
+      <div class="col-md-6">
+        <h1>Edit Your Account</h1>
       </div>
       <div class="col-sm-8">
         <div class="alert alert-info" *ngIf="emailForm.dirty || passwordForm.dirty || deleteAccountForm.dirty">
@@ -9,12 +9,8 @@
         </div>
       </div>
     </div>
-    <p >{{emailForm.dirty}}</p>
-    <p >{{passwordForm.dirty}}</p>
-    <p >{{deleteAccountForm.dirty}}</p>
     <div class="panel panel-default">
       <div class="col-sm-4">
-        <p>email: {{email}}</p>
         <button class="btn btn-success btn-block" (click)="changeEmailState(true)" *ngIf="emailState == false">change email</button>
         <button class="btn btn-success btn-block" (click)="changeEmailState(false)" *ngIf="emailState == true">cancel</button>  
       </div>
@@ -25,7 +21,7 @@
               [ngClass]="{'is-invalid': emailForm.get('email').errors && emailForm.get('email').touched }"
               class="form-control mb-2" 
               formControlName="email" 
-              placeholder="email">
+              placeholder="{{email}}">
               <div class="invalid-feedback" *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">email cannot be empty</div>
               <input type="text" 
               [ngClass]="{'is-invalid': emailForm.get('password').errors && emailForm.get('password').touched }"
