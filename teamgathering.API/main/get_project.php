@@ -29,12 +29,16 @@ try {
     mysqli_check();
 
     $pro_info = !!$token ? returnTokenProfileId($token) : false;
-    $profile_id = !!$pro_info ? $pro_info->profile_id : false;
+    $profile_id = !!$pro_info ? (int)$pro_info->profile_id : false;
 
     $clauseArray = [ $project_id ];
     $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=?', 'i', $clauseArray );
 
     if(!!$row_project['project_id']){
+
+        if( $profile_id != false &&  $row_project['owner_id'] == $profile_id   ){
+            $profile_access_status = true;
+        }
 
         $sql_team = "SELECT DISTINCT teams.team_id, teams.team_name, teams.team_description FROM teams 
         WHERE teams.project_id=".$row_project['project_id']." ORDER BY teams.team_id";     
@@ -51,9 +55,10 @@ try {
                     $team_object = new stdClass();
                     $team_object->profiles = [];
                     $team_object = $row_team;
-                    $sql_profile = "SELECT DISTINCT
+                    $sql_project_team = "SELECT DISTINCT
                     profiles_team.profile_team_status, 
                     profiles_team.role, 
+                    profiles_team.profile_id AS owner_id, 
                     profiles.profile_id, 
                     profiles.first_name, 
                     profiles.last_name,
@@ -63,19 +68,19 @@ try {
                     LEFT JOIN profiles_team ON profiles_team.profile_id = profiles.profile_id
                     WHERE profiles_team.team_id = ".$row_team['team_id']." ORDER BY profiles.profile_id";     
                     
-                    $stmt_profile = $conn->prepare($sql_profile);
-                    $stmt_profile->execute();
-                    $result_profile = $stmt_profile->get_result();
-                    $stmt_profile->close();
+                    $stmt_project_team = $conn->prepare($sql_project_team);
+                    $stmt_project_team->execute();
+                    $result_project_team = $stmt_project_team->get_result();
+                    $stmt_project_team->close();
 
                     $profiles = [];
 
-                    if(!!$result_profile && $result_profile->num_rows > 0){  
-                        while( $row_profile = $result_profile->fetch_assoc() ){
-                            if( $profile_id != false && $row_profile['profile_id'] == $profile_id ){
+                    if(!!$result_project_team && $result_project_team->num_rows > 0){  
+                        while( $row_project_team = $result_project_team->fetch_assoc() ){
+                            if( $profile_id != false && ( $row_project_team['owner_id'] == $profile_id || $row_project_team['profile_id'] == $profile_id ) || $profile_access_status != true ){
                                 $profile_access_status = true;
                             }
-                            array_push($profiles, $row_profile);
+                            array_push($profiles, $row_project_team);
                         }
                     }
                     $team_object['profiles'] = $profiles;

@@ -25,7 +25,7 @@ function create_project( $project_name, $description, $short_description, $proje
 
     global $conn;
 
-    $sql = "INSERT INTO `projects` ( 'project_name', 'description', 'short_description', 'project_status', 'image', 'owner_id' ) VALUES ( ?,?,?,?,? )";
+    $sql = "INSERT INTO `projects` ( `project_name`, `description`, `short_description`, `project_status`, `image`, `owner_id` ) VALUES ( ?,?,?,?,?,? )";
 	$stmt = $conn->prepare($sql);
 	$stmt->bind_param("sssssi", $project_name, $description, $short_description, $project_status, $image, $owner_id );
 
@@ -56,28 +56,28 @@ function create_team( ){
 }
 
 
-function create_request( ){
+function create_request( $profile_id, $owner_id, $project_id, $status ) {
 
-    // global $conn;
+    global $conn;
 
-    // $sql = "INSERT INTO `requests` (  ) VALUES ()";
-	// $stmt = $conn->prepare($sql);
-	// $stmt->bind_param("",  );
+    $sql = "INSERT INTO `requests` ( `requester_id`, `requestee_id`, `project_id`, `request_status` ) VALUES (?,?,?,?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("iiis", $profile_id, $owner_id, $project_id, $status );
 
-    // if ($stmt->execute()) {
-    // 	$return_id = $conn->insert_id;
-    // 	return $return_id;
-    // } else {
-    // 	return false;
-    // }
-    // $stmt->close();
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
 }
 
 // ======================================================================
 //  JOIN TABLES
 // ======================================================================
 
-function create_profile_join_team( $requested_profile_id , $team_id, $role, $profile_team_status ){
+function create_profiles_team( $requested_profile_id , $team_id, $role, $profile_team_status ){
 
     global $conn;
 

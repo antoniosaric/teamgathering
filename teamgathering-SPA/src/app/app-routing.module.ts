@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { MessagesComponent } from './messages/messages.component';
-import { RequestsComponent } from './requests/requests.component';
 import { ProfileListComponent } from './profiles/profile-list/profile-list.component';
 import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
 import { ProfileInfoComponent } from './profiles/profile-info/profile-info.component';
@@ -28,6 +27,7 @@ import { ProjectInfoComponent } from './projects/project-info/project-info.compo
 import { ProjectEditComponent } from './projects/project-edit/project-edit.component';
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 import { ProjectAddComponent } from './projects/project-add/project-add.component';
+import { RequestListComponent } from './requests/request-list/request-list.component';
 
 
 const routes: Routes = [
@@ -40,7 +40,7 @@ const routes: Routes = [
     children: [
       // { path: 'profiles', component: ProfileListComponent, resolve: {users: ProfileListResolver} },
       { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
-      { path: 'requests', component: RequestsComponent, canActivate: [AuthGuard] },
+      { path: 'request-list', component: RequestListComponent, canActivate: [AuthGuard] },
       { path: 'profile/edit', component: ProfileEditComponent, resolve: {profile: ProfileEditResolver}, canActivate: [AuthGuard], canDeactivate: [PreventUnsavedChanges] },
       { path: 'profile/edit-account', component: ProfileEditAccountComponent, canActivate: [AuthGuard] },
       { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] },

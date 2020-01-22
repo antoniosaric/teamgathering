@@ -3,6 +3,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { ProjectService } from 'src/app/_services/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
+import { RequestService } from 'src/app/_services/request.service';
 
 @Component({
   selector: 'app-project-info',
@@ -17,7 +18,8 @@ export class ProjectInfoComponent implements OnInit {
     private projectService: ProjectService,
     private route: ActivatedRoute,
     private router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    private requestService: RequestService
   ) { }
 
   ngOnInit() {
@@ -33,4 +35,29 @@ export class ProjectInfoComponent implements OnInit {
       return false;
     }
   }
+
+  profileOnTeamCheck(index){
+    for( var i = 0; i < this.project_info.teams[index].profiles.length; i++){
+      console.log(this.project_info.teams[index].profiles[i].profile_id)
+      if( this.authService.profile_id == this.project_info.teams[index].profiles[i].profile_id){
+        return true;
+        break;
+      }
+    }
+    return false;
+  }
+
+  requestJoinProject(project_id){
+    this.requestService.addRequest({ 'token': localStorage.getItem('token') }, {'project_id': project_id}).subscribe(next => {
+      this.authService.setToken(next);
+      this.alertify.success('request made');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+
+    })
+  }
+
+
+
 }

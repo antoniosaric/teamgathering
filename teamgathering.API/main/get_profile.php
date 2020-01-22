@@ -28,7 +28,6 @@ try {
     $clauseArray = [ $profile_id ];
     $row_profile = get_tabel_info_single_row( 'profiles', 'WHERE profile_id=?', 'i', $clauseArray );
 
-
     $sql2 = "SELECT DISTINCT *
     FROM projects 
     LEFT JOIN teams ON teams.project_id = projects.project_id
@@ -42,19 +41,7 @@ try {
 
     if(!!$result2 && $result2->num_rows > 0){  
         while( $row2 = $result2->fetch_assoc() ){
-            $project_object = new stdClass(); 
             $team_object = new stdClass(); 
-            if( !!$row2["project_id"] ){ 
-                $project_object->project_id = $row2['project_id'];
-                $project_object->project_name = $row2['project_name'];
-                $project_object->project_status = $row2['project_status']; 
-                $project_object->created_date = $row2['created_date']; 
-                $project_object->project_roll = ( $row2['owner_id'] == $profile_id ) ? 'Owner': 'Member';
-                
-                if( !in_array( $project_object, $projects ) ){                   
-                    array_push($projects, $project_object);
-                }
-            }
             if( !!$row2["team_id"] ){ 
                     $team_object->team_id = $row2['team_id'];
                     $team_object->team_name = $row2['team_name'];
@@ -68,7 +55,31 @@ try {
             }
         }
     }
-    
+
+    $sql3 = "SELECT DISTINCT * FROM projects WHERE projects.owner_id = ".$profile_id." ORDER BY projects.project_id";
+
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->execute();
+    $result3 = $stmt3->get_result();
+    $stmt3->close();
+
+    if(!!$result3 && $result3->num_rows > 0){  
+        while( $row3 = $result3->fetch_assoc() ){
+            $project_object = new stdClass(); 
+            if( !!$row3["project_id"] ){ 
+                $project_object->project_id = $row3['project_id'];
+                $project_object->project_name = $row3['project_name'];
+                $project_object->project_status = $row3['project_status']; 
+                $project_object->created_date = $row3['created_date']; 
+                $project_object->project_roll = ( $row3['owner_id'] == $profile_id ) ? 'Owner': 'Member';
+                
+                if( !in_array( $project_object, $projects ) ){                   
+                    array_push($projects, $project_object);
+                }
+            }
+        }
+    }
+
     if( !!$row_profile['profile_id'] ){
         $profile->profile_id = $row_profile['profile_id'];
         $profile->email = $row_profile['email'];
@@ -102,3 +113,6 @@ try {
     return;
 }
 ?>
+
+
+

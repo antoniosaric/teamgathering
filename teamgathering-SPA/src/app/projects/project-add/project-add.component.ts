@@ -13,6 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ProjectAddComponent implements OnInit {
   addProjectForm: FormGroup;
   project_info: any;
+  new_project_id: number = 0;
   status_options: any = ['public', 'private'];
   
   @HostListener('window:beforeunload', ['$event'])
@@ -37,13 +38,18 @@ export class ProjectAddComponent implements OnInit {
 
   createaddProjectForm(){
     this.addProjectForm = this.fb.group({
-      project_name: ['', [ Validators.required ] ],
-      project_status: ['Select Project Status', [ Validators.required ] ],
+      project_name: ['', Validators.required ],
+      project_status: ['private', Validators.required ],
       description: ['', Validators.required],
-      short_description: ['', Validators.required],
-      looking_for: ['' ],
-      stacks: ['' ]
+      short_description: ['', Validators.required]
+      // looking_for: ['' ],
+      // stacks: ['' ]
     })
+  }
+
+  setNewProjectId(data){
+    this.new_project_id = data.new_project_id;
+    console.log(this.new_project_id)
   }
 
   addProject(){
@@ -52,13 +58,14 @@ export class ProjectAddComponent implements OnInit {
       this.project_info = Object.assign( {}, this.addProjectForm.value );
       this.projectService.addProject({ 'token': localStorage.getItem('token') }, this.project_info).subscribe(next => {
         this.authService.setToken(next);
+        this.setNewProjectId(next);
         this.alertify.success('Project added successful');
         this.addProjectForm.reset(this.project_info);
       }, error => {
         this.alertify.error(error);
       }, () => {
         // this.ngOnInit();
-        this.router.navigate(['/project/edit/'+this.project_info['project_id']]);
+        this.router.navigate(['/project/edit/'+this.new_project_id ]);
       })
     }
   }

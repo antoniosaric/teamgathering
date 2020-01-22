@@ -1,0 +1,9 @@
+.group {
+    display: block;    
+}
+
+.group strong {
+    float: left;
+}
+
+  

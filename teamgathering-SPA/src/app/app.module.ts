@@ -14,7 +14,6 @@ import { AuthService } from './_services/auth.service';
 import { FooterComponent } from './footer/footer.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.interceptor';
-import { RequestsComponent } from './requests/requests.component';
 import { MessagesComponent } from './messages/messages.component';
 import { ProfileInfoComponent } from './profiles/profile-info/profile-info.component';
 import { ProfileListComponent } from './profiles/profile-list/profile-list.component';
@@ -48,6 +47,7 @@ import { ProfileEditResolver } from './_resolvers/profile-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotosComponent } from './photos/photos.component';
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
+import { RequestListComponent } from './requests/request-list/request-list.component';
 
 
 // export function tokenGetter() {
@@ -61,7 +61,6 @@ import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
       NavComponent,
       RegisterComponent,
       FooterComponent,
-      RequestsComponent,
       MessagesComponent,
       ProfileEditComponent,
       ProfileListComponent,
@@ -73,7 +72,6 @@ import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
       ProjectEditComponent,
       ProjectAddComponent,
       ProfileEditAccountComponent,
-      RequestsComponent,
       ExploreComponent,
       TermsandconditionsComponent,
       ContactComponent,
@@ -84,9 +82,9 @@ import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
       CareersComponent,
       BlogComponent,
       PressComponent,
-      RequestsComponent,
       BuildingComponent,
-      PhotosComponent
+      PhotosComponent,
+      RequestListComponent
    ],
    imports: [
       BrowserModule,

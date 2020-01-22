@@ -38,8 +38,7 @@ constructor( private http: HttpClient ) { }
   addProject( token: any, project_info: Project ){
     const params = {...token, ...project_info }
     console.log(params)
-    // return this.http.post( environment.apiUrl + 'crud_project/do_addProject.php', params )
-    return params;
+    return this.http.post( environment.apiUrl + 'crud_project/do_createProject.php', params )
   }
 
 }

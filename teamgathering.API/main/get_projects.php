@@ -9,17 +9,17 @@ include '../_crud/read.php';
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-// if( !isset($request->project_id) ){
-//   include '../_general/cors.php';
-//   die();
-// }
+if( !isset($request->project_id) ){
+  include '../_general/cors.php';
+  die();
+}
 
-// $token = ( isset($request->token ) ) ? $request->token : false;
-// $project_id = $request->project_id;
+$token = ( isset($request->token ) ) ? $request->token : false;
+$project_id = $request->project_id;
 
 
-$token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzkxNTQ1MjEsImp0aSI6InpkQlwvcWNpQnRveVk4blZMMytEMStXbk9mQStCTEhMTDhvYWtcL3BlZG9JVT0iLCJpc3MiOiJodHRwczpcL1wvd3d3LnRlYW1nYXRoZXJpbmcuY29tIiwiaWF1ZHNzIjoiaHR0cHM6XC9cL3RlYW1nYXRoZXJpbmcuY29tIiwibmJmIjoxNTc5MTU0NTIxLCJleHAiOjE1ODE1NzM3MjEsImRhdGEiOnsicHJvZmlsZV9pZCI6IjEiLCJmaXJzdF9uYW1lIjoieHh4ampqIiwibGFzdF9uYW1lIjoiU2FyaWNjZGRkZCIsImVtYWlsIjoiYUBhLmNvbSJ9fQ._HrkiTrEdL47TUKfBTEGXoIF7dRBP6zWJ7HOxJSM87o";
-$project_id = 1;
+// $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzkxNTQ1MjEsImp0aSI6InpkQlwvcWNpQnRveVk4blZMMytEMStXbk9mQStCTEhMTDhvYWtcL3BlZG9JVT0iLCJpc3MiOiJodHRwczpcL1wvd3d3LnRlYW1nYXRoZXJpbmcuY29tIiwiaWF1ZHNzIjoiaHR0cHM6XC9cL3RlYW1nYXRoZXJpbmcuY29tIiwibmJmIjoxNTc5MTU0NTIxLCJleHAiOjE1ODE1NzM3MjEsImRhdGEiOnsicHJvZmlsZV9pZCI6IjEiLCJmaXJzdF9uYW1lIjoieHh4ampqIiwibGFzdF9uYW1lIjoiU2FyaWNjZGRkZCIsImVtYWlsIjoiYUBhLmNvbSJ9fQ._HrkiTrEdL47TUKfBTEGXoIF7dRBP6zWJ7HOxJSM87o";
+// $project_id = 1;
 
 
 
@@ -52,9 +52,6 @@ try {
       if(!!$result && $result->num_rows > 0){  
         while( $row = $result->fetch_assoc() ){
           if( !in_array( $team_object, $teams ) ){                   
-            
-
-
             $sql2 = "SELECT DISTINCT
             profiles_team.profile_team_status, 
             profiles_team.role, 

@@ -85,7 +85,7 @@
           </tab> 
           <tab heading="Projects">
             <div *ngFor="let project of profile_info?.projects">
-                <a [routerLink]="['/project/add']">Add Project</a>
+              <a [routerLink]="['/project/add']">Add Project</a>
               <hr>
               <h4>
                 <a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a>
@@ -99,6 +99,7 @@
           </tab> 
           <tab heading="Teams">
             <div *ngFor="let team of profile_info?.teams">
+              <a [routerLink]="['/team/add']">Add Team</a>
               <hr>
               <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
               <h5>Role: {{team.role}}</h5>

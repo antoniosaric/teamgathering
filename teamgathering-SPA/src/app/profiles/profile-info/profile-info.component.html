@@ -24,7 +24,7 @@
             </div>  
           </div>
           <div class="card-footer">
-            <div class="btn-group d-flex">
+            <div class="btn-group d-flex" *ngIf="authService.checkTokenExists() != null">
               <button class="btn-secondary w-100">Like</button>
               <button class="btn-secondary w-100">Message</button>
             </div>

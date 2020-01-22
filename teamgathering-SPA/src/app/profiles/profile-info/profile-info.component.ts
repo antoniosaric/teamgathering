@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ProfileService } from '../../_services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class ProfileInfoComponent implements OnInit {
     private alertify: AlertifyService, 
     private profileService: ProfileService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {

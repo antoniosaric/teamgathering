@@ -63,9 +63,9 @@ export class AuthService {
   checkTokenExists(){
     if( localStorage.hasOwnProperty('token') ){
       return localStorage.getItem('token');
-  }else{
-      return null;
-  }
+    }else{
+        return null;
+    }
   }
 
   setProfileName(data){

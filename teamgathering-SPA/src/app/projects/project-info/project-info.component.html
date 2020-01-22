@@ -8,6 +8,10 @@
               <strong>Title:</strong>
               <p>{{project_info?.project_name | titlecase}} </p>
             </div>
+            <div>
+              <strong>Owner:</strong>
+              <p>{{project_info?.project_name | titlecase}} </p>
+            </div>
             <div *ngIf="project_info?.view_status == 'authorized'">
               <strong>Number of Members:</strong>
               <p>{{project_info?.count}}</p>
@@ -18,9 +22,9 @@
             </div>  
           </div>
           <div class="card-footer">
-            <div class="btn-group d-flex" *ngIf="project_info?.owner_id != authService.profile_id">
+            <div class="btn-group d-flex" *ngIf="project_info?.owner_id != authService.profile_id && authService.checkTokenExists() != null">
               <button class="btn-secondary w-100">Follow</button>
-              <button class="btn-secondary w-100">Request Join</button>
+              <button class="btn-secondary w-100" (click)="requestJoinProject(project_info?.project_id)">Request Join</button>
             </div>
             <div class="btn-group d-flex" *ngIf="project_info?.owner_id == authService.profile_id">
                 <a [routerLink]="['/project/edit/', project_info?.project_id]"><button class="btn-secondary w-100">Edit</button></a>
@@ -39,32 +43,29 @@
               <hr>
             </tab> 
             <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
-              <div *ngFor="let team of project_info?.teams">
+              <div *ngFor="let team of project_info?.teams; let i = index">
                 <hr>
-                <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+                <h4>
+                  <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a> 
+                </h4>
+                <div>
+                  <p>Description: {{team.team_description}}</p>
+                </div>
                 <div *ngFor="let profile of team.profiles">
                   <div *ngIf="profile.profile_team_status == 'active'">
                     <hr>
-                    <h5>Role</h5>
-                    <p>{{profile.role}}</p>
-                    <h5>Name</h5>
-                    <p><a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></p>
-                    <h5>Joined</h5>
-                    <p>{{profile.joined_date | date: 'mediumDate'}}</p>
-                    <h5>Status</h5>
-                    <p class="green">{{profile.profile_team_status}}</p>
+                    <h5>Role: {{profile.role}}</h5>
+                    <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></h5>
+                    <h5>Joined: {{profile.joined_date | date: 'mediumDate'}}</h5>
+                    <h5 class="green">Status: {{profile.profile_team_status}}</h5>
                     <hr>
                   </div>
                   <div *ngIf="profile.profile_team_status == 'inactive'">           
                     <hr>
-                    <h5>Role</h5>
-                    <p>{{profile.role}}</p>
-                    <h5>Name</h5>
-                    <p><a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></p>
-                    <h5>Joined</h5>
-                    <p>{{profile.joined_date | date: 'mediumDate'}}</p>
-                    <h5>Status</h5>
-                    <p class="red">{{profile.profile_team_status}}</p>
+                    <h5>Role: {{profile.role}}</h5>
+                    <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></h5>
+                    <h5>Joined: {{profile.joined_date | date: 'mediumDate'}}</h5>
+                    <h5 class="red">Status: {{profile.profile_team_status}}</h5>
                     <hr>
                   </div>
                 </div>
