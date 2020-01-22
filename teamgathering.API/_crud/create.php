@@ -77,13 +77,13 @@ function create_request( $profile_id, $owner_id, $project_id, $status ) {
 //  JOIN TABLES
 // ======================================================================
 
-function create_profiles_team( $requested_profile_id , $team_id, $role, $profile_team_status ){
+function create_profiles_team( $profile_id , $team_id, $role, $profile_team_status ){
 
     global $conn;
 
-    $sql = "INSERT INTO `profiles_team_sm` ( 'profile_id' , 'team_id', 'role', 'profile_team_status' ) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO `profiles_team` ( `profile_id` , `team_id`, `role`, `profile_team_status` ) VALUES (?,?,?,?)";
 	$stmt = $conn->prepare($sql);
-	$stmt->bind_param("iiss", $requested_profile_id , $team_id, $role, $profile_team_status );
+	$stmt->bind_param("iiss", $profile_id , $team_id, $role, $profile_team_status );
 
     if ($stmt->execute()) {
     	$return_id = $conn->insert_id;
@@ -95,3 +95,6 @@ function create_profiles_team( $requested_profile_id , $team_id, $role, $profile
 }
 
 ?>
+
+
+

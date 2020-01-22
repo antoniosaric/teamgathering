@@ -18,12 +18,12 @@
             <ol>
               <li class="container">
                 <form [formGroup]="updateRequestForm" (ngSubmit)="updateRequest(request)">
-                  <p>Project:  {{request.project_name}}, <a [routerLink]="['/project-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                  <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Request From:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
                       <strong>Status:</strong>
                       <select formControlName="status">
-                        <option [ngValue]="null" disabled>Select Status</option>
+                        <option [ngValue]="null" disabled>pending</option>
                         <option *ngFor="let status of request_status_selectables" [ngValue]="status">
                         {{ status }}
                         </option>
@@ -58,80 +58,36 @@
           <div *ngIf="request.request_status == 'approved'">
             <ol>
               <li class="container">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="updateRequest(request)">
-                  <p>Project:  {{request.project_name}}, <a [routerLink]="['/project-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                  <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
-                      <strong>Status:</strong>
-                      <select formControlName="status">
-                        <option [ngValue]="null" disabled>Select Status</option>
-                        <option *ngFor="let status of request_status_selectables" [ngValue]="status">
-                        {{ status }}
-                        </option>
-                      </select>
+                    <strong>Status: {{request.request_status}}</strong>
                     </div>
-                    <div class="ml-4 group">
-                      <strong>Team:</strong>
-                      <select formControlName="team_id">
-                        <option [ngValue]="null" disabled>Select Assigned Team</option>
-                        <option *ngFor="let team of teams" [ngValue]="team.team_id">
-                        {{ team.team_name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="group">
-                    <input type="text" 
-                    [ngClass]="{'is-invalid': updateRequestForm.get('role').errors && updateRequestForm.get('role').touched }"
-                    class="form-control mb-2" 
-                    formControlName="role" 
-                    placeholder="Role">
-                    <div class="invalid-feedback" *ngIf="updateRequestForm.get('role').hasError('required') && updateRequestForm.get('role').touched">role cannot be empty</div>
                   </div> 
                   <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
                   <div class="btn-group">
-                    <button class="btn btn-success" type="submit" [disabled]="!updateRequestForm.valid">Save</button>
+                    <button class="btn btn-warning" type="submit">Delete</button>
+                    <!-- <button class="btn btn-warning" type="reset">Reset</button> -->
                   </div>
-                </form> 
+                </form>  
               </li>
             </ol> 
           </div>
           <div *ngIf="request.request_status == 'unapproved'">
             <ol>
               <li class="container">
-                <form [formGroup]="updateRequestForm" (ngSubmit)="updateRequest(request)">
-                  <p>Project:  {{request.project_name}}, <a [routerLink]="['/project-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
+                  <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
-                      <strong>Status:</strong>
-                      <select formControlName="status">
-                        <option [ngValue]="null" disabled>Select Status</option>
-                        <option *ngFor="let status of request_status_selectables" [ngValue]="status">
-                        {{ status }}
-                        </option>
-                      </select>
+                    <strong>Status: {{request.request_status}}</strong>
                     </div>
-                    <div class="ml-4 group">
-                      <strong>Team:</strong>
-                      <select formControlName="team_id">
-                        <option [ngValue]="null" disabled>Select Assigned Team</option>
-                        <option *ngFor="let team of teams" [ngValue]="team.team_id">
-                        {{ team.team_name }}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="group">
-                    <input type="text" 
-                    [ngClass]="{'is-invalid': updateRequestForm.get('role').errors && updateRequestForm.get('role').touched }"
-                    class="form-control mb-2" 
-                    formControlName="role" 
-                    placeholder="Role">
-                    <div class="invalid-feedback" *ngIf="updateRequestForm.get('role').hasError('required') && updateRequestForm.get('role').touched">role cannot be empty</div>
                   </div> 
                   <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
                   <div class="btn-group">
-                    <button class="btn btn-success" type="submit" [disabled]="!updateRequestForm.valid">Save</button>
+                    <button class="btn btn-warning" type="submit">Delete</button>
+                    <!-- <button class="btn btn-warning" type="reset">Reset</button> -->
                   </div>
                 </form>  
               </li>
@@ -147,7 +103,7 @@
             <ol>
               <li class="container row">
                 <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
-                  <p>Project:  {{request.project_name}}, <a [routerLink]="['/project-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                  <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <p><strong>Status:</strong> {{request.request_status}}</p>
                   <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
                   <div class="btn-group">
@@ -162,7 +118,7 @@
             <ol>
               <li class="container">
                 <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
-                  <p>Project:  {{request.project_name}}, <a [routerLink]="['/project-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                  <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
                     <strong>Status: {{request.request_status}}</strong>
@@ -181,7 +137,7 @@
             <ol>
               <li class="container">
                 <form [formGroup]="updateRequestForm" (ngSubmit)="deleteRequest(request)">
-                  <p>Project:  {{request.project_name}}, <a [routerLink]="['/project-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                  <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
                   <div class="form-group row">
                     <div class="ml-3 group">
                     <strong>Status: {{request.request_status}}</strong>

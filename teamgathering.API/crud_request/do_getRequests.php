@@ -33,7 +33,8 @@ try {
   requests.updated_date, 
   requests.requester_id, 
   requests.requestee_id, 
-  projects.project_name, 
+  projects.project_name,
+  projects.project_id,  
   profiles.profile_id,
   profiles.first_name,
   profiles.last_name
@@ -51,7 +52,7 @@ try {
     }
   }
 
-  $sql = "SELECT DISTINCT 
+  $sql2 = "SELECT DISTINCT 
   requests.request_id, 
   requests.request_status, 
   requests.created_date, 
@@ -59,20 +60,21 @@ try {
   requests.requester_id, 
   requests.requestee_id, 
   projects.project_name, 
+  projects.project_id, 
   profiles.profile_id,
   profiles.first_name,
   profiles.last_name
   FROM requests LEFT JOIN projects ON projects.project_id = requests.project_id LEFT JOIN profiles ON profiles.profile_id = requests.requestee_id
   WHERE requests.requester_id = ".$profile_id." ORDER BY projects.project_id, requests.request_status, requests.request_id";     
     
-  $stmt = $conn->prepare($sql);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $stmt->close();
+  $stmt2 = $conn->prepare($sql2);
+  $stmt2->execute();
+  $result2 = $stmt2->get_result();
+  $stmt2->close();
 
-  if(!!$result && $result->num_rows > 0){  
-    while( $row = $result->fetch_assoc() ){
-      array_push($profile_requests, $row);
+  if(!!$result2 && $result2->num_rows > 0){  
+    while( $row2 = $result2->fetch_assoc() ){
+      array_push($profile_requests, $row2);
     }
   }
 
@@ -89,6 +91,5 @@ try {
   return;
 }
 ?>
-
 
 

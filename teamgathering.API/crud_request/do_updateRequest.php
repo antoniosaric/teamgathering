@@ -1,4 +1,5 @@
 <?php
+ob_start();
 header('Access-Control-Allow-Origin: http://localhost:4200', false);
 header("Access-Control-Allow-Headers: content-type");	
 include_once('../_database/confi.php');
@@ -6,6 +7,7 @@ include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
 include_once '../_general/functions.php';
 include '../_crud/create.php';
+include '../_crud/update.php';
 include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
@@ -16,10 +18,10 @@ if( !isset($request->request_id) || !isset($request->token) ){
     die();
 }
 
-$team_id = isset($request->team_id) && $request->team_id > 0 ? $request->team_id : false;
-$request_id = isset($request->request_id) && $request->request_id > 0 ? $request->request_id : false;
-$requester_id = isset($request->requester_id) && $request->requester_id > 0 ? $request->requester_id : false;
-$requestee_id = isset($request->requestee_id) && $request->requestee_id > 0 ? $request->requestee_id : false;
+$team_id = isset($request->team_id) && $request->team_id > 0 ? (int)$request->team_id : false;
+$request_id = isset($request->request_id) && $request->request_id > 0 ? (int)$request->request_id : false;
+$requester_id = isset($request->requester_id) && $request->requester_id > 0 ? (int)$request->requester_id : false;
+$requestee_id = isset($request->requestee_id) && $request->requestee_id > 0 ? (int)$request->requestee_id : false;
 $role = isset($request->role) && strlen($request->role) > 0 ? trim($request->role) : false;
 $status = isset($request->status) && strlen($request->status) > 0 ? trim($request->status) : false;
 
@@ -41,19 +43,18 @@ try {
     $profile_id = intval($pro_info->profile_id);
 
     $clauseArray = [ $request_id, $profile_id ];
-    $row_request = get_tabel_info_single_row( 'requests', 'WHERE requests.request_id=? AND requests_requestee_id=?', 'ii', $clauseArray );
+    $row_request = get_tabel_info_single_row( 'requests', 'WHERE requests.request_id=? AND requests.requestee_id=?', 'ii', $clauseArray );
 
-    if( !$row_request && !$row_request["request_id"] ){
+    if( !!$row_request && !!$row_request["request_id"] ){
         if($status == 'approved'){
 
-            $status = 'active';
             $return_profiles_team_id = create_profiles_team( $requester_id, $team_id, $role, $status );
 
             if(!!$return_profiles_team_id){
-
-                $set = 'status=?';
+                $status = 'active';
+                $set = 'request_status=?';
                 $clauseArray = [ $status, $request_id ];
-                $return_update_profiles = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );
+                $return_update_request = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );
 
                 $data->message = 'team member added';
                 $data->token = exchangeToken($token);
@@ -96,3 +97,5 @@ try {
 }
 
 ?>
+
+
