@@ -82,13 +82,15 @@ export class RequestListComponent implements OnInit {
     this.authService.checkToken();
     console.log(data)
     if( !!data.request_id ){
-      this.requestService.deleteRequest({ 'token': localStorage.getItem('token') }, { 'request_id': data.request_id } ).subscribe(next => {
-        this.authService.setToken(next);
-        this.alertify.success('request successfully deleted');
-      }, error => {
-        this.alertify.error(error);
-      }, () => {
-        this.router.navigate(['/request-list']);
+      this.alertify.confirm('Are you sure you want to delete this request. This will not change your team status?', () => {
+        this.requestService.deleteRequest({ 'token': localStorage.getItem('token') }, { 'request_id': data.request_id } ).subscribe(next => {
+          this.authService.setToken(next);
+          this.alertify.success('request successfully deleted');
+        }, error => {
+          this.alertify.error(error);
+        }, () => {
+          this.router.navigate(['/request-list']);
+        })
       })
     }
   }

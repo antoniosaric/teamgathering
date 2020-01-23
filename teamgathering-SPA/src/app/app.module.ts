@@ -49,6 +49,8 @@ import { PhotosComponent } from './photos/photos.component';
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 import { RequestListComponent } from './requests/request-list/request-list.component';
 import { TeamEditComponent } from './teams/team-edit/team-edit.component';
+import { TeamEditResolver } from './_resolvers/team-edit.resolver';
+
 
 
 // export function tokenGetter() {
@@ -118,6 +120,7 @@ import { TeamEditComponent } from './teams/team-edit/team-edit.component';
       ProfileEditResolver,
       ProjectEditResolver,
       ProjectInfoResolver,
+      TeamEditResolver,
       PreventUnsavedChanges
    ],
    bootstrap: [
