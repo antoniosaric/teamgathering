@@ -64,16 +64,21 @@ export class TeamEditComponent implements OnInit {
   updateTeamInfo(){
     this.authService.checkToken();
     if( this.teamInfoForm.valid ){
-      this.team_update_info = Object.assign( {}, { ...{'team_name': this.team_info['teams'] }, ...{'team_description': this.team_info['team_description'] }} 
-      );
+      this.team_update_info = Object.assign( {}, {...this.teamInfoForm.value,
+        ...{'team_id': this.team_info['team_id'] }
+       });
+       this.team_info = Object.assign( {}, {...this.teamInfoForm.value,
+        ...{'profiles': this.team_info['profiles'] },
+        ...{'team_id': this.team_info['team_id'] }
+       });
       this.teamService.updateTeam({ 'token': localStorage.getItem('token') }, this.team_update_info ).subscribe(next => {
         this.authService.setToken(next);
         this.alertify.success('team update successful');
         this.teamInfoForm.reset(this.team_update_info);
+        this.teamInfoForm.reset(this.team_info);
       }, error => {
         this.alertify.error(error);
       }, () => {
-        // this.ngOnInit();
         this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
       })
     }

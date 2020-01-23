@@ -36,10 +36,10 @@ export class TeamService {
 
   updateTeam(token: any, parameters: any ): Observable<Team> {
     const params = { ...token, ...parameters }
-    return this.http.post(environment.apiUrl + 'crud_team/do_getTeam.php', params).pipe(
+    return this.http.post(environment.apiUrl + 'crud_team/do_updateTeam.php', params).pipe(
       map((response: any) => {
-        if( !!response.teams ){
-          return response.teams;
+        if( !!response ){
+          return response;
         }else{
           return false;
         }
@@ -49,7 +49,7 @@ export class TeamService {
 
   updateTeamProfile(token: any, parameters: any ){
     const params = { ...token, ...parameters }
-    return this.http.post(environment.apiUrl + 'crud_team/do_getTeam.php', params).pipe(
+    return this.http.post(environment.apiUrl + 'crud_team/do_updateProfilesTeam.php', params).pipe(
       map((response: any) => {
         if( !!response.teams ){
           return response.teams;
@@ -62,7 +62,7 @@ export class TeamService {
 
   deleteTeam(token: any, parameters: any ){
     const params = { ...token, ...parameters }
-    return this.http.post(environment.apiUrl + 'crud_team/do_getTeam.php', params).pipe(
+    return this.http.post(environment.apiUrl + 'crud_team/do_deleteTeam.php', params).pipe(
       map((response: any) => {
         if( !!response.teams ){
           return response.teams;
