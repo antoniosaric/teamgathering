@@ -25,8 +25,8 @@ export class TeamService {
     const params = { ...token, ...parameters }
     return this.http.post(environment.apiUrl + 'crud_team/do_getTeam.php', params).pipe(
       map((response: any) => {
-        if( !!response.teams ){
-          return response.teams;
+        if( !!response.team ){
+          return response.team;
         }else{
           return false;
         }

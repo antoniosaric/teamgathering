@@ -50,8 +50,8 @@ export class TeamEditComponent implements OnInit {
     })
 
     this.profileInfoForm = this.fb.group({
-      role: [null, Validators.required  ],
-      profile_status_selectables: ['' , Validators.required]
+      role: ['', Validators.required  ],
+      status: [null , Validators.required]
     })
 
     this.deleteTeamForm = this.fb.group({
@@ -113,6 +113,18 @@ export class TeamEditComponent implements OnInit {
   changeDeleteState(event){
     this.deleteTeamForm.reset(this.deleteTeamObject);
     this.deleteState = event;
+  }
+
+  toPresentCheck(date){
+    var current_date = new Date();
+    console.log('%%%%%%%%')
+    console.log(current_date);
+    console.log(date);
+    if( date == '0000-00-00 00:00:00' || current_date == date ){
+      return true;
+    }else{
+      return false;
+    }
   }
 
 }

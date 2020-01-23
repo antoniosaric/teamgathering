@@ -61,38 +61,39 @@
         <tab heading="Active Memebers">
           <h3 class="mt-3 mb-3">Active Members</h3>
           <div *ngFor="let profile of team_info.profiles"> 
-            <div *ngIf="profile.profile_team_status == 'inactive'">
+            <div *ngIf="profile.profile_team_status == 'active'">
               <ol>
                 <li class="container">
+                  <div class="pull-left">
+                    <p >{{profile.first_name}} {{profile.last_name}}</p>
+                  </div>
+                  <div class="btn-group pull-right mb-1">
+                    <button class="btn btn-warning" (click)="deleteProfileFromTeam()">Delete</button>
+                  </div>
                   <form [formGroup]="profileInfoForm" (ngSubmit)="updateProfileInfo(profile)">
-                  <div class="group">
-                    <input type="text" 
-                    [ngClass]="{'is-invalid': profileInfoForm.get('role').errors && profileInfoForm.get('role').touched }"
-                    class="form-control mb-2" 
-                    formControlName="role" 
-                    placeholder="Role">
-                    <div class="invalid-feedback" *ngIf="profileInfoForm.get('role').hasError('required') && profileInfoForm.get('role').touched">role cannot be empty</div>
-                  </div>  
-                  <div class="form-group row">
-                    <div class="ml-3 group">
-                      <strong>Status:</strong>
-                      <select formControlName="status">
-                        <option [ngValue]="null" disabled>active</option>
-                        <option *ngFor="let status of profile_status_selectables" [ngValue]="status">
-                        {{ status }}
-                        </option>
-                      </select>
+                    <div class="group">
+                      <input type="text" 
+                      [ngClass]="{'is-invalid': profileInfoForm.get('role').errors && profileInfoForm.get('role').touched }"
+                      class="form-control mb-2" 
+                      formControlName="role" 
+                      placeholder="{{profile.role}}">
+                      <div class="invalid-feedback" *ngIf="profileInfoForm.get('role').hasError('required') && profileInfoForm.get('role').touched">role cannot be empty</div>
+                    </div>  
+                    <div class="form-group row">
+                      <div class="ml-3 group">
+                        <strong>Status:</strong>
+                        <select formControlName="status">
+                          <option [ngValue]="null" disabled>active</option>
+                          <option *ngFor="let status of profile_status_selectables" [ngValue]="status">
+                          {{ status }}
+                          </option>
+                        </select>
+                      </div>
+                    </div> 
+                    <div class="btn-group">
+                      <button class="btn btn-success" type="submit">Update</button>
                     </div>
-                  </div> 
-                  <p>Joined: {{profile.joined_date | date: 'mediumDate' }}, to: {{profile.ended_date | date: 'mediumDate'}}</p>
-                  <div class="btn-group">
-                    <button class="btn btn-warning" type="submit">Update</button>
-                  </div>
-
                   </form> 
-                  <div class="btn-group">
-                    <button class="btn btn-warning" (click)="deleteProfileFromTeam()")>Delete</button>
-                  </div>
                 </li>
               </ol>
             </div>
@@ -102,38 +103,40 @@
         <tab heading="Inactive Members">
           <h3 class="mt-3 mb-3">Inactive Members</h3>
           <div *ngFor="let profile of team_info.profiles"> 
-            <div *ngIf="profile.profile_team_status == 'active'">
+            <div *ngIf="profile.profile_team_status == 'inactive'">
               <ol>
                 <li class="container">
+                  <div class="pull-left">
+                    <p >{{profile.first_name}} {{profile.last_name}}</p>
+                  </div>
+                  <div class="btn-group pull-right mb-1">
+                    <button class="btn btn-warning" (click)="deleteProfileFromTeam()">Delete</button>
+                  </div>
                   <form [formGroup]="profileInfoForm" (ngSubmit)="updateProfileInfo(profile)">
-                  <div class="group">
-                    <input type="text" 
-                    [ngClass]="{'is-invalid': profileInfoForm.get('role').errors && profileInfoForm.get('role').touched }"
-                    class="form-control mb-2" 
-                    formControlName="role" 
-                    placeholder="Role">
-                    <div class="invalid-feedback" *ngIf="profileInfoForm.get('role').hasError('required') && profileInfoForm.get('role').touched">role cannot be empty</div>
-                  </div>  
-                  <div class="form-group row">
-                    <div class="ml-3 group">
-                      <strong>Status:</strong>
-                      <select formControlName="status">
-                        <option [ngValue]="null" disabled>active</option>
-                        <option *ngFor="let status of profile_status_selectables" [ngValue]="status">
-                        {{ status }}
-                        </option>
-                      </select>
+                    <div class="group">
+                      <input type="text" 
+                      [ngClass]="{'is-invalid': profileInfoForm.get('role').errors && profileInfoForm.get('role').touched }"
+                      class="form-control mb-2" 
+                      formControlName="role" 
+                      placeholder="{{profile.role}}">
+                      <div class="invalid-feedback" *ngIf="profileInfoForm.get('role').hasError('required') && profileInfoForm.get('role').touched">role cannot be empty</div>
+                    </div>  
+                    <div class="form-group row">
+                      <div class="ml-3 group">
+                        <strong>Status:</strong>
+                        <select formControlName="status">
+                          <option [ngValue]="null" disabled>inactive</option>
+                          <option *ngFor="let status of profile_status_selectables" [ngValue]="status">
+                          {{ status }}
+                          </option>
+                        </select>
+                      </div>
+                    </div> 
+                    <p>Joined: {{profile.joined_date | date: 'mediumDate' }}, to: <span *ngIf="!toPresentCheck(profile.ended_date)"></span><span *ngIf="toPresentCheck(profile.ended_date)">present</span></p>
+                    <div class="btn-group">
+                      <button class="btn btn-success" type="submit">Update</button>
                     </div>
-                  </div> 
-                  <p>Joined: {{profile.joined_date | date: 'mediumDate' }}, to: {{profile.ended_date | date: 'mediumDate'}}</p>
-                  <div class="btn-group">
-                    <button class="btn btn-warning" type="submit">Update</button>
-                  </div>
-
                   </form> 
-                  <div class="btn-group">
-                    <button class="btn btn-warning" (click)="deleteProfileFromTeam()")>Delete</button>
-                  </div>
                 </li>
               </ol>
             </div>
@@ -144,3 +147,11 @@
     </div>
   </div>
   <div class="container mb-4"></div>
+
+
+
+
+
+                  <!-- <p>Joined: {{profile.joined_date | date: 'mediumDate' }}, to: <span *ngIf="!toPresentCheck(profile.ended_date)">{{profile.ended_date | date: 'mediumDate'}}</span><span *ngIf="toPresentCheck(profile.ended_date)">present</span></p> -->
+
+                      <!-- <p>Joined: {{profile.joined_date | date: 'mediumDate' }}, to: {{profile.ended_date | date: 'mediumDate'}}</p> -->
