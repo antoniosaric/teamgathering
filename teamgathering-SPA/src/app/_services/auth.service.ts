@@ -54,7 +54,6 @@ export class AuthService {
   }
 
   checkToken(){
-    console.log( localStorage.getItem('token') )
     if(this.jwtHelper.isTokenExpired(localStorage.getItem('token')) || localStorage.getItem('token') == 'undefined' ){
       this.logout();
       this.alertify.success('session expired, please relog');
@@ -74,7 +73,6 @@ export class AuthService {
   }
 
   setToken(data){
-    console.log(data)
     if( !!data.token && data != false ){
       localStorage.setItem('token', data.token);
     }else{

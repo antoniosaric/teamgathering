@@ -56,7 +56,7 @@
                     <hr>
                     <h5>Role: {{profile.role}}</h5>
                     <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></h5>
-                    <h5>Joined: {{profile.joined_date | date: 'mediumDate'}}</h5>
+                    <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
                     <h5 class="green">Status: {{profile.profile_team_status}}</h5>
                     <hr>
                   </div>
@@ -64,7 +64,7 @@
                     <hr>
                     <h5>Role: {{profile.role}}</h5>
                     <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></h5>
-                    <h5>Joined: {{profile.joined_date | date: 'mediumDate'}}</h5>
+                    <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
                     <h5 class="red">Status: {{profile.profile_team_status}}</h5>
                     <hr>
                   </div>

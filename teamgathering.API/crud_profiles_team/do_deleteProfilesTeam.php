@@ -1,15 +1,24 @@
-<?php 
+<?php
 ob_start();
+header('Access-Control-Allow-Origin: http://localhost:4200', false);
+header("Access-Control-Allow-Headers: content-type");	
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
-include_once('../_general/status_returns.php');
-include_once('../_general/functions.php');
+include_once '../_general/status_returns.php';
+include_once '../_general/functions.php';
 include '../_crud/delete.php';
+include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$requested_profile_id = (int)$request->requested_profile_id;
-$team_id = (int)$request->team_id;
+
+if( !isset($request->profile_id) || !isset($request->token) ){
+    // include '../_general/cors.php';
+    die();
+}
+
+$delete_profile_id = intval($request->profile_id);
+$profiles_team_id = intval($request->profiles_team_id);
 $token = $request->token;
 $data = new stdClass();
 
@@ -20,11 +29,34 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    //not sure if deleteing profiles_team should be allowed.
+    if($profile_id != $delete_profile_id ){
 
-    echo json_encode($data);
-    $conn->close();
-    return;
+        $clauseArray = [ $profiles_team_id, $delete_profile_id ];
+        $row_request = get_tabel_info_single_row( 'profiles_team', 'WHERE profiles_team_id=? AND profile_id=?', 'ii', $clauseArray ); 
+
+        if( !!$row_request['profiles_team_id'] ){
+            
+            $return_delete_profiles_team = delete_function('profiles_team', 'profiles_team_id', $profiles_team_id );
+            $data->token = exchangeToken($token);
+            $data->message = "profile removed from team";
+            status_return(200);
+            echo json_encode($data);
+            $conn->close();
+            return;
+        }else{
+            $data->message = "team profile association not found";
+            status_return(400); 
+            echo json_encode($data);
+            $conn->close();
+            return;         
+        }
+    }else{
+        $data->message = "cannot delete owner";
+        status_return(400); 
+        echo json_encode($data);
+        $conn->close();
+        return;    
+    }
 }catch (Exception $e ){
     status_return(500);
     echo($e->message);

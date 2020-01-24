@@ -2,10 +2,10 @@
 
     function delete_function( $table, $target, $id ){
 
-        global $connection;
+        global $conn;
 
         $sql = "DELETE FROM `".$table."` WHERE ".$target."=?";  
-        $stmt = $connection->prepare($sql);
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {

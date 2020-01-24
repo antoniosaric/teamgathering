@@ -78,4 +78,24 @@ export class ProfileEditComponent implements OnInit {
     this.image = data.image;
   }
 
+  toPresentCheck(date){
+    var current_date = new Date();
+    console.log('%%%%%%%%')
+    console.log(current_date);
+    console.log(date);
+    if( date == '0000-00-00 00:00:00' || current_date == date || date == undefined ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  statusClassCheck(data){
+    if(data.profile_team_status == 'active' ){
+      return 'green';
+    }else{
+      return 'red';
+    }
+  }
+
 }

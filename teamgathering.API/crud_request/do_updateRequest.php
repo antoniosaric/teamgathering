@@ -47,11 +47,11 @@ try {
 
     if( !!$row_request && !!$row_request["request_id"] ){
         if($status == 'approved'){
-
+            $status = 'active';
             $return_profiles_team_id = create_profiles_team( $requester_id, $team_id, $role, $status );
 
             if(!!$return_profiles_team_id){
-                $status = 'active';
+                $status = 'approved';
                 $set = 'request_status=?';
                 $clauseArray = [ $status, $request_id ];
                 $return_update_request = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );

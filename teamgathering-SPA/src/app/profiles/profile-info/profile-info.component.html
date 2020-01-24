@@ -60,7 +60,7 @@
                 <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
                 <h5>Role: {{team.role}}</h5>
                 <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
-                <h5>Status: {{team.profile_team_status}}</h5>
+                <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
                 <hr>
               </div>
             </tab> 

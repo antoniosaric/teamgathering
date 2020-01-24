@@ -12,7 +12,7 @@
         $row = mysqli_fetch_assoc($result);
         $stmt->close();    
 
-        if(!!isset($row['created_date'])){
+        if( !!isset( $row['created_date'] ) || !!isset( $row['joined_date'] ) ){
             return $row;
         }else{
             return false;

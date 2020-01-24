@@ -22,7 +22,7 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $clauseArray = [ $team_id, 'owner', $profile_id ];
+    $clauseArray = [ $team_id, 'Owner', $profile_id ];
     $row_team = get_tabel_info_single_row( 'teams', 'WHERE team_id=? AND ( role=? AND profile_id=? )', 'isi', $clauseArray );
 
     if( !!$row_team['team_id'] && validate_pw($pass, $row_team["password"]) ){

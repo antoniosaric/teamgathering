@@ -6,9 +6,6 @@ import { Team } from 'src/app/_models/team';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-
-
-
 @Component({
   selector: 'app-team-edit',
   templateUrl: './team-edit.component.html',
@@ -25,6 +22,7 @@ export class TeamEditComponent implements OnInit {
   profile_status_selectables = ['active', 'inactive'];
   deleteState = false;
   deleteTeamObject: any;
+  model: any = {};
 
   constructor(
     private alertify: AlertifyService,
@@ -47,11 +45,6 @@ export class TeamEditComponent implements OnInit {
     this.teamInfoForm = this.fb.group({
       team_name: [this.team_info.team_name, Validators.required  ],
       team_description: [this.team_info.team_description, Validators.required  ]
-    })
-
-    this.profileInfoForm = this.fb.group({
-      role: ['', Validators.required  ],
-      status: [null , Validators.required]
     })
 
     this.deleteTeamForm = this.fb.group({
@@ -84,28 +77,45 @@ export class TeamEditComponent implements OnInit {
     }
   }
 
-  updateProfileInfo(){
+  updateProfileTeamInfo(data){
     this.authService.checkToken();
-    if( this.profileInfoForm.valid ){
-      this.team_profile_update_info = Object.assign( {}, { ...{'team_name': this.profileInfoForm['teams'] }, ...{'team_description': this.profileInfoForm['count'] }} 
-      );
-      this.teamService.updateTeamProfile({ 'token': localStorage.getItem('token') }, this.team_profile_update_info ).subscribe(next => {
-        this.authService.setToken(next);
-        this.alertify.success('team update successful');
-        this.teamInfoForm.reset(this.team_update_info);
-      }, error => {
-        this.alertify.error(error);
-      }, () => {
-        // this.ngOnInit();
-        this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
-      })
-    }
+    console.log(data)
+    console.log(this.model)
+    // if( this.profileInfoForm.valid ){
+    //   this.team_profile_update_info = Object.assign( {}, { ...{'team_name': this.profileInfoForm['teams'] }, ...{'team_description': this.profileInfoForm['count'] }} 
+    //   );
+    //   this.teamService.updateTeamProfile({ 'token': localStorage.getItem('token') }, this.team_profile_update_info ).subscribe(next => {
+    //     this.authService.setToken(next);
+    //     this.alertify.success('team update successful');
+    //     this.teamInfoForm.reset(this.team_update_info);
+    //   }, error => {
+    //     this.alertify.error(error);
+    //   }, () => {
+    //     // this.ngOnInit();
+    //     this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
+    //   })
+    // }
   }
 
-  deleteProfileFromTeam(){
+  deleteProfileFromTeam(data){
     this.alertify.confirm('Are you sure you want to delete this profile from the team?', () => {
+      this.authService.checkToken();
+      console.log(data)
 
-      console.log('yes')
+      if(data.role == 'Owner'){
+        this.alertify.error('cannot delete owner');
+      }else{
+        console.log(data)
+        this.teamService.deleteProfileFromTeam( { 'token': localStorage.getItem('token')}, { 'profile_id': data.profile_id , 'profiles_team_id': data.profiles_team_id} ).subscribe(next => {
+          this.authService.setToken(next);
+          this.teamInfoForm.reset(this.team_info);
+          this.alertify.success('profile successfully removed from team');
+        }, error => {
+          this.alertify.error(error);
+        }, () => {
+          this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
+        })
+      }
     })
     return true;
   }
@@ -120,16 +130,6 @@ export class TeamEditComponent implements OnInit {
     this.deleteState = event;
   }
 
-  toPresentCheck(date){
-    var current_date = new Date();
-    console.log('%%%%%%%%')
-    console.log(current_date);
-    console.log(date);
-    if( date == '0000-00-00 00:00:00' || current_date == date ){
-      return true;
-    }else{
-      return false;
-    }
-  }
+
 
 }

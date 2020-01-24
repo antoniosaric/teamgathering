@@ -27,7 +27,13 @@ export class ProfileInfoComponent implements OnInit {
     })
   }
 
-
+  statusClassCheck(data){
+    if(data.profile_team_status == 'active' ){
+      return 'green';
+    }else{
+      return 'red';
+    }
+  }
 
   
 }
