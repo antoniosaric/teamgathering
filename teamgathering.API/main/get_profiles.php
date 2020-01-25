@@ -21,7 +21,8 @@ try {
 
   $sql = "SELECT * FROM profiles ".$param;
   $stmt = $conn->prepare($sql);
-  isset($request->param) ? $stmt->execute("i", $param) : $stmt->execute() ;
+  isset($request->param) ? $stmt->bind_param("i", $param) : null ;
+  $stmt->execute();
   $result = $stmt->get_result();
   $stmt->close();
 

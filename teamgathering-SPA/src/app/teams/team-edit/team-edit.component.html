@@ -92,7 +92,7 @@
         </tab>
         <tab heading="Inactive Members">
           <h3 class="mt-3 mb-3">Inactive Members</h3>
-          <form  #updateProfileInfo="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="updateProfileTeamInfo()">
+          <form  #updateProfileInfo="ngForm" class="form-inline my-2 my-lg-0" >
             <div class="container">
               <div *ngFor="let profile of team_info.profiles"> 
                 <div *ngIf="profile.profile_team_status == 'inactive'">

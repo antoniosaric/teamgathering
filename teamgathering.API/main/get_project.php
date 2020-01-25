@@ -44,7 +44,7 @@ try {
         WHERE teams.project_id=".$row_project['project_id']." ORDER BY teams.team_id";     
 
         $stmt_team = $conn->prepare( $sql_team );
-        $stmt_team->execute( );
+        $stmt_team->execute();
         $result_team = $stmt_team->get_result();
         $stmt_team->close();
 

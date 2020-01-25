@@ -89,7 +89,7 @@ export class PhotosComponent implements OnInit {
     })
   }
 
-  deleteProjectImage(project_id: number){
+  deleteProjectImage(){
     this.alertify.confirm('Are you sure you want to delete your photo?', () => {
       this.imageService.deleteProjectImage({'token': localStorage.getItem('token') }, { 'project_id': this.project_id } ).subscribe(next => {
         this.alertify.success('imaged deleted');

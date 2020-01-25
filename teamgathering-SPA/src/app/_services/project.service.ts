@@ -41,4 +41,8 @@ constructor( private http: HttpClient ) { }
     return this.http.post( environment.apiUrl + 'crud_project/do_createProject.php', params )
   }
 
+  getProjectsList(token: any){
+    return this.http.post( environment.apiUrl + 'crud_project/do_getProjects.php', token )
+  }
+
 }

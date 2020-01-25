@@ -31,6 +31,7 @@ import { PressComponent } from './info/press/press.component';
 import { HelpComponent } from './info/help/help.component';
 import { BuildingComponent } from './info/building/building.component';
 import { FourOFourComponent } from './info/errors/fourOFour/fourOFour.component';
+import { ServerErrorComponent } from './info/errors/serverError/serverError.component';
 import { ProjectCardComponent } from './projects/project-card/project-card.component';
 import { ProjectInfoComponent } from './projects/project-info/project-info.component';
 import { ProjectListComponent } from './projects/project-list/project-list.component';
@@ -49,6 +50,7 @@ import { PhotosComponent } from './photos/photos.component';
 import { ProjectEditResolver } from './_resolvers/project-edit.resolver';
 import { RequestListComponent } from './requests/request-list/request-list.component';
 import { TeamEditComponent } from './teams/team-edit/team-edit.component';
+import { TeamAddComponent } from './teams/team-add/team-add.component';
 import { TeamEditResolver } from './_resolvers/team-edit.resolver';
 
 
@@ -76,11 +78,13 @@ import { TeamEditResolver } from './_resolvers/team-edit.resolver';
       ProjectAddComponent,
       ProfileEditAccountComponent,
       TeamEditComponent,
+      TeamAddComponent,
       ExploreComponent,
       TermsandconditionsComponent,
       ContactComponent,
       PrivacyComponent,
       FourOFourComponent,
+      ServerErrorComponent,
       HelpComponent,
       AboutComponent,
       CareersComponent,

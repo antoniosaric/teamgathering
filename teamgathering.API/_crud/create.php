@@ -38,21 +38,21 @@ function create_project( $project_name, $description, $short_description, $proje
     $stmt->close();
 }
 
-function create_team( ){
+function create_team( $team_name, $team_description, $project_id ){
 
-    // global $conn;
+    global $conn;
 
-    // $sql = "INSERT INTO `teams` (  ) VALUES ()";
-	// $stmt = $conn->prepare($sql);
-	// $stmt->bind_param("",  );
+    $sql = "INSERT INTO `teams` ( `team_name`, `team_description`, `project_id` ) VALUES (?,?,?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("ssi", $team_name, $team_description, $project_id );
 
-    // if ($stmt->execute()) {
-    // 	$return_id = $conn->insert_id;
-    // 	return $return_id;
-    // } else {
-    // 	return false;
-    // }
-    // $stmt->close();
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
 }
 
 

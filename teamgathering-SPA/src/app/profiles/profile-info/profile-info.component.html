@@ -57,7 +57,7 @@
             <tab heading="Teams">
               <div *ngFor="let team of profile_info?.teams">
                 <hr>
-                <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+                <h4>{{team.team_name}}</h4>
                 <h5>Role: {{team.role}}</h5>
                 <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
                 <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>

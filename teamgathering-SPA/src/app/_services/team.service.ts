@@ -47,18 +47,31 @@ export class TeamService {
     )
   }
 
-  updateTeamProfile(token: any, parameters: any ){
+  addTeam(token: any, parameters: any ): Observable<Team> {
     const params = { ...token, ...parameters }
-    return this.http.post(environment.apiUrl + 'crud_team/do_updateProfilesTeam.php', params).pipe(
+    return this.http.post(environment.apiUrl + 'crud_team/do_createTeam.php', params).pipe(
       map((response: any) => {
-        if( !!response.teams ){
-          return response.teams;
+        if( !!response ){
+          return response;
         }else{
           return false;
         }
       })
     )
   }
+
+  // updateTeamProfile(token: any, parameters: any ){
+  //   const params = { ...token, ...parameters }
+  //   return this.http.post(environment.apiUrl + 'crud_team/do_updateProfilesTeam.php', params).pipe(
+  //     map((response: any) => {
+  //       if( !!response.teams ){
+  //         return response.teams;
+  //       }else{
+  //         return false;
+  //       }
+  //     })
+  //   )
+  // }
 
   deleteTeam(token: any, parameters: any ){
     const params = { ...token, ...parameters }

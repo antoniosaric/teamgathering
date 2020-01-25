@@ -45,7 +45,8 @@ try {
         WHERE projects.project_id = ".$project_id." ORDER BY teams.team_id, profiles_team.profiles_team_id";     
         
       $stmt = $conn->prepare($sql);
-      $stmt->execute('i', $project_id);
+      $stmt->bind_param("i", $project_id);
+      $stmt->execute();
       $result = $stmt->get_result();
       $stmt->close();
 
