@@ -3,7 +3,7 @@
 function assignToken( $profile_id, $first_name = NULL, $last_name = NULL, $email = NULL ){
 
     $configTG = parse_ini_file("../../config.ini");
-    $tokenId    = base64_encode(mcrypt_create_iv(32));
+    $tokenId    = base64_encode(random_bytes(32));
     $issuedAt   = time();
     $notBefore  = $issuedAt;             //Not set as it has to have instant access
     $expire     = $notBefore  + ( 4 * 7 * 24 * 60 * 60 ); // 4 weeks; 7 days; 24 hours; 60 mins; 60 secs

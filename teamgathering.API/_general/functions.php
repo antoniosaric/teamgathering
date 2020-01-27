@@ -19,9 +19,10 @@ function get_random_string(){
 
 function mysqli_check(){
     if ( mysqli_connect_error() ){
+        echo mysqli_connect_error();
         status_return(500);
         die();
-    }   
+    }
   } 
 
   function check_post_data($postdata){

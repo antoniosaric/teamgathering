@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: http://localhost:4200', false);
 header("Access-Control-Allow-Headers: content-type");			
 
 include_once('../_database/confi.php');

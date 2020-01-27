@@ -9,7 +9,6 @@ function status_return($status){
 			http_response_code(200);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -26,7 +25,6 @@ function status_return($status){
 			http_response_code(204);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -43,7 +41,6 @@ function status_return($status){
 			http_response_code(400);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -60,7 +57,6 @@ function status_return($status){
 			http_response_code(401);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -77,7 +73,6 @@ function status_return($status){
 			http_response_code(403);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -94,7 +89,6 @@ function status_return($status){
 			http_response_code(404);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -111,7 +105,6 @@ function status_return($status){
 			http_response_code(500);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -128,7 +121,6 @@ function status_return($status){
 			http_response_code(500);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");
@@ -146,7 +138,6 @@ function status_return($status){
 			http_response_code(200);
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header('Content-Type: application/json');
-			header('Access-Control-Allow-Origin: http://localhost:4200', false);
 			header('Access-Control-Max-Age: 86400');  
 			header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 			header("Access-Control-Allow-Methods: POST, OPTIONS");

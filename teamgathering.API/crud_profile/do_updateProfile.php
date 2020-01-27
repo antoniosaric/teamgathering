@@ -1,6 +1,5 @@
 <?php
 ob_start();
-// header('Access-Control-Allow-Origin: http://localhost:4200', false);
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
