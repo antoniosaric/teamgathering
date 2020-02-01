@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -108,7 +109,7 @@ import { TeamEditResolver } from './_resolvers/team-edit.resolver';
       //    config:{
       //       tokenGetter: tokenGetter,
       //       whitelistedDomains: ['localhost:5001'],
-      //       blacklistedRoutes: ['localhost:5001/teamtest/teamgathering.API/_authorization/do_login.php']
+      //       blacklistedRoutes: ['localhost:5001/teamtest/api/_authorization/do_login.php']
       //    }
       // }),
    ],
@@ -125,7 +126,8 @@ import { TeamEditResolver } from './_resolvers/team-edit.resolver';
       ProjectEditResolver,
       ProjectInfoResolver,
       TeamEditResolver,
-      PreventUnsavedChanges
+      PreventUnsavedChanges,
+      Location, {provide: LocationStrategy, useClass: PathLocationStrategy}
    ],
    bootstrap: [
       AppComponent

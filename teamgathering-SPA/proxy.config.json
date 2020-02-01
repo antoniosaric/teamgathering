@@ -1,0 +1,10 @@
+{
+    "/api": {
+      "target": "http://teamgathering.com",
+      "secure": false,
+      "pathRewrite": {
+        "^/api": ""
+      },
+      "changeOrigin": true
+    }
+  }
