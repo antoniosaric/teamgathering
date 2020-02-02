@@ -17,9 +17,9 @@
         <li *ngIf="loggedIn()" class="nav-item" routerLinkActive="active">
             <a class="nav-link" [routerLink]="['/profile-project']">Projects</a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
+        <!-- <li class="nav-item" routerLinkActive="active">
             <a class="nav-link" [routerLink]="['/task-list']">tasks</a>
-        </li>
+        </li> -->
       </ul>
       <div *ngIf="loggedIn()" class="dropdown" dropdown>
         <a class="dropdown-toggle text-light" dropdownToggle>
