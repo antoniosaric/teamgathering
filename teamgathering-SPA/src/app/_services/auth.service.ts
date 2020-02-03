@@ -91,9 +91,9 @@ export class AuthService {
   }
 
   sendForgotPasswordEmail( parameters: any ){
-    const params = { ...parameters }
-    // return this.http.post( environment.apiUrl + 'crud_profile/do_deleteProfile.php', params )
-    return params
+    const params = { ...parameters };
+    console.log(params)
+    return this.http.post( environment.apiUrl + '_authorization/do_send_resetPasswordEmail.php', params )
   }
 
 }

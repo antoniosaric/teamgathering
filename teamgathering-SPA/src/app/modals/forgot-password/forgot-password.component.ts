@@ -46,7 +46,6 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgotPasswordSend(){
     if( this.forgotPassword.valid ){
-      console.log(this.forgotPassword.value )
       this.authService.sendForgotPasswordEmail( this.forgotPassword.value ).subscribe(next => {
         this.alertify.success('email sent');
         this.forgotPassword.reset();
