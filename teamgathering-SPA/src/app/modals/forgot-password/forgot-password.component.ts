@@ -1,5 +1,7 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { AuthService } from '../../_services/auth.service';
+import { AlertifyService } from '../../_services/alertify.service';
 
 
 @Component({
@@ -10,11 +12,13 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class ForgotPasswordComponent implements OnInit {
   forgotPassword: FormGroup;
   forgotPasswordSetPassword: FormGroup;
-  forgotPasswordModalState = '1';
-  @Output() registerToggleSize = new EventEmitter<string>();
+  modalState = '1'; 
+  @Output() onSetState = new EventEmitter<boolean>();
 
   constructor(
-    private fb: FormBuilder
+    private authService: AuthService, 
+    private alertify: AlertifyService, 
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -29,7 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   createForgotPasswordSetPasswordForm(){
-    this.forgotPasswordSetPassword= this.fb.group({
+    this.forgotPasswordSetPassword = this.fb.group({
       key: ['', [ Validators.required ] ],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
       confirmPassword: ['', Validators.required],
@@ -41,7 +45,29 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPasswordSend(){
-    console.log('sent');
+    if( this.forgotPassword.valid ){
+      console.log(this.forgotPassword.value )
+      this.authService.sendForgotPasswordEmail( this.forgotPassword.value ).subscribe(next => {
+        this.alertify.success('email sent');
+        this.forgotPassword.reset();
+        this.modalState = '2';
+      }, error => {
+        this.alertify.error(error);
+      }, () =>{
+      });
+    } 
+  }
+
+  forgotPasswordSetPasswordSend(){
+    this.onSetState.emit(false);
+  }
+
+  closeModal(){
+    this.onSetState.emit(false);
+  }
+
+  goBack(){
+    this.modalState = '1';
   }
 
 }

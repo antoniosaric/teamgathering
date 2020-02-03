@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import {LocationStrategy, Location, PathLocationStrategy} from '@angular/common';
+import { LocationStrategy, Location, PathLocationStrategy } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +53,7 @@ import { RequestListComponent } from './requests/request-list/request-list.compo
 import { TeamEditComponent } from './teams/team-edit/team-edit.component';
 import { TeamAddComponent } from './teams/team-add/team-add.component';
 import { TeamEditResolver } from './_resolvers/team-edit.resolver';
+import { ForgotPasswordComponent } from './modals/forgot-password/forgot-password.component';
 
 
 
@@ -78,6 +79,7 @@ import { TeamEditResolver } from './_resolvers/team-edit.resolver';
       ProjectEditComponent,
       ProjectAddComponent,
       ProfileEditAccountComponent,
+      ForgotPasswordComponent,
       TeamEditComponent,
       TeamAddComponent,
       ExploreComponent,
@@ -104,7 +106,7 @@ import { TeamEditResolver } from './_resolvers/team-edit.resolver';
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule,
-      ImageCropperModule
+      ImageCropperModule,
       // JwtModule.forRoot({
       //    config:{
       //       tokenGetter: tokenGetter,

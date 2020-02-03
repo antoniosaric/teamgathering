@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  forgotPasswordModalState = false;
 
   constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
@@ -21,6 +22,7 @@ export class NavComponent implements OnInit {
       this.alertify.success('Logged in Successfully');
     }, error => {
       this.alertify.error(error);
+      this.forgotPasswordModalState = true;
     }, () => {
       this.router.navigate(['/profile-info', this.authService.profile_id]);
     })
@@ -32,6 +34,10 @@ export class NavComponent implements OnInit {
 
   logout(){
     this.authService.logout();
+  }
+
+  changeState(event){
+    this.forgotPasswordModalState = event;
   }
 
 }

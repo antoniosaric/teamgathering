@@ -90,4 +90,10 @@ export class AuthService {
     this.router.navigate(['/home']);
   }
 
+  sendForgotPasswordEmail( parameters: any ){
+    const params = { ...parameters }
+    // return this.http.post( environment.apiUrl + 'crud_profile/do_deleteProfile.php', params )
+    return params
+  }
+
 }
