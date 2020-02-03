@@ -12,21 +12,20 @@ include '../_crud/read.php';
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-// if( !isset($request->email) ){
-//     // include '../_general/cors.php';
-//     die();
-// }
+if( !isset($request->email) ){
+    // include '../_general/cors.php';
+    die();
+}
 
-// $email = trim($request->email);
+$email = trim($request->email);
 
 $data = new stdClass();
-$random_key = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);
+$random_key = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 16);
 
 try {
     global $conn;
     mysqli_check();
 
-    $to = "saric.tony@gmail.com";
     $subject = "Reset Key";
     $message = "
     <html>
@@ -36,6 +35,7 @@ try {
     <body>
     <p>Here is your Reset Password Key!</p>
     <p>{$random_key}</p>
+    <p>Please copy and paste this into the browser</p>
     </body>
     </html>";
     
@@ -43,14 +43,27 @@ try {
     $header .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $header .= "MIME-Version: 1.0\r\n";
     
-    $retval = mail ($to,$subject,$message,$header);
+    $retval = mail ($email,$subject,$message,$header);
     
     if( $retval == true ) {
-        $data->message = "email sent";
-        status_return(200);
-        echo json_encode($data);
-        $conn->close();
-        return;
+
+        $set = 'secret_key=?';
+        $clauseArray = [ $random_key, $email ];
+        $return_password = update_table( 'profiles', $set, 'email', 'ss', $clauseArray );
+
+        if(!!$return_password){
+            $data->message = "email sent";
+            status_return(200);
+            echo json_encode($data);
+            $conn->close();
+            return;
+        }else{
+            $data->message = "something went wrong";
+            status_return(401);
+            echo json_encode($data);
+            $conn->close();
+            return;
+        }
     }else {
         $data->message = "something went wrong";
         status_return(401);

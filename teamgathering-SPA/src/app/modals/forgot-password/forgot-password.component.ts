@@ -58,7 +58,16 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   forgotPasswordSetPasswordSend(){
-    this.onSetState.emit(false);
+    if( this.forgotPasswordSetPassword.valid ){
+      this.authService.forgotPasswordSetPassword( this.forgotPasswordSetPassword.value ).subscribe(next => {
+        this.onSetState.emit(false);
+        this.alertify.success('please log back in');
+        this.forgotPasswordSetPassword.reset();
+      }, error => {
+        this.alertify.error(error);
+      }, () =>{
+      });
+    }  
   }
 
   closeModal(){

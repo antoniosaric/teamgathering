@@ -92,8 +92,12 @@ export class AuthService {
 
   sendForgotPasswordEmail( parameters: any ){
     const params = { ...parameters };
-    console.log(params)
-    return this.http.post( environment.apiUrl + '_authorization/do_send_resetPasswordEmail.php', params )
+    return this.http.post( environment.apiUrl + '_authorization/do_sendResetPasswordEmail.php', params )
+  }
+
+  forgotPasswordSetPassword( parameters: any ){
+    const params = { ...parameters };
+    return this.http.post( environment.apiUrl + '_authorization/do_resetPassword.php', params )
   }
 
 }
