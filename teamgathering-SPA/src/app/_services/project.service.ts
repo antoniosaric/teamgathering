@@ -12,13 +12,16 @@ export class ProjectService {
 
 constructor( private http: HttpClient ) { }
 
-  getHomepage(): Observable<Project[]> {
-    return this.http.get<Project[]>( environment.apiUrl + 'main/homepage.php' )
+  getHomepage(token: any): Observable<Project[]> {
+    const params = { ...token }
+    console.log('%%%%%%%%%')
+    console.log(params)
+    return this.http.post<Project[]>( environment.apiUrl + 'main/homepage.php', params )
   }
 
 
   getProject(token: any, parameters: any ): Observable<Project> {
-    const params = {...parameters, ...token }
+    const params = {...parameters, ...token };
     return this.http.post(environment.apiUrl + 'main/get_project.php', params).pipe(
       map((response: any) => {
         if( !!response.project ){

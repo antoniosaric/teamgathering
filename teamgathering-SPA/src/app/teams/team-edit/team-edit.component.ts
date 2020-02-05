@@ -77,6 +77,11 @@ export class TeamEditComponent implements OnInit {
     }
   }
 
+  backToProject(id){
+    console.log(id);
+    this.router.navigate(['/project/edit/'+id]);
+  }
+
   // updateProfileTeamInfo(data){
   //   this.authService.checkToken();
   //   console.log(data)

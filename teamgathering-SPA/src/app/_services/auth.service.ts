@@ -64,7 +64,7 @@ export class AuthService {
     if( localStorage.hasOwnProperty('token') ){
       return localStorage.getItem('token');
     }else{
-        return null;
+      return null;
     }
   }
 

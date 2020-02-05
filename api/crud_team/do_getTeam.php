@@ -30,6 +30,7 @@ try {
 
     $sql = "SELECT DISTINCT 
             teams.team_id,
+            projects.project_id,
             teams.team_name,
             teams.team_description,
             profiles_team.profiles_team_id,
@@ -58,6 +59,7 @@ try {
             $team_info_name = $row['team_name'];
             $team_info_description = $row['team_description'];
             $team_info_id = $row['team_id'];
+            $team_info_project_id = $row['project_id'];
 
             if( !!$row["profiles_team_id"] ){ 
                     $team_profile_object->profiles_team_id = $row['profiles_team_id'];
@@ -78,6 +80,7 @@ try {
         $team->team_name = $team_info_name;
         $team->team_description = $team_info_description;
         $team->team_id = $team_info_id;
+        $team->project_id = $team_info_project_id;
         $team->profiles = $team_profile;
         $data->team = $team;
         $data->message = 'team info pulled';

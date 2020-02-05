@@ -12,7 +12,7 @@ export class ProjectInfoResolver implements Resolve<Project> {
     constructor(private projectService: ProjectService, private router: Router, private alertify: AlertifyService, private authService: AuthService ){}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Project>{
-        return this.projectService.getProject({'project_id': route.params['id']}, { 'token': this.authService.checkTokenExists()}).pipe(
+        return this.projectService.getProject({'project_id': route.params['id']}, { 'token': this.authService.checkTokenExists() } ).pipe(
             catchError(error => {
                 this.alertify.error('Problem retrieving data');
                 this.router.navigate(['/home']);

@@ -7,6 +7,7 @@ include '../_general/functions.php';
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 // $param = isset($request->param) ? trim($request->param) : " ORDER BY project_id ASC Limit 5";
+$token = isset($request->token) && strlen($request->token) > 0 && $request->token != null? trim($request->token) : false;
 
 $data = [];
 
@@ -14,10 +15,10 @@ try {
   global $conn;
   mysqli_check();
 
-  $private = 'private';
   $sql = "SELECT DISTINCT 
           projects.project_id AS project_id,
           projects.project_name AS project_name,
+          projects.project_status AS project_status,
           projects.short_description AS short_description,
           projects.image AS image,
           projects.owner_id AS owner_id,
@@ -26,8 +27,14 @@ try {
           FROM projects 
           LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
           LEFT JOIN teams ON teams.project_id = projects.project_id
-          LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-          WHERE project_status != 'private' AND profiles_team.role != 'Owner'";
+          LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id";
+
+  if(!!$token){
+    $sql .= " WHERE ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND profiles_team.role != 'Owner'";
+  }else{
+    $sql .= " WHERE projects.project_status = 'public' AND profiles_team.role != 'Owner'";
+  }
+
   $stmt = $conn->prepare($sql);
   $stmt->execute();
   $result = $stmt->get_result();
