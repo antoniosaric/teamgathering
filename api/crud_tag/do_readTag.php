@@ -1,16 +1,26 @@
 <?php
 ob_start();
+header("Access-Control-Allow-Headers: content-type");	
 include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
 include_once '../_general/functions.php';
+include '../_crud/create.php';
 include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$team_id = (int)$request->team_id;
+
+if( !isset($request->tag) || !isset($request->token) ){
+    // include '../_general/cors.php';
+    die();
+}
+$tag = strtolower(trim($request->tag));
+$tag_new = "%{$tag}%";
 $token = $request->token;
+
 $data = new stdClass();
+$tag_array = [];
 
 try {
     mysqli_check();
@@ -19,27 +29,34 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $sql = "SELECT DISTINCT projects.owner_id AS owner_id FROM profiles_team LEFT JOIN teams ON teams.team_id = profiles_team.team_id LEFT JOIN projects ON projects.id = teams.project_id WHERE team.id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $team_id);
-    $result = $stmt->execute();
-    
-    $stmt->close();
+    $sql = "SELECT DISTINCT tag_name FROM tags WHERE LOWER( tag_name ) RLIKE ? "; 
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("s", $tag );
 
-    if( !!$result ){
-        $get_result = $stmt->get_result();
-        $return_profile = delete_function( 'tags', 'tag_id', $row_tag['tag_id']  );
-        $data->message = "tag deleted";
+    if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        while( $row = $result->fetch_assoc() ){
+            if( !in_array( $tag_array, $row ) ){                   
+                array_push( $tag_array, $row );
+            }
+        }
+        $data->tags = $tag_array;
+        $data->message = "tags found";
         status_return(200);
-    }else{
-        $data->message = "unauthorized";
-        status_return(401); 
+        echo json_encode($data);
+        $stmt->close();
+        return;
+    } else {
+        $data->message = "tags not found";
+        status_return(400); 
+        echo json_encode($data);
+        $stmt->close();
+        return;
     }
-    echo json_encode($data);
     $conn->close();
-    return;
 }catch (Exception $e ){
     status_return(500);
     echo($e->message);
     return;
 }
+?>

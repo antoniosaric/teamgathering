@@ -79,8 +79,17 @@
             <textarea name="looking_for" id="looking_for" cols="30" rows="6" class="form-control" formControlName="looking_for"></textarea>
             <!-- <p>{{profile_info?.looking_for}}</p> -->
             <h4>Skills</h4>
-            <label for="skill">Add Skill</label>
-            <input type="text" class="form-control" name="skill">
+            <app-tag></app-tag>
+            <div class="container mt-2">
+              <div class="row">
+                <div class="col-lg-auto col-md-auto col-sm-auto" *ngFor="let tag of profile_info?.tags">
+                  <button type="button" class="btn btn-secondary button-radius-badge">
+                    <span>{{tag.tag_name}}</span>
+                  </button>
+                  <button  type="button" class="btn btn-danger button-radius-delete-badge" (click)="deleteTag(tag)">X</button>
+                </div>
+              </div>
+            </div>
             <hr>
           </tab> 
           <tab heading="Projects">

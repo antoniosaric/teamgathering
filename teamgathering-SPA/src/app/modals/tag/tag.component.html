@@ -1,3 +1,18 @@
-<p>
-  tag works!
-</p>
+<div class="border padding-bottom-sm">
+  <label for="skill">Add Skill</label>
+  <!-- <form (click)="check(submitTag)" #submitTag="ngForm"> -->
+    <form  #submitTag="ngForm" (ngSubmit)="addTag()">
+    <mat-form-field>
+      <input matInput placeholder="skills" [matAutocomplete]="auto" [formControl]="searchTagsCtrl" type="text" name="tag_name">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
+        <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+        <ng-container *ngIf="!isLoading">
+          <mat-option *ngFor="let tag of filtered_tags" [value]="tag.tag_name">
+            <span>- {{tag.tag_name}} -</span>
+          </mat-option>
+        </ng-container>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>
+

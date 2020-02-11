@@ -18,6 +18,7 @@ $profile_id = (int)$request->profile_id;
 $profile = new stdClass(); 
 $projects = []; 
 $teams = []; 
+$tags = [];
 $data = new stdClass();
 
 try {
@@ -79,6 +80,23 @@ try {
         }
     }
 
+    $sql4 = "SELECT DISTINCT tags.tag_id, tags.tag_name FROM tags LEFT JOIN profiles_tag ON profiles_tag.tag_id = tags.tag_id WHERE profiles_tag.profile_id = ".$profile_id." ORDER BY tags.tag_id";
+
+    $stmt4 = $conn->prepare($sql4);
+    $stmt4->execute();
+    $result4 = $stmt4->get_result();
+    $stmt4->close();
+
+    if(!!$result4 && $result4->num_rows > 0){  
+        while( $row4 = $result4->fetch_assoc() ){
+            if( !!$row4["tag_id"] ){ 
+                if( !in_array( $row4, $tags) ){                   
+                    array_push( $tags, $row4 );
+                }
+            }
+        }
+    }
+
     if( !!$row_profile['profile_id'] ){
         $profile->profile_id = $row_profile['profile_id'];
         $profile->email = $row_profile['email'];
@@ -93,6 +111,7 @@ try {
         $profile->description = $row_profile['description'];
         $profile->teams = $teams;
         $profile->projects = $projects;
+        $profile->tags = $tags;
         $data->profile = $profile;
         $data->message = "profile retrieved";
         status_return(200);

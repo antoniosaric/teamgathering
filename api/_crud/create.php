@@ -73,6 +73,23 @@ function create_request( $profile_id, $owner_id, $project_id, $status ) {
     $stmt->close();
 }
 
+function create_tag( $tag_name ) {
+
+    global $conn;
+
+    $sql = "INSERT INTO `tags` ( `tag_name` ) VALUES ( ? )";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("s", $tag_name );
+
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
+}
+
 // ======================================================================
 //  JOIN TABLES
 // ======================================================================
@@ -84,6 +101,24 @@ function create_profiles_team( $profile_id , $team_id, $role, $profile_team_stat
     $sql = "INSERT INTO `profiles_team` ( `profile_id` , `team_id`, `role`, `profile_team_status` ) VALUES (?,?,?,?)";
 	$stmt = $conn->prepare($sql);
 	$stmt->bind_param("iiss", $profile_id , $team_id, $role, $profile_team_status );
+
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
+}
+
+
+function create_profiles_tag( $profile_id , $tag_id  ){
+
+    global $conn;
+
+    $sql = "INSERT INTO `profiles_tag` ( `profile_id` , `tag_id` ) VALUES (?,?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("ii", $profile_id , $tag_id  );
 
     if ($stmt->execute()) {
     	$return_id = $conn->insert_id;

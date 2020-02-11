@@ -1,11 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { LocationStrategy, Location, PathLocationStrategy } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule, MatFormFieldModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +64,7 @@ import { TagComponent } from './modals/tag/tag.component';
 
 
 
+
 // export function tokenGetter() {
 //    return localStorage.getItem("token");
 //  }
@@ -107,6 +112,11 @@ import { TagComponent } from './modals/tag/tag.component';
       HttpClientModule,
       FormsModule,
       ReactiveFormsModule,
+      MatInputModule,
+      MatAutocompleteModule,
+      MatFormFieldModule,
+      MatSelectModule,
+      BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule,
@@ -119,6 +129,7 @@ import { TagComponent } from './modals/tag/tag.component';
       //    }
       // }),
    ],
+   exports: [MatAutocompleteModule,MatInputModule],
    providers: [
       AuthService,
       ErrorInterceptorProvider, 
@@ -137,6 +148,7 @@ import { TagComponent } from './modals/tag/tag.component';
    ],
    bootstrap: [
       AppComponent
-   ]
+   ],
+   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
