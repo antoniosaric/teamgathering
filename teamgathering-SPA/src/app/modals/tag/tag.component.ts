@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
  
@@ -15,7 +15,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./tag.component.css']
 })
 export class TagComponent implements OnInit {
-  tag_object: any;
+  @Output() returnTagId: EventEmitter<any> = new EventEmitter();
+  input_string: string;
+  tag_string: string;
   searchTagsCtrl = new FormControl();
   filtered_tags: any;
   isLoading = false;
@@ -43,6 +45,7 @@ export class TagComponent implements OnInit {
         switchMap(value => {
           if(value != '' && value != null){
             if(value.hasOwnProperty('tag_name')){
+              this.input_string = value.tag_name;
               return this.tagService.getTags( { 'token': localStorage.getItem('token') }, { 'tag': value.tag_name } )
               .pipe(
                 finalize(() => {
@@ -50,6 +53,7 @@ export class TagComponent implements OnInit {
                 }),
               )
             }else{
+              this.input_string = value;
               return this.tagService.getTags( { 'token': localStorage.getItem('token') }, { 'tag': value } )
               .pipe(
                 finalize(() => {
@@ -64,31 +68,29 @@ export class TagComponent implements OnInit {
       )
       .subscribe(data => {
         if (data['tags'] == undefined ) {
-          console.log('one')
           this.errorMsg = data['message'];
-          this.tagForSave = {'tag_name': 'something', 'tag_id': 0}
+          this.tagForSave = {'tag_name': this.input_string}
           this.filtered_tags = [];
+          this.filtered_tags.unshift(this.tagForSave)
         } else {
-          console.log('two')
-          this.tagForSave = {'tag_name': 'xxxxxx', 'tag_id': 0}
-          this.errorMsg = "happy";
+          this.tagForSave = {'tag_name': this.input_string}
+          this.errorMsg = "";
           this.filtered_tags = data['tags'];
+          this.filtered_tags.unshift(this.tagForSave)
         }
        });
     }
 
   displayFn(tag) {
-    console.log(tag)
-    console.log('#######')
-    console.log(this.searchTagsCtrl.value)
     if (!tag || tag == undefined || tag == null){
       this.isLoading = false;
       return ''; 
     }else{
-      console.log('tag id found')
-      this.addTag();
+      console.log('*******')
       console.log(tag)
-      this.searchTagsCtrl.reset()
+      this.addTag(tag);
+      this.searchTagsCtrl.reset();
+      this.isLoading = false;
     }
   }
 
@@ -97,35 +99,30 @@ export class TagComponent implements OnInit {
 
   }
 
-  addTag(){
-    this.authService.checkToken();
-    if( this.searchTagsCtrl.value != '' && this.searchTagsCtrl.value != null && this.searchTagsCtrl.value != undefined){
-      this.tagService.addTag({ 'token': localStorage.getItem('token') }, { 'tag_name': this.searchTagsCtrl.value } ).subscribe(next => {
+  addTagToProfile( next, tag_name ){
+    console.log(next)
+    console.log(tag_name)
+    this.returnTagId.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
+  }
+
+  addTag(tag){
+    if( tag != '' && tag != null && tag != undefined){
+      this.tagService.addTag({ 'token': localStorage.getItem('token') }, { 'tag_name': tag } ).subscribe(next => {
         this.authService.setToken(next);
+        this.addTagToProfile( next, tag )
         this.alertify.success('skill added successfully');
+        this.searchTagsCtrl.reset()
       }, error => {
         this.alertify.error(error);
       }, () => {
         this.router.navigate(['/profile/edit']);
       })
     }
-
-
-
-    console.log('check')
-    var something = {"tag_name": this.searchTagsCtrl.value}
-    console.log(something)
-    console.log('check')
-    
-    this.searchTagsCtrl.reset()
   }
 
 
   onSubmit() {
-    console.log('submit')
-      console.log(this.searchTagsCtrl.value)
       this.searchTagsCtrl.reset()
-    };
-
+  };
 
 }

@@ -1,9 +1,13 @@
-<div class="border padding-bottom-sm">
-  <label for="skill">Add Skill</label>
+<div class="border">
+  
   <!-- <form (click)="check(submitTag)" #submitTag="ngForm"> -->
-    <form  #submitTag="ngForm" (ngSubmit)="addTag()">
-    <mat-form-field>
-      <input matInput placeholder="skills" [matAutocomplete]="auto" [formControl]="searchTagsCtrl" type="text" name="tag_name">
+    <mat-form-field class="ml-2">
+      <input matInput placeholder="add skills" 
+      [matAutocomplete]="auto" 
+      [formControl]="searchTagsCtrl" 
+      type="text" 
+      name="tag_name"
+      >
       <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
         <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
         <ng-container *ngIf="!isLoading">
@@ -13,6 +17,5 @@
         </ng-container>
       </mat-autocomplete>
     </mat-form-field>
-  </form>
 </div>
 

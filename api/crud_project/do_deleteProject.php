@@ -26,7 +26,8 @@ try {
     $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=? AND owner_id=?', 'ii', $clauseArray );
 
     if( !!$row_project['project_id'] && validate_pw($pass, $row_project["password"]) ){
-        $return_profile = delete_function( 'projects', 'project_id', $row_project['project_id']  );
+        $return_delete_project = delete_function( 'projects', 'project_id', $row_project['project_id']  );
+        $data->token = exchangeToken($token);
         $data->message = "project deleted";
         status_return(200);
     }else{

@@ -20,4 +20,10 @@ constructor(private http: HttpClient) { }
     return this.http.post( environment.apiUrl + 'crud_tag/do_createProfileTag.php', params )
   }
 
+  deleteTag( token: any, tag_object: any ){
+    const params = {...token, ...tag_object }
+    console.log(params)
+    return this.http.post( environment.apiUrl + 'crud_tag/do_deleteProfileTag.php', params )
+  }
+
 }

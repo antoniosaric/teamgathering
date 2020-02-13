@@ -4,6 +4,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { TagService } from 'src/app/_services/tag.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -30,7 +31,8 @@ export class ProfileEditComponent implements OnInit {
     private profileService: ProfileService, 
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private tagService: TagService
   ) { }
 
   ngOnInit() {
@@ -55,7 +57,7 @@ export class ProfileEditComponent implements OnInit {
   updateProfile(){
     this.authService.checkToken();
     if( this.editForm.valid ){
-      this.profile_info = Object.assign( {}, {...this.editForm.value, ...{ image: this.profile_info.image} } );
+      this.profile_info = Object.assign( {}, {...this.editForm.value, ...{ image: this.profile_info.image }, ...{ tags: this.profile_info.tags } } );
       this.profileService.updateProfile({ 'token': localStorage.getItem('token') }, this.profile_info).subscribe(next => {
         this.authService.setProfileName(this.profile_info);
         this.authService.setToken(next);
@@ -97,7 +99,26 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-  deleteTag(tag){
+  removeTagFromProfileObject(tag){
+    this.profile_info.tags.splice(this.profile_info.tags.findIndex(v => v.tag_id === tag.tag_id), 1);
+  }
+
+  addTagToProfileObject(tag){
     console.log(tag)
+    this.profile_info.tags.push(tag);
+  }
+
+  deleteTag(tag){
+    this.authService.checkToken();
+    this.tagService.deleteTag({ 'token': localStorage.getItem('token') }, tag).subscribe(next => {
+      this.authService.setToken(next);
+      this.removeTagFromProfileObject(tag);
+      this.alertify.success('Profile update successful');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+      this.router.navigate(['/profile/edit']);
+    })
+
   }
 }

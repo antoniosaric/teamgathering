@@ -16,7 +16,6 @@ if( !isset($request->tag_name) || !isset($request->token) ){
     // include '../_general/cors.php';
     die();
 }
-
 $tag_name = trim($request->tag_name);
 $token = $request->token;
 
@@ -29,8 +28,9 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $clauseArray = [ $tag_name ];
-    $row_tag = get_tabel_info_single_row( 'tags', 'WHERE tag_name=?', 's', $clauseArray );
+    $clauseArray = [ strtolower($tag_name) ];
+
+    $row_tag = get_tabel_info_single_row( 'tags', 'WHERE LOWER( tag_name ) = ?', 's', $clauseArray );
 
     if( !!isset( $row_tag["tag_id"]) ){
 
@@ -40,8 +40,10 @@ try {
         if(!isset($row_profile_tag['profiles_tag_id'])){
 
             $return_profile_tag_id = create_profiles_tag( $profile_id , $row_tag["tag_id"] );
+
             if(!!$return_profile_tag_id){
                 $data->message = "tag added to profile";
+                $data->tag_id = $row_tag["tag_id"];
                 $data->token = exchangeToken($token);
                 status_return(200); 
                 echo json_encode($data);
@@ -67,6 +69,7 @@ try {
         $return_profile_tag_id = create_profiles_tag( $profile_id , $return_tag_id );
 
         if(!!$return_profile_tag_id){
+            $data->tag_id = $return_tag_id;
             $data->token = exchangeToken($token);
             $data->message = "tag added to profile";
             status_return(200); 

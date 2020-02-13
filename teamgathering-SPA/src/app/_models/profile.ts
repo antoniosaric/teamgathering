@@ -1,5 +1,6 @@
 import { Project } from './project';
 import { Team } from './team';
+import { Tag } from './tag';
 
 export interface Profile {
     
@@ -16,6 +17,7 @@ export interface Profile {
     joined_date?: Date;
     projects?: Project[];
     teams?: Team[];
+    tags?: Tag[];
     team_name?: string;
     team_id?: number;
     project_name?: string;
