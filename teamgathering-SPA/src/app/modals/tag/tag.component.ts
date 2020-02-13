@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./tag.component.css']
 })
 export class TagComponent implements OnInit {
-  @Output() returnTagId: EventEmitter<any> = new EventEmitter();
+  @Output() returnTagId = new EventEmitter<object>();
   input_string: string;
   tag_string: string;
   searchTagsCtrl = new FormControl();
@@ -86,20 +86,14 @@ export class TagComponent implements OnInit {
       this.isLoading = false;
       return ''; 
     }else{
-      console.log('*******')
-      console.log(tag)
       this.addTag(tag);
       this.searchTagsCtrl.reset();
       this.isLoading = false;
     }
   }
 
-  setProfileTag(data){
-    console.log(data)
-
-  }
-
   addTagToProfile( next, tag_name ){
+    console.log('*******')
     console.log(next)
     console.log(tag_name)
     this.returnTagId.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );

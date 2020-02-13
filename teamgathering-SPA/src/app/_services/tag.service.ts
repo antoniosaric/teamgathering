@@ -16,14 +16,23 @@ constructor(private http: HttpClient) { }
 
   addTag( token: any, tag_object: any ){
     const params = {...token, ...tag_object }
-    console.log(params)
     return this.http.post( environment.apiUrl + 'crud_tag/do_createProfileTag.php', params )
   }
 
   deleteTag( token: any, tag_object: any ){
     const params = {...token, ...tag_object }
-    console.log(params)
     return this.http.post( environment.apiUrl + 'crud_tag/do_deleteProfileTag.php', params )
+  }
+
+
+  addTagProject( token: any, tag_object: any ){
+    const params = {...token, ...tag_object }
+    return this.http.post( environment.apiUrl + 'crud_tag/do_createProjectTag.php', params )
+  }
+
+  deleteTagProject( token: any, tag_object: any ){
+    const params = {...token, ...tag_object }
+    return this.http.post( environment.apiUrl + 'crud_tag/do_deleteProjectTag.php', params )
   }
 
 }
