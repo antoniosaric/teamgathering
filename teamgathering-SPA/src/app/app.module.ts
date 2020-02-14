@@ -58,7 +58,8 @@ import { TeamEditComponent } from './teams/team-edit/team-edit.component';
 import { TeamAddComponent } from './teams/team-add/team-add.component';
 import { TeamEditResolver } from './_resolvers/team-edit.resolver';
 import { ForgotPasswordComponent } from './modals/forgot-password/forgot-password.component';
-import { TagComponent } from './modals/tag/tag.component';
+import { TagProfileComponent } from './modals/tag/tag-profile/tag-profile.component';
+import { TagProjectComponent } from './modals/tag/tag-project/tag-project.component';
 
 
 
@@ -104,7 +105,8 @@ import { TagComponent } from './modals/tag/tag.component';
       BuildingComponent,
       PhotosComponent,
       RequestListComponent,
-      TagComponent
+      TagProjectComponent,
+      TagProfileComponent
    ],
    imports: [
       BrowserModule,

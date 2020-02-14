@@ -41,7 +41,15 @@
               <h4>Looking For</h4>
               <p>{{profile_info?.looking_for}}</p>
               <h4>Skills</h4>
-              <p>{{profile_info?.skills}}</p>
+              <div class="container mt-2">
+                <div class="row">
+                  <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of profile_info?.tags">
+                    <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
+                      <span>{{tag.tag_name}}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <hr>
             </tab> 
             <tab heading="Projects">

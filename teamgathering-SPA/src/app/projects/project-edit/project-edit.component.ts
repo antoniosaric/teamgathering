@@ -4,6 +4,7 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProjectService } from 'src/app/_services/project.service';
 import { AuthService } from 'src/app/_services/auth.service';
+import { TagService } from 'src/app/_services/tag.service';
 
 @Component({
   selector: 'app-project-edit',
@@ -32,7 +33,8 @@ export class ProjectEditComponent implements OnInit {
     private projectService: ProjectService, 
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private tagService: TagService
   ) { }
 
   ngOnInit() {
@@ -104,6 +106,27 @@ export class ProjectEditComponent implements OnInit {
     }else{
       return 'red';
     }
+  }
+
+  removeTagFromProjectObject(tag){
+    this.project_info.tags.splice(this.project_info.tags.findIndex(v => v.tag_id === tag.tag_id), 1);
+  }
+
+  addTagToProjectObject(tag){
+    this.project_info.tags.push(tag);
+  }
+
+  deleteTagProject(tag){
+    this.authService.checkToken();
+    this.tagService.deleteTagProject({ 'token': localStorage.getItem('token') }, { 'tag_id': tag.tag_id, 'project_id': this.project_id } ).subscribe(next => {
+      this.authService.setToken(next);
+      this.removeTagFromProjectObject(tag);
+      this.alertify.success('Profile update successful');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+    })
+
   }
 
 }

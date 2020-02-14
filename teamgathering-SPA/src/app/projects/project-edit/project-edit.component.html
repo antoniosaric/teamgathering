@@ -109,8 +109,18 @@
                 <h4>Looking For</h4>
                 <textarea name="looking_for" id="looking_for" cols="30" rows="6" class="form-control" formControlName="looking_for"></textarea>
                 <h4>Stacks</h4>
-                <textarea name="stacks" id="stacks" cols="30" rows="6" class="form-control" formControlName="stacks"></textarea>
-                <hr>
+                <h4>Skills</h4>
+                <app-tag-project (returnTagId)="addTagToProjectObject($event)" [project_id]="project_info.project_id" [page]="page"></app-tag-project>
+                <div class="container mt-2">
+                  <div class="row">
+                    <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of project_info?.tags">
+                      <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
+                        <span>{{tag.tag_name}}</span>
+                      </button>
+                      <button  type="button" class="btn btn-danger button-radius-delete-badge default-cursor" (click)="deleteTagProject(tag)">X</button>
+                    </div>
+                  </div>
+                </div>                <hr>
               </div>
             </tab> 
           </tabset>

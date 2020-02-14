@@ -129,6 +129,24 @@ function create_profiles_tag( $profile_id , $tag_id  ){
     $stmt->close();
 }
 
+
+function create_projects_tag( $project_id , $tag_id  ){
+
+    global $conn;
+
+    $sql = "INSERT INTO `projects_tag` ( `project_id` , `tag_id` ) VALUES (?,?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("ii", $project_id , $tag_id  );
+
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
+}
+
 ?>
 
 

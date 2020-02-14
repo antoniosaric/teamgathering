@@ -1,21 +1,21 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
- 
+  
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { TagService } from 'src/app/_services/tag.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { Router } from '@angular/router';
 
-
 @Component({
-  selector: 'app-tag',
-  templateUrl: './tag.component.html',
-  styleUrls: ['./tag.component.css']
+  selector: 'app-tag-profile',
+  templateUrl: './tag-profile.component.html',
+  styleUrls: ['./tag-profile.component.css']
 })
-export class TagComponent implements OnInit {
+export class TagProfileComponent implements OnInit {
   @Output() returnTagId = new EventEmitter<object>();
+  @Input() page: string; 
   input_string: string;
   tag_string: string;
   searchTagsCtrl = new FormControl();
@@ -93,9 +93,6 @@ export class TagComponent implements OnInit {
   }
 
   addTagToProfile( next, tag_name ){
-    console.log('*******')
-    console.log(next)
-    console.log(tag_name)
     this.returnTagId.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
   }
 
@@ -113,7 +110,6 @@ export class TagComponent implements OnInit {
       })
     }
   }
-
 
   onSubmit() {
       this.searchTagsCtrl.reset()

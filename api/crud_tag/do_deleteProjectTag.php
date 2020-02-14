@@ -17,6 +17,8 @@ if( !isset($request->tag_id) || !isset($request->token) ){
 }
 $tag_id = intval($request->tag_id);
 $token = $request->token;
+$project_id = intval($request->project_id);
+
 
 $data = new stdClass();
 
@@ -27,7 +29,7 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $sql = "SELECT DISTINCT count( profiles_tag_id ) AS count_profile FROM `profiles_tag` WHERE tag_id=?"; 
+    $sql = "SELECT DISTINCT count( projects_tag_id ) AS count_project FROM `projects_tag` WHERE tag_id=?"; 
 	$stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $tag_id );
     if( $query = $stmt->execute() ){
@@ -35,7 +37,7 @@ try {
     }
     $stmt->close();
 
-    $sql2 = "SELECT DISTINCT count( projects_tag_id ) AS count_project FROM `projects_tag` WHERE tag_id=?"; 
+    $sql2 = "SELECT DISTINCT count( profiles_tag_id ) AS count_profile FROM `profiles_tag` WHERE tag_id=?"; 
     $stmt2 = $conn->prepare($sql2);
     $stmt2->bind_param("i", $tag_id );
     if( $query2 = $stmt2->execute() ){
@@ -47,9 +49,9 @@ try {
         $row = $result->fetch_assoc();
         $row2 = $result2->fetch_assoc();
         
-        $sql3 = "SELECT DISTINCT profiles_tag_id FROM `profiles_tag` WHERE tag_id=? AND profile_id=?"; 
+        $sql3 = "SELECT DISTINCT projects_tag_id FROM `projects_tag` WHERE tag_id=? AND project_id=?"; 
         $stmt3 = $conn->prepare($sql3);
-        $stmt3->bind_param("ii", $tag_id, $profile_id );
+        $stmt3->bind_param("ii", $tag_id, $project_id );
         if($query3 = $stmt3->execute()){
             $result3 = $stmt3->get_result();
         }
@@ -57,15 +59,15 @@ try {
 
         if( $query3 ){
             $row3 = $result3->fetch_assoc();
-            if( !!isset($row3['profiles_tag_id']) ){
-                if( intval($row2['count_project']) > 1 ){
+            if( !!isset($row3['projects_tag_id']) ){
+                if( intval($row2['count_profile']) > 1 ){
                     // delete assocation
 
-                    $return_delete_profile_tag = delete_function( 'profiles_tag', 'profiles_tag_id', $row3['profiles_tag_id']  );
+                    $return_delete_project_tag = delete_function( 'projects_tag', 'projects_tag_id', $row3['projects_tag_id']  );
         
-                    if(!!$return_delete_profile_tag){
+                    if(!!$return_delete_project_tag){
                         $data->token = exchangeToken($token);
-                        $data->message = "tag removed from profile";
+                        $data->message = "tag removed from project";
                         status_return(200);
                         echo json_encode($data);
                         return;
@@ -75,14 +77,14 @@ try {
                         echo json_encode($data);
                         return;        
                     }
-                }else if( intval($row['count_profile']) > 1 ){
+                }else if( intval($row['count_project']) > 1 ){
                     // delete assocation
 
-                    $return_delete_profile_tag = delete_function( 'profiles_tag', 'profiles_tag_id', $row3['profiles_tag_id']  );
+                    $return_delete_project_tag = delete_function( 'projects_tag', 'projects_tag_id', $row3['projects_tag_id']  );
         
-                    if(!!$return_delete_profile_tag){
+                    if(!!$return_delete_project_tag){
                         $data->token = exchangeToken($token);
-                        $data->message = "tag removed from profile";
+                        $data->message = "tag removed from project";
                         status_return(200);
                         echo json_encode($data);
                         return;
@@ -92,24 +94,24 @@ try {
                         echo json_encode($data);
                         return;        
                     }
-                }else if( intval($row['count_profile']) == 1 ){
+                }else if( intval($row['count_project']) == 1 ){
                     // delete assocation and tag
-                    $return_delete_profile_tag = delete_function( 'profiles_tag', 'profiles_tag_id', $row3['profiles_tag_id']  );
+                    $return_delete_project_tag = delete_function( 'projects_tag', 'projects_tag_id', $row3['projects_tag_id']  );
         
-                    if(!!$return_delete_profile_tag){
+                    if(!!$return_delete_project_tag){
 
                         $return_delete_tag = delete_function( 'tags', 'tag_id', $tag_id  );
 
                         if(!!$return_delete_tag){
                             $data->token = exchangeToken($token);
-                            $data->message = "skill removed from profile";
+                            $data->message = "skill removed from project";
                             status_return(200);
                             echo json_encode($data);
                             return;
 
                         }else{
                             $data->token = exchangeToken($token);
-                            $data->message = "skill removed from profile, tag not removed";
+                            $data->message = "skill removed from project, tag not removed";
                             status_return(200); 
                             echo json_encode($data);
                             return;        

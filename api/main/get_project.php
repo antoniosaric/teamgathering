@@ -22,6 +22,7 @@ $project = new stdClass();
 $teams = [];
 $profile = [];
 $saved_team_array = [];
+$tags = [];
 $profile_access_status = false;
 
 try {
@@ -90,6 +91,24 @@ try {
         }
         $project = $row_project;
         $project['teams'] = $teams;
+
+        $sql4 = "SELECT DISTINCT tags.tag_id, tags.tag_name FROM tags LEFT JOIN projects_tag ON projects_tag.tag_id = tags.tag_id WHERE projects_tag.project_id = ".$project_id." ORDER BY tags.tag_id";
+
+        $stmt4 = $conn->prepare($sql4);
+        $stmt4->execute();
+        $result4 = $stmt4->get_result();
+        $stmt4->close();
+    
+        if(!!$result4 && $result4->num_rows > 0){  
+            while( $row4 = $result4->fetch_assoc() ){
+                if( !!$row4["tag_id"] ){ 
+                    if( !in_array( $row4, $tags) ){                   
+                        array_push( $tags, $row4 );
+                    }
+                }
+            }
+        }
+        $project['tags'] = $tags;
         if( $row_project['project_status'] == 'public' || $profile_access_status == true ){
 
             $sql_count = "SELECT DISTINCT count(profiles.profile_id)

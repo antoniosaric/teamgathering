@@ -104,8 +104,6 @@ export class ProfileEditComponent implements OnInit {
   }
 
   addTagToProfileObject(tag){
-    console.log('$$$$$$$')
-    console.log(tag)
     this.profile_info.tags.push(tag);
   }
 
