@@ -21,6 +21,7 @@ $project_name = isset($request->project_name) && strlen($request->project_name) 
 $description = isset($request->description) && strlen($request->description) > 0 ? trim($request->description) : false;
 $short_description = isset($request->short_description) && strlen($request->short_description) > 0 ? trim($request->short_description) : false;
 $project_status = isset($request->project_status) && strlen($request->project_status) > 0 ? trim($request->project_status) : false;
+$looking_for = isset($request->looking_for) && strlen($request->looking_for) > 0 ? trim($request->looking_for) : false;
 $image = isset($request->image) && strlen($request->image) > 0 ? trim($request->image) : false;
 
 if( !$project_name || !$description || !$short_description || !$project_status || !$image ){
@@ -45,9 +46,9 @@ try {
     $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=? AND owner_id=?', 'ii', $clauseArray );
 
     if( !!$row_project && !!$row_project["project_id"] ){
-        $set = 'project_name=?, description=?, short_description=?, project_status=?, image=? ';
-        $clauseArray = [ $project_name, $description, $short_description, $project_status, $image, $project_id ];
-        $return_update_projects = update_table( 'projects', $set, 'project_id', 'sssssi', $clauseArray );
+        $set = 'project_name=?, description=?, short_description=?, looking_for=?, project_status=?, image=? ';
+        $clauseArray = [ $project_name, $description, $short_description, $looking_for, $project_status, $image, $project_id ];
+        $return_update_projects = update_table( 'projects', $set, 'project_id', 'ssssssi', $clauseArray );
 
         $data->token = exchangeToken($token);
         $data->message = "project updated";

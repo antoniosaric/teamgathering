@@ -65,11 +65,13 @@ export class ProjectEditComponent implements OnInit {
          ...{'teams': this.project_info['teams'] },
          ...{'count': this.project_info['count'] },
          ...{'created_date': this.project_info['created_date']},
-         ...{'project_id': this.project_info['project_id']} 
+         ...{'project_id': this.project_info['project_id']},
+         ...{ 'tags': this.project_info['tags']} 
         } 
       );
       this.projectService.updateProject({ 'token': localStorage.getItem('token') }, this.project_info).subscribe(next => {
         this.authService.setToken(next);
+
         this.alertify.success('Project update successful');
         this.editForm.reset(this.project_info);
       }, error => {
