@@ -23,6 +23,7 @@ export class TeamEditComponent implements OnInit {
   deleteState = false;
   deleteTeamObject: any;
   model: any = {};
+  modalState = 0;
 
   constructor(
     private alertify: AlertifyService,
@@ -82,25 +83,7 @@ export class TeamEditComponent implements OnInit {
     this.router.navigate(['/project/edit/'+id]);
   }
 
-  // updateProfileTeamInfo(data){
-  //   this.authService.checkToken();
-  //   console.log(data)
-  //   console.log(this.model)
-  //   if( this.profileInfoForm.valid ){
-  //     this.team_profile_update_info = Object.assign( {}, { ...{'team_name': this.profileInfoForm['teams'] }, ...{'team_description': this.profileInfoForm['count'] }} 
-  //     );
-  //     this.teamService.updateTeamProfile({ 'token': localStorage.getItem('token') }, this.team_profile_update_info ).subscribe(next => {
-  //       this.authService.setToken(next);
-  //       this.alertify.success('team update successful');
-  //       this.teamInfoForm.reset(this.team_update_info);
-  //     }, error => {
-  //       this.alertify.error(error);
-  //     }, () => {
-  //       // this.ngOnInit();
-  //       this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
-  //     })
-  //   }
-  // }
+ 
 
   deleteProfileFromTeam(data){
     this.alertify.confirm('Are you sure you want to delete this profile from the team?', () => {
@@ -135,6 +118,13 @@ export class TeamEditComponent implements OnInit {
     this.deleteState = event;
   }
 
+  toggleChangeRoleModal(data){
+    this.modalState = data.profile_id;
+  }
+
+  closeModal(){
+    this.modalState = 0;
+  }
 
 
 }

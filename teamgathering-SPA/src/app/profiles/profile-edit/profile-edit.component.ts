@@ -108,16 +108,17 @@ export class ProfileEditComponent implements OnInit {
   }
 
   deleteTag(tag){
-    this.authService.checkToken();
-    this.tagService.deleteTag({ 'token': localStorage.getItem('token') }, tag).subscribe(next => {
-      this.authService.setToken(next);
-      this.removeTagFromProfileObject(tag);
-      this.alertify.success('Profile update successful');
-    }, error => {
-      this.alertify.error(error);
-    }, () => {
-      this.router.navigate(['/profile/edit']);
+    this.alertify.confirm('Are you sure you want to remove this skill?', () => {
+      this.authService.checkToken();
+      this.tagService.deleteTag({ 'token': localStorage.getItem('token') }, tag).subscribe(next => {
+        this.authService.setToken(next);
+        this.removeTagFromProfileObject(tag);
+        this.alertify.success('Profile update successful');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+        this.router.navigate(['/profile/edit']);
+      })
     })
-
   }
 }

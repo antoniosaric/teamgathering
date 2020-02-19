@@ -71,7 +71,7 @@ try {
                 $project_object->project_name = $row3['project_name'];
                 $project_object->project_status = $row3['project_status']; 
                 $project_object->created_date = $row3['created_date']; 
-                $project_object->project_roll = ( $row3['owner_id'] == $profile_id ) ? 'Owner': 'Member';
+                $project_object->project_role = ( $row3['owner_id'] == $profile_id ) ? 'Owner': 'Member';
                 
                 if( !in_array( $project_object, $projects ) ){                   
                     array_push($projects, $project_object);

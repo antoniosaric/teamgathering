@@ -60,6 +60,7 @@ import { TeamEditResolver } from './_resolvers/team-edit.resolver';
 import { ForgotPasswordComponent } from './modals/forgot-password/forgot-password.component';
 import { TagProfileComponent } from './modals/tag/tag-profile/tag-profile.component';
 import { TagProjectComponent } from './modals/tag/tag-project/tag-project.component';
+import { UpdateRoleComponent } from './modals/update-role/update-role.component';
 
 
 
@@ -106,7 +107,8 @@ import { TagProjectComponent } from './modals/tag/tag-project/tag-project.compon
       PhotosComponent,
       RequestListComponent,
       TagProjectComponent,
-      TagProfileComponent
+      TagProfileComponent,
+      UpdateRoleComponent
    ],
    imports: [
       BrowserModule,

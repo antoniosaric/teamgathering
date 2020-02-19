@@ -100,15 +100,15 @@
                 <a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a>
                 <a [routerLink]="['/project/edit/', project.project_id]" class="ml-4">Edit</a>
               </h4>
-              <h5>Roll: {{project.project_roll}}</h5>
+              <h5>Role: {{project.project_role}}</h5>
               <h5>Status: {{project.project_status}}</h5>
               <h5>Created: {{project.created_date | date: 'mediumDate'}}</h5>
               <hr>
             </div>
           </tab> 
           <tab heading="Teams">
+            <a [routerLink]="['/team/add']">Add Team</a>
             <div *ngFor="let team of profile_info?.teams">
-              <a [routerLink]="['/team/add']">Add Team</a>
               <hr>
               <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
               <h5>Role: {{team.role}}</h5>

@@ -1,0 +1,16 @@
+<!-- Modal content -->
+<form #changeRoleForm="ngForm" (ngSubmit)="updateRole(changeRoleForm)">
+  <select name="profile_team_status" ngModel [(ngModel)]="set_status">
+    <option *ngFor="let status of available_status" [value]="status">
+      {{status}}
+    </option>
+  </select>
+
+  <input type="text" name="role" placeholder="Role" ngModel [(ngModel)]="profile.role" required>
+  <div class="btn-group ml-2">
+    <button class="btn btn-success" type="submit" [disabled]="!changeRoleForm.dirty">Update</button>
+  </div>
+  <div class="btn-group ml-1" >
+      <button class="btn btn-warning" (click)="closeModal()">Close</button>
+  </div>
+</form>

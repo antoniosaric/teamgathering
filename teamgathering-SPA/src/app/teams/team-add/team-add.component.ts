@@ -78,4 +78,14 @@ export class TeamAddComponent implements OnInit {
       this.alertify.error(error);
     }) 
   }
+
+  goBack(){
+    if(!!this.teamInfoForm.dirty){
+      this.alertify.confirm('You have unsaved info, are you sure you want to go back?', () => {
+        this.router.navigate(['/profile/edit']);
+      })
+    }else{
+      this.router.navigate(['/profile/edit']);
+    }
+  }
 }

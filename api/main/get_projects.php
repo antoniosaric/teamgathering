@@ -176,7 +176,7 @@ try {
 //             $profile_object->role = $row['role'];
 //             $profile_object->project_status = $row['project_status']; 
 //             $profile_object->created_date = $row['created_date']; 
-//             $profile_object->project_roll = ( $row['owner_id'] == $profile_id ) ? 'Owner': 'Member';
+//             $profile_object->project_role = ( $row['owner_id'] == $profile_id ) ? 'Owner': 'Member';
             
 //             if( !in_array( $profile_object, $projects ) ){                   
 //                 array_push($projects, $profile_object);

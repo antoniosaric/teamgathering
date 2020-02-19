@@ -119,16 +119,16 @@ export class ProjectEditComponent implements OnInit {
   }
 
   deleteTagProject(tag){
-    this.authService.checkToken();
-    this.tagService.deleteTagProject({ 'token': localStorage.getItem('token') }, { 'tag_id': tag.tag_id, 'project_id': this.project_id } ).subscribe(next => {
-      this.authService.setToken(next);
-      this.removeTagFromProjectObject(tag);
-      this.alertify.success('Profile update successful');
-    }, error => {
-      this.alertify.error(error);
-    }, () => {
+    this.alertify.confirm('Are you sure you want to remove this stack?', () => {
+      this.authService.checkToken();
+      this.tagService.deleteTagProject({ 'token': localStorage.getItem('token') }, { 'tag_id': tag.tag_id, 'project_id': this.project_id } ).subscribe(next => {
+        this.authService.setToken(next);
+        this.removeTagFromProjectObject(tag);
+        this.alertify.success('Profile update successful');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+      })
     })
-
   }
-
 }
