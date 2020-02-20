@@ -65,7 +65,6 @@ export class RequestListComponent implements OnInit {
     this.authService.checkToken();
     if( this.updateRequestForm.valid ){
       this.request_info = Object.assign( {}, {...this.updateRequestForm.value }, { 'requester_id': data.requester_id },{ 'requestee_id': data.requestee_id },{ 'request_id': data.request_id } );
-      console.log(this.request_info);
       this.requestService.updateRequest({ 'token': localStorage.getItem('token') }, this.request_info ).subscribe(next => {
         this.authService.setToken(next);
         this.alertify.success('request successfully made');
@@ -73,7 +72,8 @@ export class RequestListComponent implements OnInit {
       }, error => {
         this.alertify.error(error);
       }, () => {
-        this.router.navigate(['/request-list']);
+        this.ngOnInit();
+        // this.router.navigate(['/request-list']);
       })
     }
   }
@@ -89,7 +89,8 @@ export class RequestListComponent implements OnInit {
         }, error => {
           this.alertify.error(error);
         }, () => {
-          this.router.navigate(['/request-list']);
+          this.ngOnInit();
+          // this.router.navigate(['/request-list']);
         })
       })
     }

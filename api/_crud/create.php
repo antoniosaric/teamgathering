@@ -56,14 +56,14 @@ function create_team( $team_name, $team_description, $project_id ){
 }
 
 
-function create_request( $profile_id, $owner_id, $project_id, $status ) {
+function create_request( $profile_id, $owner_id, $project_id, $status, $message ) {
 
     global $conn;
 
-    $sql = "INSERT INTO `requests` ( `requester_id`, `requestee_id`, `project_id`, `request_status` ) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO `requests` ( `requester_id`, `requestee_id`, `project_id`, `request_status`, `message` ) VALUES (?,?,?,?,?)";
 	$stmt = $conn->prepare($sql);
-	$stmt->bind_param("iiis", $profile_id, $owner_id, $project_id, $status );
-
+    $stmt->bind_param("iiiss", $profile_id, $owner_id, $project_id, $status, $message );
+    
     if ($stmt->execute()) {
     	$return_id = $conn->insert_id;
     	return $return_id;

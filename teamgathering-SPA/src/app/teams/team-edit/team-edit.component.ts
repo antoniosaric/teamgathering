@@ -79,31 +79,32 @@ export class TeamEditComponent implements OnInit {
   }
 
   backToProject(id){
-    console.log(id);
     this.router.navigate(['/project/edit/'+id]);
   }
 
- 
+  removeProfileFromTeamArray(data){
+    for(var i = 0; i < this.team_info.profiles.length; i++) {
+      if(this.team_info.profiles[i].profile_id == data.profile_id && this.team_info.profiles[i].profiles_team_id == data.profiles_team_id ) {
+        this.team_info.profiles.splice(i, 1);
+        console.log('found')
+        break;
+      }
+    }
+  }
 
   deleteProfileFromTeam(data){
     this.alertify.confirm('Are you sure you want to delete this profile from the team?', () => {
       this.authService.checkToken();
-      console.log(data)
-
-      if(data.role == 'Owner'){
-        this.alertify.error('cannot delete owner');
-      }else{
-        console.log(data)
-        this.teamService.deleteProfileFromTeam( { 'token': localStorage.getItem('token')}, { 'profile_id': data.profile_id , 'profiles_team_id': data.profiles_team_id} ).subscribe(next => {
-          this.authService.setToken(next);
-          this.teamInfoForm.reset(this.team_info);
-          this.alertify.success('profile successfully removed from team');
-        }, error => {
-          this.alertify.error(error);
-        }, () => {
-          this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
-        })
-      }
+      this.teamService.deleteProfileFromTeam( { 'token': localStorage.getItem('token')}, { 'profile_id': data.profile_id , 'profiles_team_id': data.profiles_team_id } ).subscribe(next => {
+        this.removeProfileFromTeamArray(data);
+        this.authService.setToken(next);
+        this.teamInfoForm.reset(this.team_info);
+        this.alertify.success('profile successfully removed from team');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+        this.router.navigate(['/team/edit/'+this.team_info['team_id']]);
+      })
     })
     return true;
   }
