@@ -112,9 +112,10 @@ export class TeamEditComponent implements OnInit {
   }
 
   deleteTeam(){
+    console.log(this.deleteTeamForm.value);
     this.alertify.confirm('Last Chance To Not Delete This Team', () => {
       this.authService.checkToken();
-      this.teamService.deleteTeam( { 'token': localStorage.getItem('token')}, { 'team_id': this.team_info.team_id } ).subscribe(next => {
+      this.teamService.deleteTeam( { 'token': localStorage.getItem('token')}, { 'team_id': this.team_info.team_id, 'password': this.deleteTeamForm.value.password } ).subscribe(next => {
         this.authService.setToken(next);
         this.alertify.success('team successfully deleted');
         this.backToProject(this.team_info.project_id);

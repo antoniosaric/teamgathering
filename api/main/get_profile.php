@@ -32,7 +32,7 @@ try {
     FROM projects 
     LEFT JOIN teams ON teams.project_id = projects.project_id
     LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-    WHERE profiles_team.profile_id = ".$profile_id." ORDER BY projects.project_id, teams.team_id";
+    WHERE profiles_team.profile_id = ".$profile_id." AND profiles_team.profile_team_status !='deleted' ORDER BY projects.project_id, teams.team_id";
 
     $stmt2 = $conn->prepare($sql2);
     $stmt2->execute();

@@ -43,7 +43,7 @@ try {
     WHERE profiles_team.team_id IN ( 
         SELECT DISTINCT profiles_team.team_id 
         FROM profiles_team 
-        WHERE profiles_team.profile_id = ".$profile_id." AND profiles_team.profile_team_status != 'deleted' ) AND profiles.profile_id != ".$profile_id." ORDER BY projects.project_id, teams.team_id";
+        WHERE profiles_team.profile_id = ".$profile_id." ) AND profiles.profile_id != ".$profile_id." AND profiles_team.profile_team_status != 'deleted' ORDER BY projects.project_id, teams.team_id";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -53,7 +53,7 @@ try {
     if(!!$result && $result->num_rows > 0){  
         while( $row = $result->fetch_assoc() ){
             if( !!$row["profile_id"] ){ 
-                if( !in_array( $row, $projects ) ){   
+                if( !in_array( $row, $profiles ) ){   
                     array_push($profiles, $row);
                 }
             }

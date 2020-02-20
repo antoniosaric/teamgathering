@@ -6,6 +6,7 @@ include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
 include_once '../_general/functions.php';
 include '../_crud/delete.php';
+include '../_crud/update.php';
 include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
@@ -17,6 +18,7 @@ if( !isset($request->team_id) || !isset($request->token) ){
 }
 
 $team_id = intval($request->team_id);
+$pass = trim($request->password);
 $token = $request->token;
 $data = new stdClass();
 $deleted = 'deleted';
