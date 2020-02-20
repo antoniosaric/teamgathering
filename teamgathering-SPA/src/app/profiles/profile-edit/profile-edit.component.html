@@ -110,7 +110,10 @@
             <a [routerLink]="['/team/add']">Add Team</a>
             <div *ngFor="let team of profile_info?.teams">
               <hr>
-              <h4><a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a></h4>
+              <h4>
+                <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a>
+                <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
+              </h4>
               <h5>Role: {{team.role}}</h5>
               <h5>{{team.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(team.ended_date)"> {{team.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(team.ended_date)">Present</span></h5>
               <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>

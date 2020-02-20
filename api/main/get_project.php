@@ -42,7 +42,7 @@ try {
         }
 
         $sql_team = "SELECT DISTINCT teams.team_id, teams.team_name, teams.team_description FROM teams 
-        WHERE teams.project_id=".$row_project['project_id']." ORDER BY teams.team_id";     
+        WHERE teams.project_id=".$row_project['project_id']." AND teams.team_status != 'deleted' ORDER BY teams.team_id";     
 
         $stmt_team = $conn->prepare( $sql_team );
         $stmt_team->execute();
@@ -67,7 +67,7 @@ try {
                     profiles_team.profile_team_status
                     FROM profiles 
                     LEFT JOIN profiles_team ON profiles_team.profile_id = profiles.profile_id
-                    WHERE profiles_team.team_id = ".$row_team['team_id']." ORDER BY profiles.profile_id";     
+                    WHERE profiles_team.team_id = ".$row_team['team_id']." AND profiles_team.profile_team_status != 'deleted' ORDER BY profiles.profile_id";     
                     
                     $stmt_project_team = $conn->prepare($sql_project_team);
                     $stmt_project_team->execute();
@@ -116,7 +116,7 @@ try {
             LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
             LEFT JOIN teams ON teams.project_id = projects.project_id
             LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-            WHERE projects.project_id=".$row_project['project_id']." AND profiles_team.role != 'Owner'";     
+            WHERE projects.project_id=".$row_project['project_id']." AND profiles_team.role != 'Owner' AND teams.team_status !='deleted' AND profiles_team.profile_team_status != 'deleted'";     
 
             $stmt_count = $conn->prepare($sql_count);
             $stmt_count->execute();

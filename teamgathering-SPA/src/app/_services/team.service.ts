@@ -66,16 +66,8 @@ export class TeamService {
   }
 
   deleteTeam(token: any, parameters: any ){
-    const params = { ...token, ...parameters }
-    return this.http.post(environment.apiUrl + 'crud_team/do_deleteTeam.php', params).pipe(
-      map((response: any) => {
-        if( !!response.teams ){
-          return response.teams;
-        }else{
-          return false;
-        }
-      })
-    )
+    const params = { ...token, ...parameters };
+    return this.http.post( environment.apiUrl + 'crud_team/do_deleteTeam.php', params )
   }
 
   deleteProfileFromTeam(token: any, parameters: any ){

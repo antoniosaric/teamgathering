@@ -42,7 +42,7 @@ try {
     if(!!$result2 && $result2->num_rows > 0){  
         while( $row2 = $result2->fetch_assoc() ){
             $team_object = new stdClass(); 
-            if( !!$row2["team_id"] ){ 
+            if( !!$row2["team_id"] && ( $row2["profile_team_status"] != 'deleted' || $row2["team_status"] != 'deleted' ) ){ 
                     $team_object->team_id = $row2['team_id'];
                     $team_object->team_name = $row2['team_name'];
                     $team_object->role = $row2['role'];
@@ -56,7 +56,7 @@ try {
         }
     }
 
-    $sql3 = "SELECT DISTINCT * FROM projects WHERE projects.owner_id = ".$profile_id." ORDER BY projects.project_id";
+    $sql3 = "SELECT DISTINCT * FROM projects WHERE projects.owner_id = ".$profile_id." AND projects.project_status != 'deleted' ORDER BY projects.project_id";
 
     $stmt3 = $conn->prepare($sql3);
     $stmt3->execute();

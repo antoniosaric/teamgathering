@@ -30,9 +30,9 @@ try {
           LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id";
 
   if(!!$token){
-    $sql .= " WHERE ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND profiles_team.role != 'Owner'";
+    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND profiles_team.role != 'Owner'";
   }else{
-    $sql .= " WHERE projects.project_status = 'public' AND profiles_team.role != 'Owner'";
+    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND projects.project_status = 'public' AND profiles_team.role != 'Owner'";
   }
 
   $stmt = $conn->prepare($sql);

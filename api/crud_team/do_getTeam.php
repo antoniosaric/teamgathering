@@ -20,6 +20,7 @@ $token = $request->token;
 $data = new stdClass();
 $team = new stdClass();
 $team_profile = [];
+$deleted = 'deleted';
 
 try {
     mysqli_check();
@@ -32,6 +33,7 @@ try {
             teams.team_id,
             projects.project_id,
             teams.team_name,
+            teams.team_status,
             teams.team_description,
             profiles_team.profiles_team_id,
             profiles_team.role,
@@ -54,34 +56,38 @@ try {
 
     if(!!$result && $result->num_rows > 0){  
         while( $row = $result->fetch_assoc() ){
-            $team_profile_object = new stdClass(); 
+            if( $row['team_name'] != $deleted ){
+                $team_profile_object = new stdClass(); 
 
-            $team_info_name = $row['team_name'];
-            $team_info_description = $row['team_description'];
-            $team_info_id = $row['team_id'];
-            $team_info_project_id = $row['project_id'];
+                $team_info_name = $row['team_name'];
+                $team_info_description = $row['team_description'];
+                $team_info_id = $row['team_id'];
+                $team_info_project_id = $row['project_id'];
 
-            if( !!$row["profiles_team_id"] ){ 
-                    $team_profile_object->profiles_team_id = $row['profiles_team_id'];
-                    $team_profile_object->profile_id = $row['profile_id'];
-                    $team_profile_object->role = $row['role'];
-                    $team_profile_object->profile_team_status = $row['profile_team_status'];
-                    $team_profile_object->joined_date = $row['joined_date'];
-                    $team_profile_object->ended_date = $row['ended_date'];
-                    $team_profile_object->first_name = $row['first_name'];
-                    $team_profile_object->last_name = $row['last_name'];
+                if( !!$row["profiles_team_id"] && $row["profile_team_status"] != $deleted ){ 
+                        $team_profile_object->profiles_team_id = $row['profiles_team_id'];
+                        $team_profile_object->profile_id = $row['profile_id'];
+                        $team_profile_object->role = $row['role'];
+                        $team_profile_object->profile_team_status = $row['profile_team_status'];
+                        $team_profile_object->joined_date = $row['joined_date'];
+                        $team_profile_object->ended_date = $row['ended_date'];
+                        $team_profile_object->first_name = $row['first_name'];
+                        $team_profile_object->last_name = $row['last_name'];
 
-                if( !in_array( $team_profile_object, $team_profile ) ){
-                    array_push($team_profile, $team_profile_object);
+                    if( !in_array( $team_profile_object, $team_profile ) ){
+                        array_push($team_profile, $team_profile_object);
+                    }
                 }
             }
         }
 
-        $team->team_name = $team_info_name;
-        $team->team_description = $team_info_description;
-        $team->team_id = $team_info_id;
-        $team->project_id = $team_info_project_id;
-        $team->profiles = $team_profile;
+        if(!!isset($team_info_name)){    
+            $team->team_name = $team_info_name;
+            $team->team_description = $team_info_description;
+            $team->team_id = $team_info_id;
+            $team->project_id = $team_info_project_id;
+            $team->profiles = $team_profile;
+        }
         $data->team = $team;
         $data->message = 'team info pulled';
         $data->token = exchangeToken($token);

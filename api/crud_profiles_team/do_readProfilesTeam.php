@@ -11,6 +11,7 @@ $request = json_decode($postdata);
 $team_id = (int)$request->team_id;
 $token = $request->token;
 $data = new stdClass();
+$deleted = 'deleted';
 
 try {
     mysqli_check();
@@ -19,9 +20,9 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $sql = "SELECT DISTINCT * FROM profiles_team LEFT JOIN teams ON teams.team_id = profiles_team.team_id LEFT JOIN projects ON projects.id = teams.project_id WHERE team.id = ?";
+    $sql = "SELECT DISTINCT * FROM profiles_team LEFT JOIN teams ON teams.team_id = profiles_team.team_id LEFT JOIN projects ON projects.id = teams.project_id WHERE team.id = ? AND profiles_team.profile_team_status !=?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $team_id);
+    $stmt->bind_param('is', $team_id, $deleted);
     $result = $stmt->execute();
     $get_result = $stmt->get_result();
     // $row = $get_result->fetch_assoc();

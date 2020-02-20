@@ -26,6 +26,7 @@ $project_id = $request->project_id;
 $data = new stdClass();
 $teams = [];
 $profiles = [];
+$deleted = 'deleted';
 
 try {
   global $conn;
@@ -40,9 +41,10 @@ try {
       $sql = "SELECT DISTINCT teams.team_id, 
       teams.team_name, 
       teams.team_description, 
+      teams.team_status
       FROM projects 
         LEFT JOIN teams ON teams.project_id = projects.project_id
-        WHERE projects.project_id = ".$project_id." ORDER BY teams.team_id, profiles_team.profiles_team_id";     
+        WHERE projects.project_id = ? ORDER BY teams.team_id";     
         
       $stmt = $conn->prepare($sql);
       $stmt->bind_param("i", $project_id);
@@ -52,36 +54,38 @@ try {
 
       if(!!$result && $result->num_rows > 0){  
         while( $row = $result->fetch_assoc() ){
-          if( !in_array( $team_object, $teams ) ){                   
-            $sql2 = "SELECT DISTINCT
-            profiles_team.profile_team_status, 
-            profiles_team.role, 
-            profiles.profile_id, 
-            profiles.first_name, 
-            profiles.last_name
-            FROM profiles 
-              LEFT JOIN profiles_team ON profiles_team.profile_id = profiles.profile_id
-              WHERE profiles_team.team_id = ".$row['team_id']." ORDER BY profiles.profile_id";     
-              
-            $stmt2 = $conn->prepare($sql2);
-            $stmt2->execute();
-            $result2 = $stmt2->get_result();
-            $stmt2->close();
+          if($row['team_status'] != $deleted ){     
+            if( !in_array( $team_object, $teams ) ){                   
+              $sql2 = "SELECT DISTINCT
+              profiles_team.profile_team_status, 
+              profiles_team.role, 
+              profiles.profile_id, 
+              profiles.first_name, 
+              profiles.last_name
+              FROM profiles 
+                LEFT JOIN profiles_team ON profiles_team.profile_id = profiles.profile_id
+                WHERE profiles_team.team_id = ".$row['team_id']." AND profiles_team.profile_team_status != 'deleted' ORDER BY profiles.profile_id";     
+                
+              $stmt2 = $conn->prepare($sql2);
+              $stmt2->execute();
+              $result2 = $stmt2->get_result();
+              $stmt2->close();
 
-            $profiles = [];
+              $profiles = [];
 
-            if(!!$result2 && $result2->num_rows > 0){  
-              while( $row2 = $result2->fetch_assoc() ){
+              if(!!$result2 && $result2->num_rows > 0){  
+                while( $row2 = $result2->fetch_assoc() ){
 
 
 
-                array_push($profiles, $row2);
-              
+                  array_push($profiles, $row2);
+                
 
+                }
               }
+              $teams->profiles = $profiles;
+              array_push($projects, $teams);
             }
-            $teams->profiles = $profiles;
-            array_push($projects, $teams);
           }
         }
       }

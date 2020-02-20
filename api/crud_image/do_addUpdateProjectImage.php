@@ -55,13 +55,13 @@ try {
             return;
         }else{
             $data->message = "something went wrong";
-            status_return(403);
+            status_return(400);
             echo json_encode($data);
             return;
         }
 	}else{
         $data->message = "something went wrong";
-        status_return(403);
+        status_return(400);
         echo json_encode($data);
 	  	return;
 	}

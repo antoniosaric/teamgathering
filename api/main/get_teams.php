@@ -27,9 +27,10 @@ try {
 
   $sql = "SELECT DISTINCT teams.team_id, 
   teams.team_name, 
+  teams.team_status, 
   projects.project_name 
   FROM teams LEFT JOIN projects ON projects.project_id = teams.project_id LEFT JOIN profiles ON profiles.profile_id = projects.owner_id
-  WHERE profiles.profile_id = ".$profile_id." ORDER BY projects.project_id, teams.team_id";     
+  WHERE profiles.profile_id = ".$profile_id." AND projects.project_status !='deleted' ORDER BY projects.project_id, teams.team_id";     
     
   $stmt = $conn->prepare($sql);
   $stmt->execute();
@@ -38,8 +39,10 @@ try {
 
   if(!!$result && $result->num_rows > 0){  
     while( $row = $result->fetch_assoc() ){
-      if( !in_array( $teams, $row ) ){   
-        array_push($teams, $row);
+      if($row['team_status']){      
+        if( !in_array( $teams, $row ) ){   
+          array_push($teams, $row);
+        }
       }
     }
   }else{

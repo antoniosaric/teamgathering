@@ -15,6 +15,7 @@ $role = trim($request->role);
 $profile_team_status = trim($request->profile_team_status);
 $token = $request->token;
 $data = new stdClass();
+$deleted = 'deleted';
 
 try {
     mysqli_check();
@@ -23,9 +24,9 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $sql = "SELECT DISTINCT profiles_team.profile_id AS profile_id, profiles_team.profiles_team_id AS profile_team_id FROM profiles_team WHERE profiles_team.team_id = ? AND ( profiles_team.profile_id = ? OR profiles_team.profile_id = ?";
+    $sql = "SELECT DISTINCT profiles_team.profile_id AS profile_id, profiles_team.profiles_team_id AS profile_team_id FROM profiles_team WHERE profiles_team.team_id = ? AND ( profiles_team.profile_id = ? OR profiles_team.profile_id = ? ) AND profiles_team.profile_team_status != ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param( 'iii', $team_id, $requested_profile_id, $profile_id );
+    $stmt->bind_param( 'iiis', $team_id, $requested_profile_id, $profile_id, $deleted );
     $result = $stmt->execute();
     $get_result = $stmt->get_result();
     $row = $get_result->fetch_assoc();

@@ -109,24 +109,25 @@
     <button class="btn btn-success btn-block" (click)="changeDeleteState(false)" *ngIf="deleteState == true">cancel</button>  
   </div>
   <div class="col-sm-4 mt-4 mb-4" *ngIf="deleteState == true">
-    <p class="warning">To Delete Team, Type DELETE.</p>
     <form [formGroup]="deleteTeamForm" (ngSubmit)="deleteTeam()">
+      <p class="warning">To Delete Team, Type DELETE.</p>
       <div class="form-group mb-4">
         <input type="text" 
         [ngClass]="{'is-invalid': deleteTeamForm.get('deleteText').errors && deleteTeamForm.get('deleteText').touched }"
         class="form-control mb-2" 
         formControlName="deleteText" 
         placeholder="type DELETE"
-        value=""  autocomplete="new-delete">
+        value=""  autocomplete="off">
         <div class="invalid-feedback" *ngIf="deleteTeamForm.get('deleteText').hasError('pattern') && deleteTeamForm.get('deleteText').touched">to delete team, type DELETE</div>
       </div> 
       <div class="form-group">
+        <p class="warning">Enter Password.</p>
           <input type="password" 
           [ngClass]="{'is-invalid': deleteTeamForm.get('password').errors && deleteTeamForm.get('password').touched }"
           class="form-control mt-4" 
           formControlName="password" 
           placeholder="password"
-          value=""  autocomplete="new-delete">
+          value=""  autocomplete="off">
           <div class="invalid-feedback" *ngIf="deleteTeamForm.get('password').hasError('required') && deleteTeamForm.get('password').touched">Password is required &nbsp;</div>
           <div class="invalid-feedback" *ngIf="deleteTeamForm.get('password').hasError('minlength') && deleteTeamForm.get('password').touched">password must be at least 4 characters</div>
           <div class="invalid-feedback" *ngIf="deleteTeamForm.get('password').hasError('maxlength') && deleteTeamForm.get('password').touched">password must be less than 16 characters</div>

@@ -59,14 +59,14 @@ try {
             return;
         }else{
             $data->message = "something went wrong";
-            status_return(401);
+            status_return(400);
             echo json_encode($data);
             $conn->close();
             return;
         }
     }else {
         $data->message = "something went wrong";
-        status_return(401);
+        status_return(400);
         echo json_encode($data);
         $conn->close();
         return;

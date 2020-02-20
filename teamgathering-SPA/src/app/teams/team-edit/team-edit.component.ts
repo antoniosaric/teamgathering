@@ -49,8 +49,8 @@ export class TeamEditComponent implements OnInit {
     })
 
     this.deleteTeamForm = this.fb.group({
-      deleteText: ['', [ Validators.required, Validators.minLength(5), Validators.maxLength(6), Validators.pattern('(?:^|\W)DELETE(?:$|\W)') ] ],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
+      deleteText: [ '', [ Validators.required, Validators.minLength(5), Validators.maxLength(6), Validators.pattern('(?:^|\W)DELETE(?:$|\W)') ] ],
+      password: [ '', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
     })
   }
 
@@ -63,7 +63,9 @@ export class TeamEditComponent implements OnInit {
        });
        this.team_info = Object.assign( {}, {...this.teamInfoForm.value,
         ...{'profiles': this.team_info['profiles'] },
-        ...{'team_id': this.team_info['team_id'] }
+        ...{'team_id': this.team_info['team_id'] },
+        ...{'project_id': this.team_info['project_id'] }
+
        });
       this.teamService.updateTeam({ 'token': localStorage.getItem('token') }, this.team_update_info ).subscribe(next => {
         this.authService.setToken(next);
@@ -110,7 +112,16 @@ export class TeamEditComponent implements OnInit {
   }
 
   deleteTeam(){
-    console.log('yes')
+    this.alertify.confirm('Last Chance To Not Delete This Team', () => {
+      this.authService.checkToken();
+      this.teamService.deleteTeam( { 'token': localStorage.getItem('token')}, { 'team_id': this.team_info.team_id } ).subscribe(next => {
+        this.authService.setToken(next);
+        this.alertify.success('team successfully deleted');
+        this.backToProject(this.team_info.project_id);
+      }, error => {
+        this.alertify.error(error);
+      })
+    })
     return true;
   }
 

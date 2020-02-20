@@ -25,6 +25,7 @@ $data = new stdClass();
 $role = 'Owner';
 $profile_team_status = 'active';
 $team_already_created = false;
+$deleted = 'deleted';
 
 try {
     mysqli_check();
@@ -33,15 +34,15 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $clauseArray = [ $team_name, $project_id ];
+    $clauseArray = [ $project_id, $profile_id ];
     $row_team = get_tabel_info_single_row( 'projects', 'WHERE projects.project_id=? AND projects.owner_id=?', 'ii', $clauseArray );
 
     if( !isset( $row_team["team_id"]) ){
 
-        $sql = "SELECT DISTINCT teams.team_id FROM teams LEFT JOIN projects ON projects.project_id = teams.project_id WHERE teams.team_name = ? AND projects.project_id = ?";
+        $sql = "SELECT DISTINCT teams.team_id FROM teams LEFT JOIN projects ON projects.project_id = teams.project_id WHERE teams.team_name = ? AND projects.project_id = ? AND teams.team_status != ?";
     
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $team_name, $project_id);
+        $stmt->bind_param("sis", $team_name, $project_id, $deleted);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();

@@ -37,4 +37,18 @@ function mysqli_check(){
     }
   }
 
+  function unique_multidim_array($array, $key) {
+    $arrayCount = count($array);
+    $temp_array = array();
+    $i = 0;
+    $key_array = array();
+    for($i=0; $i<$arrayCount;$i++){
+      if (!in_array($array[$i][$key], $key_array)) {
+          $key_array[$i] = $array[$i][$key];
+          $temp_array[$i] = $array[$i];
+      }
+    }
+    return $temp_array;
+  }
+
 ?>
