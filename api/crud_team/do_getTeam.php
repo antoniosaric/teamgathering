@@ -20,7 +20,7 @@ $token = $request->token;
 $data = new stdClass();
 $team = new stdClass();
 $team_profile = [];
-$deleted = 'deleted';
+$deleted = "deleted";
 
 try {
     mysqli_check();
@@ -56,7 +56,7 @@ try {
 
     if(!!$result && $result->num_rows > 0){  
         while( $row = $result->fetch_assoc() ){
-            if( $row['team_name'] != $deleted ){
+            if( $row['team_status'] != $deleted ){
                 $team_profile_object = new stdClass(); 
 
                 $team_info_name = $row['team_name'];

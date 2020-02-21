@@ -33,6 +33,7 @@ if( !$request_id && !$role && !$status && !$team_id){
 
 $token = $request->token;
 $data = new stdClass();
+$deleted = 'deleted';
 
 try {
     mysqli_check();
@@ -45,40 +46,56 @@ try {
     $row_request = get_tabel_info_single_row( 'requests', 'WHERE requests.request_id=? AND requests.requestee_id=?', 'ii', $clauseArray );
 
     if( !!$row_request && !!$row_request["request_id"] ){
-        if($status == 'approved'){
-            $status = 'active';
-            $return_profiles_team_id = create_profiles_team( $requester_id, $team_id, $role, $status );
 
-            if(!!$return_profiles_team_id){
-                $status = 'approved';
-                $set = 'request_status=?';
+        $clauseArray = [ $team_id, $requester_id, $deleted ];
+        $row_request_team_check = get_tabel_info_single_row( 'profiles_team', 'WHERE profiles_team.team_id=? AND profiles_team.profile_id=? AND profiles_team.profile_team_status != ? ', 'iis', $clauseArray );
+
+        // var_dump( $row_request_team_check['profiles_team_id'] ); 
+        // var_dump( $row_request_team_check['profile_team_status'] ); 
+
+        if( !isset($row_request_team_check['profiles_team_id']) ){
+            if($status == 'approved'){
+                $status = 'active';
+                $return_profiles_team_id = create_profiles_team( $requester_id, $team_id, $role, $status );
+
+                if(!!$return_profiles_team_id){
+                    $status = 'approved';
+                    $set = 'request_status=?';
+                    $clauseArray = [ $status, $request_id ];
+                    $return_update_request = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );
+
+                    $data->message = 'team member added';
+                    $data->token = exchangeToken($token);
+                    status_return(200);
+                    echo json_encode($data);
+                    $conn->close();
+                    return;
+                }else{
+                    $data->message = "something went wrong";
+                    status_return(400); 
+                    echo json_encode($data);
+                    $conn->close();
+                    return;      
+                }
+            }else{
+                $set = 'status=?';
                 $clauseArray = [ $status, $request_id ];
-                $return_update_request = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );
+                $return_update_profiles = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );
 
-                $data->message = 'team member added';
+                $data->message = 'request updated';
                 $data->token = exchangeToken($token);
                 status_return(200);
                 echo json_encode($data);
                 $conn->close();
                 return;
-            }else{
-                $data->message = "something went wrong";
-                status_return(400); 
-                echo json_encode($data);
-                $conn->close();
-                return;      
             }
         }else{
-            $set = 'status=?';
-            $clauseArray = [ $status, $request_id ];
-            $return_update_profiles = update_table( 'requests', $set, 'request_id', 'si', $clauseArray );
-
-            $data->message = 'request updated';
+            $data->message = 'member already on team';
             $data->token = exchangeToken($token);
-            status_return(200);
+            status_return(400);
             echo json_encode($data);
             $conn->close();
-            return;
+            return; 
         }
     }else{
         $data->message = "request not found";

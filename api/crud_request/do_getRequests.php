@@ -79,8 +79,8 @@ try {
   }
 
   $data->message = "requests found";
-  $data->project_requests = $project_requests;
-  $data->profile_requests = $profile_requests;
+  $data->project_requests = array_reverse($project_requests);
+  $data->profile_requests = array_reverse($profile_requests);
   status_return(200); 
   echo json_encode($data);
   $conn->close();

@@ -17,6 +17,7 @@ if( !isset($request->token) ){
 $token = $request->token;
 $data = new stdClass();
 $teams = [];
+$deleted = 'deleted';
 
 try {
   global $conn;
@@ -39,7 +40,7 @@ try {
 
   if(!!$result && $result->num_rows > 0){  
     while( $row = $result->fetch_assoc() ){
-      if($row['team_status']){      
+      if( $row['team_status'] != $deleted ){      
         if( !in_array( $teams, $row ) ){   
           array_push($teams, $row);
         }
