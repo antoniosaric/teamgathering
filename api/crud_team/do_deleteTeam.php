@@ -5,6 +5,7 @@ include_once('../_database/confi.php');
 include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
 include_once '../_general/functions.php';
+include '../_authorization/do_passwordHash.php';
 include '../_crud/delete.php';
 include '../_crud/update.php';
 include '../_crud/read.php';
@@ -18,7 +19,7 @@ if( !isset($request->team_id) || !isset($request->token) ){
 }
 
 $team_id = intval($request->team_id);
-$pass = trim($request->password);
+$password = trim($request->password);
 $token = $request->token;
 $data = new stdClass();
 $deleted = 'deleted';
@@ -33,7 +34,7 @@ try {
     $clauseArray = [ $profile_id ];
     $row_profile_auth = get_tabel_info_single_row( 'profiles', 'WHERE profile_id=? ', 'i', $clauseArray );
 
-    if( validate_pw($pass, $row_profile_auth["password"]) ){
+    if( !!$row_profile_auth['profile_id'] && validate_pw($password, $row_profile_auth["password"]) ){
 
         $sql = "SELECT DISTINCT teams.team_id FROM teams LEFT JOIN projects ON projects.project_id = teams.project_id WHERE teams.team_id = ? AND projects.owner_id = ?";
         $stmt = $conn->prepare($sql);
@@ -55,7 +56,7 @@ try {
                 $clauseArray = [ $deleted, $team_id ];
                 $return_update_teams = update_table( 'teams', $set, 'team_id', 'si', $clauseArray );
 
-                if( !!$return_delete_team ){
+                if( !!$return_update_teams ){
                     $data->token = exchangeToken($token);
                     $data->message = "team successfully deleted";
                     status_return(200);

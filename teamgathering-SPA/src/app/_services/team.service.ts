@@ -67,6 +67,7 @@ export class TeamService {
 
   deleteTeam(token: any, parameters: any ){
     const params = { ...token, ...parameters };
+    console.log(params)
     return this.http.post( environment.apiUrl + 'crud_team/do_deleteTeam.php', params )
   }
 
