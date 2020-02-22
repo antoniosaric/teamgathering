@@ -19,6 +19,9 @@ export class ProjectEditComponent implements OnInit {
   image:string = '';
   page = 'project';
   status_options: any = ['public', 'private'];
+  deleteState = false;
+  deleteProjectForm: FormGroup;
+  deleteProjectObject: any;
   
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -55,6 +58,12 @@ export class ProjectEditComponent implements OnInit {
       looking_for: [this.project_info.looking_for ],
       stacks: [this.project_info.stacks ]
     })
+
+    this.deleteProjectForm = this.fb.group({
+      deleteText: ['', [ Validators.required, Validators.minLength(5), Validators.maxLength(6), Validators.pattern('(?:^|\W)DELETE(?:$|\W)') ] ],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]]
+    })
+
   }
 
   updateProject(){
@@ -131,4 +140,31 @@ export class ProjectEditComponent implements OnInit {
       })
     })
   }
+
+  changeDeleteState(event){
+    this.deleteProjectForm.reset(this.deleteProjectObject);
+    this.deleteState = event;
+  }
+
+  backToProfile(){
+    this.router.navigate(['/profile/edit']);
+  }
+
+  deleteProject(){
+    this.alertify.confirm('Last Chance To Not Delete This Project', () => {
+      this.authService.checkToken();
+      this.projectService.deleteProject( { 'token': localStorage.getItem('token')}, { 'project_id': this.project_info.project_id, 'password': this.deleteProjectForm.value.password } ).subscribe(next => {
+        this.authService.setToken(next);
+        this.alertify.success('project successfully deleted');
+        this.backToProfile();
+      }, error => {
+        this.alertify.error(error);
+      })
+    })
+    return true;
+  }
+
+
+
+
 }

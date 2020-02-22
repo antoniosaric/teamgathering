@@ -120,7 +120,8 @@
                       <button  type="button" class="btn btn-danger button-radius-delete-badge default-cursor" (click)="deleteTagProject(tag)">X</button>
                     </div>
                   </div>
-                </div>                <hr>
+                </div>
+                <hr>
               </div>
             </tab> 
           </tabset>
@@ -128,6 +129,36 @@
       </div>
     </div>
     </form>
+
+
+  <div class="col-sm-4 mt-2">
+    <button class="btn btn-warning btn-block" (click)="changeDeleteState(true)" *ngIf="deleteState == false">Delete Project</button>  
+    <button class="btn btn-success btn-block" (click)="changeDeleteState(false)" *ngIf="deleteState == true">cancel</button>  
+  </div>
+  <div class="col-sm-4 mt-4" *ngIf="deleteState == true">
+    <p class="warning">To Delete Project, Type DELETE.</p>
+    <form [formGroup]="deleteProjectForm" (ngSubmit)="deleteProject()">
+      <div class="form-group mb-4">
+        <input type="text" 
+        [ngClass]="{'is-invalid': deleteProjectForm.get('deleteText').errors && deleteProjectForm.get('deleteText').touched }"
+        class="form-control mb-2" 
+        formControlName="deleteText" 
+        placeholder="type DELETE">
+        <div class="invalid-feedback" *ngIf="deleteProjectForm.get('deleteText').hasError('pattern') && deleteProjectForm.get('deleteText').touched">to delete Project, type DELETE</div>
+      </div> 
+      <div class="form-group">
+          <input type="password" 
+          [ngClass]="{'is-invalid': deleteProjectForm.get('password').errors && deleteProjectForm.get('password').touched }"
+          class="form-control mt-4" 
+          formControlName="password" 
+          placeholder="password">
+          <div class="invalid-feedback" *ngIf="deleteProjectForm.get('password').hasError('required') && deleteProjectForm.get('password').touched">Password is required &nbsp;</div>
+          <div class="invalid-feedback" *ngIf="deleteProjectForm.get('password').hasError('minlength') && deleteProjectForm.get('password').touched">password must be at least 4 characters</div>
+          <div class="invalid-feedback" *ngIf="deleteProjectForm.get('password').hasError('maxlength') && deleteProjectForm.get('password').touched">password must be less than 16 characters</div>
+      </div> 
+      <button class="btn btn-warning btn-block" [disabled]="!deleteProjectForm.valid">Delete Project</button>
+    </form>
+  </div>
   </div>
   <div class="container mb-4"></div>
 

@@ -50,9 +50,6 @@ try {
         $clauseArray = [ $team_id, $requester_id, $deleted ];
         $row_request_team_check = get_tabel_info_single_row( 'profiles_team', 'WHERE profiles_team.team_id=? AND profiles_team.profile_id=? AND profiles_team.profile_team_status != ? ', 'iis', $clauseArray );
 
-        // var_dump( $row_request_team_check['profiles_team_id'] ); 
-        // var_dump( $row_request_team_check['profile_team_status'] ); 
-
         if( !isset($row_request_team_check['profiles_team_id']) ){
             if($status == 'approved'){
                 $status = 'active';

@@ -24,6 +24,7 @@ $profile = [];
 $saved_team_array = [];
 $tags = [];
 $profile_access_status = false;
+$deleted = 'deleted';
 
 try {
     global $conn;
@@ -32,8 +33,8 @@ try {
     $pro_info = !!$token ? returnTokenProfileId($token) : false;
     $profile_id = !!$pro_info ? intval($pro_info->profile_id) : false;
 
-    $clauseArray = [ $project_id ];
-    $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=?', 'i', $clauseArray );
+    $clauseArray = [ $project_id, $deleted ];
+    $row_project = get_tabel_info_single_row( 'projects', 'WHERE project_id=? AND project_status !=?', 'is', $clauseArray );
 
     if(!!$row_project['project_id']){
 

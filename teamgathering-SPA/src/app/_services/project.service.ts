@@ -47,4 +47,8 @@ constructor( private http: HttpClient ) { }
     return this.http.post( environment.apiUrl + 'crud_project/do_getProjects.php', token )
   }
 
+  deleteProject(token: any, parameters: any ){
+    const params = { ...token, ...parameters };
+    return this.http.post( environment.apiUrl + 'crud_project/do_deleteProject.php', params )
+  }
 }

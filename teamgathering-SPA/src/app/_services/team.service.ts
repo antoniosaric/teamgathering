@@ -60,18 +60,17 @@ export class TeamService {
     )
   }
 
-  updateRole(token: any, parameters: any ){
+  updateRole( token: any, parameters: any ){
     const params = { ...token, ...parameters };
     return this.http.post( environment.apiUrl + 'crud_team/do_updateRole.php', params )
   }
 
-  deleteTeam(token: any, parameters: any ){
+  deleteTeam( token: any, parameters: any ){
     const params = { ...token, ...parameters };
-    console.log(params)
     return this.http.post( environment.apiUrl + 'crud_team/do_deleteTeam.php', params )
   }
 
-  deleteProfileFromTeam(token: any, parameters: any ){
+  deleteProfileFromTeam( token: any, parameters: any ){
     const params = {...token, ...parameters }
     return this.http.post( environment.apiUrl + 'crud_profiles_team/do_deleteProfilesTeam.php', params )
   }
