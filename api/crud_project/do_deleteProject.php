@@ -9,6 +9,8 @@ include '../_authorization/do_passwordHash.php';
 include '../_crud/delete.php';
 include '../_crud/update.php';
 include '../_crud/read.php';
+require '../_general/autoload.php';
+
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
@@ -39,6 +41,19 @@ try {
         $sql = "UPDATE projects SET project_status=? WHERE project_id = ( SELECT DISTINCT projects.project_id FROM projects WHERE projects.project_id = ? AND projects.owner_id = ? )";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param('sii', $deleted, $project_id, $profile_id);
+
+        try {
+            // delete image
+            \Cloudinary::config(array(
+                'cloud_name' => $cloud_name,
+                'api_key' => $api_key,
+                'api_secret' => $api_secret, 
+                "secure" => true
+            ));
+        
+            $files['deleted_image'] = \Cloudinary\Uploader::destroy('project_'.$project_id );
+            
+        }catch (Exception $e ){}    
 
         if($stmt->execute()){
             if( intval($stmt->affected_rows) > 0 ){
@@ -84,14 +99,14 @@ try {
                 }
             }else{
                 $data->message = "something went wrong";
-                status_return(400); 
+                status_return(500); 
                 echo json_encode($data);
                 $conn->close();
                 return;         
             }
         }else{
             $data->message = "something went wrong";
-            status_return(400); 
+            status_return(500); 
             echo json_encode($data);
             $conn->close();
             return;      

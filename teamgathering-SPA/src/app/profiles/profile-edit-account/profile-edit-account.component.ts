@@ -100,7 +100,7 @@ export class ProfileEditAccountComponent implements OnInit {
   deleteAccount(){
     if( this.deleteAccountForm.valid ){
       this.deleteAccountObject = Object.assign( {}, {...this.deleteAccountForm.value } );
-      this.accountService.updatePassword( { 'token': localStorage.getItem('token') }, this.deleteAccountObject).subscribe(() => {
+      this.accountService.deleteAccount( { 'token': localStorage.getItem('token') }, this.deleteAccountObject).subscribe(() => {
         this.alertify.success('account deleted');
         this.deleteAccountForm.reset(this.deleteAccountObject);
       }, error => {

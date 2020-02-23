@@ -21,7 +21,7 @@ constructor(
     return this.http.post( environment.apiUrl + '_authorization/do_updatePassword.php', params )
   }
 
-  DeleteAccount( token: any, parameters: any ){
+  deleteAccount( token: any, parameters: any ){
     const params = {...token, ...parameters }
     return this.http.post( environment.apiUrl + 'crud_profile/do_deleteProfile.php', params )
   }
