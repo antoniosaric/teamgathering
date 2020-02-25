@@ -14,8 +14,6 @@ constructor( private http: HttpClient ) { }
 
   getHomepage(token: any): Observable<Project[]> {
     const params = { ...token }
-    console.log('%%%%%%%%%')
-    console.log(params)
     return this.http.post<Project[]>( environment.apiUrl + 'main/homepage.php', params )
   }
 
