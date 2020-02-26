@@ -9,12 +9,12 @@ include '../_crud/read.php';
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-if( !isset($request->token) ){
-//   include '../_general/cors.php';
-  die();
+$token = ( !!isset($request->token) ) ? ( $request->token != null ) ? $request->token : false : false;
+if( $token == false ){
+    //   include '../_general/cors.php';
+    die();
 }
 
-$token = ( $request->token != null ) ? $request->token : false;
 $data = new stdClass();
 $profiles = [];
 $projects = [];

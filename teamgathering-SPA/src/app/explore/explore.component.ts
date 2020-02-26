@@ -40,10 +40,8 @@ export class ExploreComponent implements OnInit {
 
   search(){
     this.searchService.search( { 'token': this.authService.checkTokenExists() }, this.model).subscribe(next => {
-      console.log(next)
       this.setSearchResults(next);
       this.suggestions = false;
-      this.alertify.success('Logged in Successfully');
     }, error => {
       this.alertify.error(error);
     })
@@ -56,7 +54,6 @@ export class ExploreComponent implements OnInit {
       this.toggleProfile = true;
       this.toggleProject = true;
       this.suggestions = true;
-      this.alertify.success('Logged in Successfully');
     }, error => {
       this.alertify.error(error);
     })

@@ -37,6 +37,29 @@ function mysqli_check(){
     }
   }
 
+  function depth_picker($arr) {
+    $collect = array();   
+    for ($i=0; $i<sizeof($arr);$i++) {
+        $collect [] = $arr[$i];
+    }   
+      
+    for ($n=1; $n<sizeof($arr);$n++) {
+        $arr[0] = $arr[0].' '.$arr[$n];
+        $collect [] = $arr[0];    
+    }      
+    return array_reverse($collect);
+  }
+  
+  function clauseFiller($arr, $count){
+    $dataReturn = array();
+    for ($i=0; $i<$count;$i++) {
+      for ($j=0; $j<sizeof($arr);$j++) {
+        array_push($dataReturn, $arr[$j]);
+      } 
+    } 
+    return $dataReturn;
+  }
+
   function unique_multidim_array($array, $key) {
     $arrayCount = count($array);
     $temp_array = array();
