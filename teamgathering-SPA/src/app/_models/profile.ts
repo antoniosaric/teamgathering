@@ -1,6 +1,7 @@
 import { Project } from './project';
 import { Team } from './team';
 import { Tag } from './tag';
+import { Follow } from './follow';
 
 export interface Profile {
     
@@ -18,6 +19,7 @@ export interface Profile {
     projects?: Project[];
     teams?: Team[];
     tags?: Tag[];
+    follows?: Follow[];
     team_name?: string;
     team_id?: number;
     project_name?: string;

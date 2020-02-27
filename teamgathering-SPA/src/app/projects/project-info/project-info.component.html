@@ -23,7 +23,7 @@
           </div>
           <div class="card-footer">
             <div class="btn-group d-flex" *ngIf="project_info?.owner_id != authService.profile_id && authService.checkTokenExists() != null">
-              <button class="btn-secondary w-100">Follow</button>
+              <button class="btn-secondary w-100" (click)="addFollow(project_info?.project_id)">Follow</button>
               <button class="btn-secondary w-100" (click)="requestJoinProject(project_info?.project_id)">Request Join</button>
             </div>
             <div class="btn-group d-flex" *ngIf="project_info?.owner_id == authService.profile_id">

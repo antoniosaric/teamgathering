@@ -5,6 +5,7 @@ import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileService } from 'src/app/_services/profile.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { TagService } from 'src/app/_services/tag.service';
+import { FollowService } from 'src/app/_services/follow.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -32,7 +33,8 @@ export class ProfileEditComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private tagService: TagService
+    private tagService: TagService,
+    private followService: FollowService
   ) { }
 
   ngOnInit() {
@@ -120,4 +122,26 @@ export class ProfileEditComponent implements OnInit {
       })
     })
   }
+
+  removeFollowFromProfileObject(follow){
+    this.profile_info.follows.splice(this.profile_info.follows.findIndex(v => v.follow_id === follow.follow_id), 1);
+  }
+
+  deleteFollow(data){
+    this.authService.checkToken();
+    this.followService.deleteFollow({ 'token': localStorage.getItem('token') }, {'project_id': data.project_id}).subscribe(next => {
+      this.authService.setToken(next);
+      this.removeFollowFromProfileObject(data);
+      this.alertify.success('unfollowed project');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+
+    })
+  }
+
+
+
+
+
 }

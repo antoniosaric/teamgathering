@@ -4,6 +4,7 @@ import { ProjectService } from 'src/app/_services/project.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { RequestService } from 'src/app/_services/request.service';
+import { FollowService } from 'src/app/_services/follow.service';
 
 @Component({
   selector: 'app-project-info',
@@ -19,7 +20,8 @@ export class ProjectInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public authService: AuthService,
-    private requestService: RequestService
+    private requestService: RequestService,
+    private followService: FollowService
   ) { }
 
   ngOnInit() {
@@ -48,6 +50,7 @@ export class ProjectInfoComponent implements OnInit {
   }
 
   requestJoinProject(project_id){
+    this.authService.checkToken();
     this.requestService.addRequest({ 'token': localStorage.getItem('token') }, {'project_id': project_id}).subscribe(next => {
       this.authService.setToken(next);
       this.alertify.success('request made');
@@ -73,6 +76,18 @@ export class ProjectInfoComponent implements OnInit {
     }else{
       return 'red';
     }
+  }
+
+  addFollow(project_id){
+    this.authService.checkToken();
+    this.followService.addFollow({ 'token': localStorage.getItem('token') }, {'project_id': project_id}).subscribe(next => {
+      this.authService.setToken(next);
+      this.alertify.success('following project');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {
+
+    })
   }
 
 }

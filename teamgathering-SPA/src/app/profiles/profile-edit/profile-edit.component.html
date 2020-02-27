@@ -123,6 +123,19 @@
           <tab heading="Messages">
               <h5>Messages</h5>
           </tab> 
+          <tab heading="Following">
+            <ol>
+              <div *ngFor="let follow of profile_info?.follows">
+                <hr>
+                <li>
+                  <h4>
+                    <a [routerLink]="['/project-info/', follow.project_id]">{{follow.project_name}}</a>
+                    <button  type="button" class="btn btn-xs btn-danger ml-3" (click)="deleteFollow(follow)">Unfollow</button>
+                  </h4>
+                </li>
+              </div>
+            </ol>
+          </tab> 
         </tabset>
       </div>
     </div>

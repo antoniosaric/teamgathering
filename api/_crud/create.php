@@ -147,6 +147,23 @@ function create_projects_tag( $project_id , $tag_id  ){
     $stmt->close();
 }
 
+function create_follow( $profile_id , $project_id ){
+
+    global $conn;
+
+    $sql = "INSERT INTO `follows` ( `profile_id` , `project_id` ) VALUES (?,?)";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("ii", $profile_id , $project_id  );
+
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
+}
+
 ?>
 
 

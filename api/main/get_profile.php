@@ -19,6 +19,7 @@ $profile = new stdClass();
 $projects = []; 
 $teams = []; 
 $tags = [];
+$follows = [];
 $data = new stdClass();
 
 try {
@@ -97,6 +98,23 @@ try {
         }
     }
 
+    $sql5 = "SELECT DISTINCT projects.project_id, projects.project_name, follows.follow_id FROM follows LEFT JOIN projects ON projects.project_id = follows.project_id WHERE follows.profile_id = ".$profile_id." ORDER BY follows.created_date DESC";
+
+    $stmt5 = $conn->prepare($sql5);
+    $stmt5->execute();
+    $result5 = $stmt5->get_result();
+    $stmt5->close();
+
+    if(!!$result5 && $result5->num_rows > 0){  
+        while( $row5 = $result5->fetch_assoc() ){
+            if( !!$row5["follow_id"] ){ 
+                if( !in_array( $row5, $follows) ){                   
+                    array_push( $follows, $row5 );
+                }
+            }
+        }
+    }
+
     if( !!$row_profile['profile_id'] ){
         $profile->profile_id = $row_profile['profile_id'];
         $profile->email = $row_profile['email'];
@@ -112,6 +130,7 @@ try {
         $profile->teams = $teams;
         $profile->projects = $projects;
         $profile->tags = $tags;
+        $profile->follows = $follows;
         $data->profile = $profile;
         $data->message = "profile retrieved";
         status_return(200);
