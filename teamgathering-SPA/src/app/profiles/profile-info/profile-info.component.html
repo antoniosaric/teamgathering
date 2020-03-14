@@ -26,7 +26,8 @@
           <div class="card-footer">
             <div class="btn-group d-flex" *ngIf="authService.checkTokenExists() != null">
               <!-- <button class="btn-secondary w-100">Like</button> -->
-              <button class="btn-secondary w-100">Message</button>
+              <!-- <button class="btn-secondary w-100" type="button" (click)="openChatInMessages(true)">Message</button> -->
+              <button class="btn-secondary w-100" type="button">Message</button>
             </div>
           </div>
         </div>

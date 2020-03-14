@@ -43,7 +43,7 @@ try {
     WHERE profiles_team.team_id IN ( 
         SELECT DISTINCT profiles_team.team_id 
         FROM profiles_team 
-        WHERE profiles_team.profile_id = ".$profile_id." ) AND profiles.profile_id != ".$profile_id." AND profiles_team.profile_team_status != 'deleted' ORDER BY projects.project_id, teams.team_id";
+        WHERE profiles_team.profile_id = ".$profile_id." ) AND profiles.profile_id != ".$profile_id." AND profiles_team.profile_team_status != 'deleted' ORDER BY projects.project_id, teams.team_id, profiles.last_name";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();

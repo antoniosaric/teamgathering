@@ -35,7 +35,25 @@ constructor( private http: HttpClient ) { }
   }
 
   updateProfile( token: any, profile_info: Profile ){
-    const params = {...token, ...profile_info }
+    const params = {...token, ...profile_info };
     return this.http.post( environment.apiUrl + 'crud_profile/do_updateProfile.php', params )
   }
+
+  getMessage(token: any, profile_info: any){
+    const params = {...token, ...profile_info }
+    return this.http.post( environment.apiUrl + 'crud_message/do_getThread.php', params )
+  }
+
+  getMessages(token: any){
+    return this.http.post( environment.apiUrl + 'crud_message/do_getMessages.php', token )
+  }
+
+  postMessage( token: any, message_info: any ){
+    const params = {...token, ...message_info };
+    console.log(params)
+    return this.http.post( environment.apiUrl + 'crud_message/do_createMessage.php', params )
+  }
+
+
+
 }

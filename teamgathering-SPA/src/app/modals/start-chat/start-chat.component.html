@@ -1,0 +1,30 @@
+<div class="modal-content" *ngIf="chatArrayCountCheck()">
+  <form [formGroup]="startChat" (ngSubmit)="startChatSend()">
+    <div class="modal-header">
+      <div class="form-group">
+        <h2>Send A message to:</h2>
+        <select class="form-control" *ngIf="start_chat_select_array.length == 1" formControlName="recipient">
+          <option *ngFor="let associate of start_chat_select_array" [ngValue]="associate">{{assignName(associate)}}</option>
+        </select>
+        <select class="form-control" *ngIf="start_chat_select_array.length > 1" formControlName="recipient">
+          <option disabled [ngValue]="''">please choose an associate</option>
+          <option *ngFor="let associate of start_chat_select_array" [ngValue]="associate" [disabled]="!checkName(associate)">{{assignName(associate)}}</option>
+        </select>
+      </div>  
+    </div>
+    <div class="modal-body mt-2">
+      <div class="form-group">
+        <textarea id="message" cols="30" rows="6" class="form-control" formControlName="message"></textarea>
+      </div> 
+    </div>
+      <div class="modal-footer">
+      <div class="modal-footer">
+        <button class="btn btn-success" type="submit" [disabled]="!startChat.valid">Send</button>
+        <button type="button" class="btn btn-warning" (click)="closeModal()">Close</button>
+      </div>  
+    </div>
+  </form>
+</div>
+<div class="modal-content" *ngIf="!chatArrayCountCheck()">
+  <h2>You need to have associates to send messages</h2>
+</div>

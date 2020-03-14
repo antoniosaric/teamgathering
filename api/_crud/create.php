@@ -90,6 +90,23 @@ function create_tag( $tag_name ) {
     $stmt->close();
 }
 
+function create_message( $profile_id, $recipient_id, $message, $zero ){
+
+    global $conn;
+
+    $sql = "INSERT INTO `messages` ( `sender_id`, `recipient_id`, `message`, IsRead ) VALUES ( ?,?,?,? )";
+	$stmt = $conn->prepare($sql);
+	$stmt->bind_param("iisi", $profile_id, $recipient_id, $message, $zero );
+
+    if ($stmt->execute()) {
+    	$return_id = $conn->insert_id;
+    	return $return_id;
+    } else {
+    	return false;
+    }
+    $stmt->close();
+}
+
 // ======================================================================
 //  JOIN TABLES
 // ======================================================================

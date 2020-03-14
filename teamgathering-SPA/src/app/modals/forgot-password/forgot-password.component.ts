@@ -18,7 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(
     private authService: AuthService, 
     private alertify: AlertifyService, 
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {

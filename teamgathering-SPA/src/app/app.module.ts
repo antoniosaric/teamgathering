@@ -61,6 +61,7 @@ import { ForgotPasswordComponent } from './modals/forgot-password/forgot-passwor
 import { TagProfileComponent } from './modals/tag/tag-profile/tag-profile.component';
 import { TagProjectComponent } from './modals/tag/tag-project/tag-project.component';
 import { UpdateRoleComponent } from './modals/update-role/update-role.component';
+import { StartChatComponent } from './modals/start-chat/start-chat.component';
 
 
 
@@ -90,6 +91,7 @@ import { UpdateRoleComponent } from './modals/update-role/update-role.component'
       ProjectAddComponent,
       ProfileEditAccountComponent,
       ForgotPasswordComponent,
+      StartChatComponent,
       TeamEditComponent,
       TeamAddComponent,
       ExploreComponent,

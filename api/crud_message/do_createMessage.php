@@ -6,21 +6,20 @@ include_once('../_authorization/assignVerifyJWT.php');
 include_once '../_general/status_returns.php';
 include_once '../_general/functions.php';
 include '../_crud/create.php';
+include '../_crud/update.php';
 include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-if( !isset($request->tag) || !isset($request->token) ){
+if( !isset($request->token) ){
     // include '../_general/cors.php';
     die();
 }
-$tag = strtolower(trim($request->tag));
-$tag_new = "%{$tag}%";
+$recipient_id = intval($request->recipient_id);
+$message = trim($request->message);
 $token = $request->token;
-
 $data = new stdClass();
-$tag_array = [];
 
 try {
     mysqli_check();
@@ -29,31 +28,22 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $sql = "SELECT DISTINCT tag_name FROM tags WHERE LOWER( tag_name ) RLIKE ? "; 
-	$stmt = $conn->prepare($sql);
-	$stmt->bind_param("s", $tag );
+    $return_message_id = create_message( $profile_id, $recipient_id, $message, 0 );
 
-    if ($stmt->execute()) {
-        $result = $stmt->get_result();
-        while( $row = $result->fetch_assoc() ){
-            if( !in_array( $row, $tag_array ) ){                   
-                array_push( $tag_array, $row );
-            }
-        }
-        $data->tags = $tag_array;
-        $data->message = "tags found";
-        status_return(200);
+    if(!!$return_message_id){
+        $data->message = "message created";
+        $data->token = exchangeToken($token);
+        status_return(200); 
         echo json_encode($data);
-        $stmt->close();
-        return;
-    } else {
-        $data->message = "tags not found";
+        $conn->close();
+        return; 
+    }else{
+        $data->message = "something went wrong";
         status_return(400); 
         echo json_encode($data);
-        $stmt->close();
+        $conn->close();
         return;
     }
-    $conn->close();
 }catch (Exception $e ){
     status_return(500);
     echo($e->message);

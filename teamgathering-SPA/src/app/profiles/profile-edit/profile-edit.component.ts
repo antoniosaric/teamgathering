@@ -16,7 +16,7 @@ export class ProfileEditComponent implements OnInit {
   @ViewChild('editForm', {static:true}) editForm: FormGroup;
   profile_info: any;
   state = 'profile';
-  image:string = '';
+  image: string = '';
   page = 'profile';
   
   @HostListener('window:beforeunload', ['$event'])
