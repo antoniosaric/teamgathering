@@ -7,7 +7,7 @@
           <option *ngFor="let associate of start_chat_select_array" [ngValue]="associate">{{assignName(associate)}}</option>
         </select>
         <select class="form-control" *ngIf="start_chat_select_array.length > 1" formControlName="recipient">
-          <option disabled [ngValue]="''">please choose an associate</option>
+          <option disabled [ngValue]="'default'">please choose an associate</option>
           <option *ngFor="let associate of start_chat_select_array" [ngValue]="associate" [disabled]="!checkName(associate)">{{assignName(associate)}}</option>
         </select>
       </div>  

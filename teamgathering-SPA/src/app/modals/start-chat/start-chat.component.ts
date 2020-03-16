@@ -38,10 +38,17 @@ export class StartChatComponent implements OnInit {
   }
 
   startChatForm(){
-    this.startChat = this.fb.group({
-      message: [ '', [ Validators.required ] ],
-      recipient: [ '', [ Validators.required ] ]
-    })
+    if(this.start_chat_select_array.length == 1){
+      this.startChat = this.fb.group({
+        message: [ '', [ Validators.required ] ],
+        recipient: [ this.start_chat_select_array[0], [ Validators.required ] ]
+      })
+    }else{
+      this.startChat = this.fb.group({
+        message: [ '', [ Validators.required ] ],
+        recipient: [ '', [ Validators.required ] ]
+      })
+    }
   }
 
   startChatSend(){
@@ -50,7 +57,6 @@ export class StartChatComponent implements OnInit {
       this.message_info = Object.assign( {}, { ...{ 'message': this.startChat.value.message}, ...{'recipient_id': this.startChat.value.recipient.profile_id } } 
       );
       this.profileService.postMessage({ 'token': localStorage.getItem('token') }, this.message_info ).subscribe(next => {
-        // this.router.navigate(['/messages']);
         this.outputUpdateMessage.emit(this.startChat.value.recipient.profile_id);
         this.onSetChatState.emit(false);
         this.startChat.reset(this.message_info);

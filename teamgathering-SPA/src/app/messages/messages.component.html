@@ -24,7 +24,7 @@
           <button type="button btn-success" (click)="onSetChatState(true)"><i class="fa fa-envelope"></i>New Message</button>
         </div>
         <div class="inbox-chat">
-          <ul class="no-indent">
+          <ul class="no-indent pointer">
             <li *ngFor="let message of messages; let i = index">
               <div class="chat-list" [ngClass]="{'active-chat': checkActive(i)}" *ngIf=true>
                 <!-- <div class="chat-list active-chat" *ngIf=true> -->

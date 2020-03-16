@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { environment } from '../../environments/environment';
 import { ProfileService } from '../_services/profile.service';
@@ -27,6 +27,7 @@ export class MessagesComponent implements OnInit {
   profiles: Profile[];
   message_state = true;
   start_chat_select_array = [];
+  interval: any;
 
   constructor( private authService: AuthService,
     private profileService: ProfileService, 
@@ -42,16 +43,29 @@ export class MessagesComponent implements OnInit {
     this.getMessages();
   }
 
+  ngOnDestroy() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  startCheckingThreads(profile_id){
+    this.getMessage( profile_id );
+    this.interval = setInterval(() => {
+      this.getMessage( profile_id );
+    }, 10000);
+  }
+
   getMessages(){
     this.profileService.getMessages({ 'token': localStorage.getItem('token') }).subscribe(next => {
       this.messages = next['messages'];
       if( next['messages'].length > 0 ){
         var reply_id = this.messages[0].sender_id == this.profile_id ? this.messages[0].recipient_id : this.messages[0].sender_id;
         this.selected_image = this.messages[0].image;
-        this.getMessage( reply_id );
         this.selected_index = 0;
         this.selected_id = reply_id;
         this.message_state = true;
+        this.startCheckingThreads(reply_id)
       }else{
         this.message_state = false;
         this.selected_index = null;
@@ -115,6 +129,7 @@ export class MessagesComponent implements OnInit {
         "message_id":0
       }; 
       this.threads.push(post);
+      this.model.message = '';
     }, error => {
       this.alertify.error(error);
     })
@@ -153,7 +168,7 @@ export class MessagesComponent implements OnInit {
     this.selected_image = data.image;
     this.selected_index = index;
     this.selected_id = select_id;
-    this.getMessage(select_id);
+    this.startCheckingThreads(select_id)
   }
 
   onSetChatState(event){

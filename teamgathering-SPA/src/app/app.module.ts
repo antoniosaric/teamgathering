@@ -113,6 +113,7 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
       UpdateRoleComponent
    ],
    imports: [
+      RouterModule,
       BrowserModule,
       AppRoutingModule,
       HttpClientModule,
@@ -125,7 +126,6 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
       BrowserAnimationsModule,
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
-      RouterModule,
       ImageCropperModule,
       // JwtModule.forRoot({
       //    config:{

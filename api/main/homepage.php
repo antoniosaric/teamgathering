@@ -1,6 +1,7 @@
 <?php
 ob_start();
 include_once('../_database/confi.php');
+include_once('../_authorization/assignVerifyJWT.php');
 include '../_general/status_returns.php';
 include '../_general/functions.php';
 
@@ -30,9 +31,11 @@ try {
           LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id";
 
   if(!!$token){
-    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND profiles_team.role != 'Owner'";
+    $pro_info = returnTokenProfileId($token);
+    $profile_id = intval($pro_info->profile_id);
+    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND projects.owner_id != ".$profile_id;
   }else{
-    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND projects.project_status = 'public' AND profiles_team.role != 'Owner'";
+    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'public' AND projects.project_status != 'private' ) ";
   }
 
   $stmt = $conn->prepare($sql);

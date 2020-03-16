@@ -111,7 +111,8 @@
             <div *ngFor="let team of profile_info?.teams">
               <hr>
               <h4>
-                <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a>
+                <!-- <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a> -->
+                {{team.team_name}}
                 <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
               </h4>
               <h5>Role: {{team.role}}</h5>

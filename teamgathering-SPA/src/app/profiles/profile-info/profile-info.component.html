@@ -1,3 +1,11 @@
+<div class="bg-secondary chat" *ngIf="modalState==true">
+  <app-start-chat 
+    (onSetChatState)="openChatInMessages($event)" 
+    (outputUpdateMessage)="outputUpdateMessage($event)" 
+    [start_chat_select_array]="associate">
+  </app-start-chat>
+</div>
+
 <div class="container mt-4">
     <div class="row">
       <div class="col-sm-4">
@@ -24,10 +32,11 @@
             </div>  
           </div>
           <div class="card-footer">
-            <div class="btn-group d-flex" *ngIf="authService.checkTokenExists() != null">
-              <!-- <button class="btn-secondary w-100">Like</button> -->
-              <!-- <button class="btn-secondary w-100" type="button" (click)="openChatInMessages(true)">Message</button> -->
-              <button class="btn-secondary w-100" type="button">Message</button>
+            <div class="btn-group d-flex" *ngIf="profile_info?.profile_id != authService.profile_id && authService.checkTokenExists() != null">
+              <button class="btn-secondary w-100" type="button" (click)="openChatInMessages(true)">Message</button>
+            </div>
+            <div class="btn-group d-flex" *ngIf="profile_info?.profile_id == authService.profile_id && authService.checkTokenExists() != null">
+              <button class="btn-secondary w-100" type="button" [routerLink]="['/profile/edit/']">Edit Profile</button>
             </div>
           </div>
         </div>
