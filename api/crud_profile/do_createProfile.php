@@ -17,7 +17,7 @@ $first_name = isset($request->first_name) && strlen($request->first_name) > 0 ? 
 $last_name = isset($request->last_name) && strlen($request->last_name) > 0 ? trim($request->last_name) : false;
 
 if( !$email && !$password && !$zip_code && !$first_name && !$last_name ){
-    include '../_general/cors.php';
+    // include '../_general/cors.php';
     die();
 }
 

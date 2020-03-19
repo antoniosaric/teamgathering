@@ -10,7 +10,7 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
 if( !isset($request->token) ){
-  include '../_general/cors.php';
+//   include '../_general/cors.php';
   die();
 }
 

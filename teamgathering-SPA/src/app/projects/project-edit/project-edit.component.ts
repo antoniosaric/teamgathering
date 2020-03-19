@@ -82,7 +82,7 @@ export class ProjectEditComponent implements OnInit {
         this.authService.setToken(next);
 
         this.alertify.success('Project update successful');
-        this.editForm.reset(this.project_info);
+        this.editForm.reset();
       }, error => {
         this.alertify.error(error);
       }, () => {
@@ -123,8 +123,8 @@ export class ProjectEditComponent implements OnInit {
     this.project_info.tags.splice(this.project_info.tags.findIndex(v => v.tag_id === tag.tag_id), 1);
   }
 
-  addTagToProjectObject(tag){
-    this.project_info.tags.push(tag);
+  addTagToProjectObject(next, tag_name){
+    this.project_info.tags.push({ 'tag_name': tag_name, 'tag_id': next.tag_id });
   }
 
   deleteTagProject(tag){
@@ -164,6 +164,20 @@ export class ProjectEditComponent implements OnInit {
     return true;
   }
 
+  addTag(tag){
+    console.log(tag)
+    if( tag != '' && tag != null && tag != undefined){
+      this.tagService.addTagProject({ 'token': localStorage.getItem('token') }, tag ).subscribe(next => {
+        this.authService.setToken(next);
+        this.addTagToProjectObject( next, tag.tag_name )
+        this.alertify.success('skill added successfully');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+        this.router.navigate(['/project/edit/'+this.project_id]);
+      })
+    }
+  }
 
 
 

@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./tag-project.component.css']
 })
 export class TagProjectComponent implements OnInit {
-  @Output() returnTagId = new EventEmitter<object>();
+  @Output() returnTag = new EventEmitter<object>();
   @Input() project_id: string; 
   @Input() page: string; 
   input_string: string;
@@ -93,22 +93,27 @@ export class TagProjectComponent implements OnInit {
     }
   }
 
-  addTagToProject( next, tag_name ){
-    this.returnTagId.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
-  }
+  // addTagToProject( next, tag_name ){
+  //   this.returnTag.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
+  // }
 
   addTag(tag){
     if( tag != '' && tag != null && tag != undefined){
-      this.tagService.addTagProject({ 'token': localStorage.getItem('token') }, { 'tag_name': tag, 'project_id': this.project_id  } ).subscribe(next => {
-        this.authService.setToken(next);
-        this.addTagToProject( next, tag )
-        this.alertify.success('skill added successfully');
-        this.searchTagsCtrl.reset()
-      }, error => {
-        this.alertify.error(error);
-      }, () => {
-        this.router.navigate(['/project/edit/'+this.project_id]);
-      })
+
+
+      this.returnTag.emit( { 'tag_name': tag, 'project_id': this.project_id } );
+      this.searchTagsCtrl.reset()
+
+      // this.tagService.addTagProject({ 'token': localStorage.getItem('token') }, { 'tag_name': tag, 'project_id': this.project_id  } ).subscribe(next => {
+      //   this.authService.setToken(next);
+      //   this.addTagToProject( next, tag )
+      //   this.alertify.success('skill added successfully');
+      //   this.searchTagsCtrl.reset()
+      // }, error => {
+      //   this.alertify.error(error);
+      // }, () => {
+      //   this.router.navigate(['/project/edit/'+this.project_id]);
+      // })
     }
   }
 

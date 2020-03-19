@@ -16,7 +16,7 @@ $password = isset($request->password) && strlen($request->password) > 0 ? trim($
 $data = new stdClass();
 
 if(!$email && !$password ){
-  include '../_general/cors.php';
+  // include '../_general/cors.php';
   die();
 }
 

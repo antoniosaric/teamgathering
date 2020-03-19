@@ -15,7 +15,7 @@ $token = $request->token;
 $data = new stdClass();
 
 if( !$profile_id ){
-    include '../_general/cors.php';
+    // include '../_general/cors.php';
     die();
 }
 

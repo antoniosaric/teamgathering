@@ -1,6 +1,6 @@
 <?php
 ob_start();
-$configTG = parse_ini_file("../../config.ini");
+$configTG = parse_ini_file("../config.ini");
 $config['HTTP_HOST'] = $_SERVER['HTTP_HOST'];
 
 $config['HTTPS'] = isset($_SERVER['HTTPS']) ? 'https://' : 'http://';     

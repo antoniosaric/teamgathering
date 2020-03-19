@@ -58,7 +58,7 @@ export class ProfileEditComponent implements OnInit {
   updateProfile(){
     this.authService.checkToken();
     if( this.editForm.valid ){
-      this.profile_info = Object.assign( {}, {...this.editForm.value, ...{ image: this.profile_info.image }, ...{ tags: this.profile_info.tags } } );
+      this.profile_info = Object.assign( {}, {...this.editForm.value, ...{ image: this.profile_info.image }, ...{ tags: this.profile_info.tags }, ...{ follows: this.profile_info.follows }, ...{ projects: this.profile_info.projects }, ...{ teams: this.profile_info.teams } } );
       this.profileService.updateProfile({ 'token': localStorage.getItem('token') }, this.profile_info).subscribe(next => {
         this.authService.setProfileName(this.profile_info);
         this.authService.setToken(next);
@@ -104,8 +104,8 @@ export class ProfileEditComponent implements OnInit {
     this.profile_info.tags.splice(this.profile_info.tags.findIndex(v => v.tag_id === tag.tag_id), 1);
   }
 
-  addTagToProfileObject(tag){
-    this.profile_info.tags.push(tag);
+  addTagToProfileObject(next, tag_name){
+    this.profile_info.tags.push({ 'tag_name': tag_name, 'tag_id': next.tag_id });
   }
 
   deleteTag(tag){
@@ -140,7 +140,19 @@ export class ProfileEditComponent implements OnInit {
     })
   }
 
-
+  addTag(tag){
+    if( tag != '' && tag != null && tag != undefined){
+      this.tagService.addTag({ 'token': localStorage.getItem('token') }, tag ).subscribe(next => {
+        this.authService.setToken(next);
+        this.addTagToProfileObject( next, tag.tag_name )
+        this.alertify.success('skill added successfully');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+        this.router.navigate(['/profile/edit']);
+      })
+    }
+  }
 
 
 

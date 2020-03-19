@@ -11,7 +11,7 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
 if( !isset($request->token) ){
-    include '../_general/cors.php';
+    // include '../_general/cors.php';
     die();
 }
 $zip_code = isset($request->zip_code) && strlen($request->zip_code) > 0 ? trim($request->zip_code) : false;

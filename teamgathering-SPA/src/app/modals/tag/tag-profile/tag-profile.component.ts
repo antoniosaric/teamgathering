@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./tag-profile.component.css']
 })
 export class TagProfileComponent implements OnInit {
-  @Output() returnTagId = new EventEmitter<object>();
+  @Output() returnTag = new EventEmitter<object>();
   @Input() page: string; 
   input_string: string;
   tag_string: string;
@@ -92,22 +92,26 @@ export class TagProfileComponent implements OnInit {
     }
   }
 
-  addTagToProfile( next, tag_name ){
-    this.returnTagId.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
-  }
+  // addTagToProfile( next, tag_name ){
+  //   this.returnTag.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
+  // }
 
   addTag(tag){
     if( tag != '' && tag != null && tag != undefined){
-      this.tagService.addTag({ 'token': localStorage.getItem('token') }, { 'tag_name': tag } ).subscribe(next => {
-        this.authService.setToken(next);
-        this.addTagToProfile( next, tag )
-        this.alertify.success('skill added successfully');
-        this.searchTagsCtrl.reset()
-      }, error => {
-        this.alertify.error(error);
-      }, () => {
-        this.router.navigate(['/profile/edit']);
-      })
+
+      this.returnTag.emit( { 'tag_name': tag } );
+      this.searchTagsCtrl.reset()
+
+    //   this.tagService.addTag({ 'token': localStorage.getItem('token') }, { 'tag_name': tag } ).subscribe(next => {
+    //     this.authService.setToken(next);
+    //     this.addTagToProfile( next, tag )
+    //     this.alertify.success('skill added successfully');
+    //     this.searchTagsCtrl.reset()
+    //   }, error => {
+    //     this.alertify.error(error);
+    //   }, () => {
+    //     this.router.navigate(['/profile/edit']);
+    //   })
     }
   }
 

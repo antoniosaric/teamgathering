@@ -2,7 +2,7 @@
 
 function assignToken( $profile_id, $first_name = NULL, $last_name = NULL, $email = NULL ){
 
-    $configTG = parse_ini_file("../../config.ini");
+    $configTG = parse_ini_file("../config.ini");
     $tokenId    = base64_encode(random_bytes(32));
     $issuedAt   = time();
     $notBefore  = $issuedAt;             //Not set as it has to have instant access
@@ -35,7 +35,7 @@ function assignToken( $profile_id, $first_name = NULL, $last_name = NULL, $email
 }
 
 function returnTokenProfileId($token){
-    $configTG = parse_ini_file("../../config.ini");
+    $configTG = parse_ini_file("../config.ini");
     $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
 
     $return = new stdClass();
@@ -52,7 +52,7 @@ function returnTokenProfileId($token){
 }
 
 function justReturnTokenProfileId($token){
-    $configTG = parse_ini_file("../../config.ini");
+    $configTG = parse_ini_file("../config.ini");
     $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
 
     $return = new stdClass();
@@ -67,7 +67,7 @@ function justReturnTokenProfileId($token){
 }
 
 function varifyToken($token){
-    $configTG = parse_ini_file("../../config.ini");
+    $configTG = parse_ini_file("../config.ini");
     $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
     $newTime = time();
     $timeCheck = $decoded->iat + 3600; //One hour renew token
@@ -100,7 +100,7 @@ function varifyToken($token){
 
 
 function exchangeToken($token){
-    $configTG = parse_ini_file("../../config.ini");
+    $configTG = parse_ini_file("../config.ini");
     $decoded = JWT::decode($token, $configTG['secret_JWT'], array('HS256'));
     $newTime = time();
     $timeCheck = $decoded->iat + 3600; //One hour renew token
