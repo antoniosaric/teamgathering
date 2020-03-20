@@ -154,6 +154,8 @@ export class ProfileEditComponent implements OnInit {
     }
   }
 
-
+  onEnter(){
+    return false;
+  }
 
 }

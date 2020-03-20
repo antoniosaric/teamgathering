@@ -5,6 +5,7 @@
     [formControl]="searchTagsCtrl" 
     type="text" 
     name="tag_name"
+    (keydown.enter)="returnFalse()"
     >
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn.bind(this)">
       <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>

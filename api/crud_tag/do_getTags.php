@@ -10,13 +10,24 @@ include '../_crud/read.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
+
+if( !isset($request->token) ){
+    // include '../_general/cors.php';
+    die();
+}
+
+$token = $request->token;
+
 $data = new stdClass();
 $tag_array = [];
 
 try {
     mysqli_check();
     global $conn;
-    
+
+    $pro_info = returnTokenProfileId($token);
+    $profile_id = intval($pro_info->profile_id);
+
     $sql = "SELECT DISTINCT tag_name FROM tags "; 
 	$stmt = $conn->prepare($sql);
 

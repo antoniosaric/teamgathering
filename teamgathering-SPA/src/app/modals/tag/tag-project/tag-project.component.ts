@@ -24,6 +24,8 @@ export class TagProjectComponent implements OnInit {
   isLoading = false;
   errorMsg: string;
   tagForSave: any;
+  all_tags = [];
+  displayed_tags = [];
 
   constructor(
     private http: HttpClient, 
@@ -93,33 +95,20 @@ export class TagProjectComponent implements OnInit {
     }
   }
 
-  // addTagToProject( next, tag_name ){
-  //   this.returnTag.emit( { 'tag_name': tag_name, 'tag_id': next.tag_id } );
-  // }
-
   addTag(tag){
     if( tag != '' && tag != null && tag != undefined){
-
-
       this.returnTag.emit( { 'tag_name': tag, 'project_id': this.project_id } );
       this.searchTagsCtrl.reset()
-
-      // this.tagService.addTagProject({ 'token': localStorage.getItem('token') }, { 'tag_name': tag, 'project_id': this.project_id  } ).subscribe(next => {
-      //   this.authService.setToken(next);
-      //   this.addTagToProject( next, tag )
-      //   this.alertify.success('skill added successfully');
-      //   this.searchTagsCtrl.reset()
-      // }, error => {
-      //   this.alertify.error(error);
-      // }, () => {
-      //   this.router.navigate(['/project/edit/'+this.project_id]);
-      // })
     }
   }
 
   onSubmit() {
       this.searchTagsCtrl.reset()
   };
+
+  returnFalse(){
+    return false;
+  }
   
 
 }

@@ -119,4 +119,8 @@ export class TagProfileComponent implements OnInit {
       this.searchTagsCtrl.reset()
   };
 
+  returnFalse(){
+    return false;
+  }
+
 }

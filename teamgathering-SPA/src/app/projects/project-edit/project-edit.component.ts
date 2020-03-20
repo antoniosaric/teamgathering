@@ -70,7 +70,7 @@ export class ProjectEditComponent implements OnInit {
     this.authService.checkToken();
     if( this.editForm.valid ){
       this.project_info = Object.assign( {}, 
-        {...this.editForm.value, ...{ image: this.project_info.image},
+        {...this.editForm.value, ...{ 'image': this.project_info.image},
          ...{'teams': this.project_info['teams'] },
          ...{'count': this.project_info['count'] },
          ...{'created_date': this.project_info['created_date']},
@@ -82,7 +82,7 @@ export class ProjectEditComponent implements OnInit {
         this.authService.setToken(next);
 
         this.alertify.success('Project update successful');
-        this.editForm.reset();
+        this.editForm.reset(this.project_info);
       }, error => {
         this.alertify.error(error);
       }, () => {
