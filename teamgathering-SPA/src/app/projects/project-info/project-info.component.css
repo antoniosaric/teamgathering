@@ -25,3 +25,7 @@
 .default-cursor{
     cursor: default;
 }
+
+.multiline {
+    white-space: pre-wrap;
+  }

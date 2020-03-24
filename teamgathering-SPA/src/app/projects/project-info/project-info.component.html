@@ -38,8 +38,8 @@
             <tab heading="About">
               <hr>
               <h4>About</h4>
-              <p *ngIf="project_info?.view_status == 'authorized'">{{project_info?.description}}</p>
-              <p *ngIf="project_info?.view_status == 'unathorized'">{{project_info?.short_description}}</p>
+              <p *ngIf="project_info?.view_status == 'authorized'" class="multiline">{{project_info?.description}}</p>
+              <p *ngIf="project_info?.view_status == 'unathorized'" class="multiline">{{project_info?.short_description}}</p>
               <hr>
             </tab> 
             <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
@@ -79,7 +79,7 @@
                 <div>
                   <hr>                    
                   <h4>Looking For</h4>
-                  <p>{{project_info?.looking_for}}</p>
+                  <p class="multiline">{{project_info?.looking_for}}</p>
                   <h4>Stacks</h4>
                   <div class="container mt-2">
                     <div class="row">

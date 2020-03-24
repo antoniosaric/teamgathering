@@ -42,3 +42,7 @@
     animation-duration: 0.4s;
     z-index: 2;
   }
+
+  .multiline {
+    white-space: pre-wrap;
+  }

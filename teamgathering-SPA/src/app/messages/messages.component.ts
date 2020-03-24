@@ -50,6 +50,7 @@ export class MessagesComponent implements OnInit {
   }
 
   startCheckingThreads(profile_id){
+    this.ngOnDestroy();
     this.getMessage( profile_id );
     this.interval = setInterval(() => {
       this.getMessage( profile_id );
