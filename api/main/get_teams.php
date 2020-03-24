@@ -41,7 +41,7 @@ try {
   if(!!$result && $result->num_rows > 0){  
     while( $row = $result->fetch_assoc() ){
       if( $row['team_status'] != $deleted ){      
-        if( !in_array( $teams, $row ) ){   
+        if( !in_array( $row, $teams ) ){   
           array_push($teams, $row);
         }
       }

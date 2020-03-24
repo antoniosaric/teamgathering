@@ -93,8 +93,8 @@
             <hr>
           </tab> 
           <tab heading="Projects">
+            <a [routerLink]="['/project/add']">Add Project</a>
             <div *ngFor="let project of profile_info?.projects">
-              <a [routerLink]="['/project/add']">Add Project</a>
               <hr>
               <h4>
                 <a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a>

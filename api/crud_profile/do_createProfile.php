@@ -8,6 +8,7 @@ include '../_authorization/do_passwordHash.php';
 include '../_crud/create.php';
 include '../_crud/read.php';
 
+
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $email = isset($request->email) && strlen($request->email) > 0 ? trim(strtolower($request->email)) : false;
@@ -69,8 +70,17 @@ try {
         $hash_password_object = generate_hash( $password );
 
         $return_profile_id = create_profile( $email, $hash_password_object->hash_pass, $hash_password_object->salt, $image, $zip_code, $city, $state, $first_name, $last_name );
-        $data->message = "profile created";
-        status_return(200);
+
+        if(!!$return_profile_id){
+            $data->message = "profile created";
+            echo json_encode($data);
+            status_return(200);
+        }else{
+            $data->message = "something went wrong";
+            echo json_encode($data);
+            status_return(400);
+            return;
+        }
     }else{
         $data->message = "email already registered";
         echo json_encode($data);

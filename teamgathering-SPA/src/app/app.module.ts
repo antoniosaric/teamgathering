@@ -23,6 +23,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { ProfileInfoComponent } from './profiles/profile-info/profile-info.component';
 import { ProfileListComponent } from './profiles/profile-list/profile-list.component';
 import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
+import { ProfileProjectComponent } from './profiles/profile-project/profile-project.component';
 import { ProfileEditAccountComponent } from './profiles/profile-edit-account/profile-edit-account.component';
 import { ProfileCardComponent } from './profiles/profile-card/profile-card.component';
 import { ExploreComponent } from './explore/explore.component';
@@ -83,6 +84,7 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
       ProfileEditComponent,
       ProfileListComponent,
       ProfileInfoComponent,
+      ProfileProjectComponent,
       ProfileCardComponent,
       ProjectCardComponent,
       ProjectInfoComponent,

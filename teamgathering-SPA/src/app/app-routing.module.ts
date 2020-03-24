@@ -31,6 +31,7 @@ import { RequestListComponent } from './requests/request-list/request-list.compo
 import { TeamEditComponent } from './teams/team-edit/team-edit.component';
 import { TeamAddComponent } from './teams/team-add/team-add.component';
 import { TeamEditResolver } from './_resolvers/team-edit.resolver';
+import { ProfileProjectComponent } from './profiles/profile-project/profile-project.component';
 
 
 
@@ -50,6 +51,7 @@ const routes: Routes = [
       { path: 'profile-list', component: ProfileListComponent, resolve: {profiles: ProfileListResolver}, canActivate: [AuthGuard] },
       { path: 'project/edit/:id', component: ProjectEditComponent, resolve: {project: ProjectEditResolver}, canActivate: [AuthGuard] },
       { path: 'team/edit/:id', component: TeamEditComponent, resolve: {team: TeamEditResolver}, canActivate: [AuthGuard] },
+      { path: 'profile-project', component: ProfileProjectComponent, canActivate: [AuthGuard] },
       { path: 'team/add', component: TeamAddComponent, canActivate: [AuthGuard] },
       { path: 'project/add', component: ProjectAddComponent, canActivate: [AuthGuard] }
 
@@ -66,7 +68,6 @@ const routes: Routes = [
   },
   // { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard] },
   // { path: 'profile', component: ProfileDetailComponent, canActivate: [AuthGuard] },
-  // { path: 'profile-project', component: ProfileProjectListComponent, canActivate: [AuthGuard] },
   { path: 'termsandconditions', component: TermsandconditionsComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'contact', component: ContactComponent },

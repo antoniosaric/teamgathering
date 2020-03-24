@@ -52,7 +52,7 @@ try {
 
         if(!!$result_team && $result_team->num_rows > 0){  
             while( $row_team = $result_team->fetch_assoc() ){
-                if( !in_array( $saved_team_array, $row_team ) ){                   
+                if( !in_array( $row_team, $saved_team_array ) ){                   
                     array_push($saved_team_array, $row_team);
                     $team_object = new stdClass();
                     $team_object->profiles = [];

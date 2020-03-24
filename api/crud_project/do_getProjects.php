@@ -35,7 +35,7 @@ try {
     if(!!$result && $result->num_rows > 0){  
         while( $row = $result->fetch_assoc() ){
             if( $row['project_id'] && $row['project_name'] ){
-                if( !in_array( $projects, $row ) ){                   
+                if( !in_array( $row, $projects ) ){                   
                     array_push( $projects, $row );
                 }
             }

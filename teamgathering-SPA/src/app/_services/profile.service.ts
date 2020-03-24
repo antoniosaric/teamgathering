@@ -54,6 +54,16 @@ constructor( private http: HttpClient ) { }
     return this.http.post( environment.apiUrl + 'crud_message/do_createMessage.php', params )
   }
 
+  getProfileProjects(token: any){
+    return this.http.post(environment.apiUrl + 'main/get_profileProjects.php', token).pipe(
+      map((response: any) => {
+        if( !!response.projects ){
+            return response.projects;
+        }
+      })
+    ) 
+  }
+
 
 
 }

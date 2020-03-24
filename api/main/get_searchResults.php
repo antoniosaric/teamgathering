@@ -103,7 +103,7 @@ try {
         $result = $stmt->get_result();
         if(!!$result && $result->num_rows > 0){  
             while( $row = $result->fetch_assoc() ){
-                if( !in_array( $projects, $row ) ){   
+                if( !in_array( $row, $projects ) ){   
                     array_push( $projects, $row );
                 }
             }

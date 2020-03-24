@@ -52,7 +52,7 @@ try {
     
         if(!!$result && $result->num_rows > 0){  
             while( $row = $result->fetch_assoc() ){
-                if( !in_array( $projects, $row ) ){   
+                if( !in_array( $row, $projects ) ){   
                     array_push( $projects, $row );
                 }
             }
@@ -77,7 +77,7 @@ try {
     
         if(!!$result2 && $result2->num_rows > 0){  
             while( $row2 = $result2->fetch_assoc() ){
-                if( !in_array( $profiles, $row2 ) ){   
+                if( !in_array( $row2, $profiles ) ){   
                     array_push( $profiles, $row2 );
                 }
             }

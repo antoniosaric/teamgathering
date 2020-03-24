@@ -13,7 +13,7 @@ function create_profile( $email, $password, $salt, $image, $zip_code, $city, $st
 	$stmt->bind_param("sssssssss", $email, $password, $salt, $image, $zip_code, $city, $state, $first_name, $last_name );
 
     if ($stmt->execute()) {
-    	$return_id = $conn->insert_id;
+        $return_id = $conn->insert_id;
     	return $return_id;
     } else {
     	return false;
