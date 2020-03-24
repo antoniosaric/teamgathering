@@ -42,6 +42,9 @@ try {
             $profile_access_status = true;
         }
 
+        $clauseArray = [ $row_project['owner_id'] ];
+        $row_owner = get_tabel_info_single_row( 'profiles', 'WHERE profile_id=? ', 'i', $clauseArray );
+
         $sql_team = "SELECT DISTINCT teams.team_id, teams.team_name, teams.team_description FROM teams 
         WHERE teams.project_id=".$row_project['project_id']." AND teams.team_status != 'deleted' ORDER BY teams.team_id";     
 
@@ -110,6 +113,10 @@ try {
             }
         }
         $project['tags'] = $tags;
+
+        $project['first_name'] = $row_owner['first_name'];
+        $project['last_name'] = $row_owner['last_name'];
+
         if( $row_project['project_status'] == 'public' || $profile_access_status == true ){
 
             $sql_count = "SELECT DISTINCT count(profiles.profile_id)
@@ -131,7 +138,6 @@ try {
         }else{
             $project['view_status'] = 'unathorized';
             $project['description'] = '';
-
             $project['teams'] = [];
             $data->project = $project;
         }

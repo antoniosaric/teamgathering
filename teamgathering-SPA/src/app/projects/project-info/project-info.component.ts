@@ -90,4 +90,12 @@ export class ProjectInfoComponent implements OnInit {
     })
   }
 
+  assignName(){
+    if(!!this.project_info.first_name){
+      return this.project_info.first_name + ' ' + this.project_info.last_name;
+    }else{
+      return 'owner';
+    }
+  }
+
 }

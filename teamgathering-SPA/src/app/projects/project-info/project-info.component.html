@@ -10,7 +10,7 @@
             </div>
             <div>
               <strong>Owner:</strong>
-              <p>{{project_info?.project_name | titlecase}} </p>
+              <a [routerLink]="['/profile-info/', project_info?.owner_id]"><p>{{ assignName() | titlecase}} </p></a>
             </div>
             <div *ngIf="project_info?.view_status == 'authorized'">
               <strong>Number of Members:</strong>
