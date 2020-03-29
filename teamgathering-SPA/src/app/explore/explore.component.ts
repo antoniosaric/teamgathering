@@ -11,13 +11,10 @@ import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
   styleUrls: ['./explore.component.css']
 })
 export class ExploreComponent implements OnInit {
+  searches = [];
   projects = [];
   profiles = [];
   model: any = {};
-  suggestions: boolean;
-  searched: boolean;
-  toggleProfile: boolean;
-  toggleProject: boolean;
 
   constructor( 
       private alertify: AlertifyService, 
@@ -26,14 +23,14 @@ export class ExploreComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    this.suggestions = this.authService.checkTokenExists() != null ? true : false;
-    this.suggestions ? this.getSuggestions() : null;
-    this.toggleProfile = false;
-    this.toggleProject = false;
+    this.authService.checkTokenExists() != null ? this.getSuggestions() : false;
   }
 
   setSearchResults(data){
-    console.log(data)
+    this.searches = data.projects;
+  }
+
+  setSuggestions(data){
     this.projects = data.projects;
     this.profiles = data.profiles;
   }
@@ -41,7 +38,6 @@ export class ExploreComponent implements OnInit {
   search(){
     this.searchService.search( { 'token': this.authService.checkTokenExists() }, this.model).subscribe(next => {
       this.setSearchResults(next);
-      this.suggestions = false;
     }, error => {
       this.alertify.error(error);
     })
@@ -50,28 +46,12 @@ export class ExploreComponent implements OnInit {
   getSuggestions(){
     this.searchService.getSuggestions( { 'token': localStorage.getItem('token') } ).subscribe(next => {
       console.log(next)
-      this.setSearchResults(next);
-      this.toggleProfile = true;
-      this.toggleProject = true;
-      this.suggestions = true;
+      this.setSuggestions(next);
     }, error => {
       this.alertify.error(error);
     })
   }
 
-  toggleSuggestions(){
-    this.ngOnInit();
-  }
-
-
-  toggleProjects(){
-    this.toggleProject = !this.toggleProject;
-  }
-
-
-  toggleProfiles(){
-    this.toggleProfile = !this.toggleProfile;
-  }
 
 }
 

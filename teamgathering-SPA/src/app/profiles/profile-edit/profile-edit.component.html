@@ -108,35 +108,41 @@
           </tab> 
           <tab heading="Teams">
             <a [routerLink]="['/team/add']">Add Team</a>
-            <div *ngFor="let team of profile_info?.teams">
-              <hr>
-              <h4>
-                <!-- <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a> -->
-                {{team.team_name}}
-                <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
-              </h4>
-              <h5>Role: {{team.role}}</h5>
-              <h5>{{team.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(team.ended_date)"> {{team.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(team.ended_date)">Present</span></h5>
-              <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
-              <hr>
+            <div *ngIf="profile_info?.teams.length != 0">
+              <div *ngFor="let team of profile_info?.teams">
+                <hr>
+                <h4>
+                  <!-- <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a> -->
+                  {{team.team_name}}
+                  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
+                </h4>
+                <h5>Role: {{team.role}}</h5>
+                <h5>{{team.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(team.ended_date)"> {{team.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(team.ended_date)">Present</span></h5>
+                <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
+                <hr>
+              </div>
+            </div>
+            <div *ngIf="profile_info?.follows.length == 0">
+              <p>you are not on any teams</p>
             </div>
           </tab> 
-          <!-- <tab heading="Messages">
-              <h5>Messages</h5>
-              <app-messages [image]="image"></app-messages>
-          </tab>  -->
           <tab heading="Following">
-            <ol>
-              <div *ngFor="let follow of profile_info?.follows">
-                <hr>
-                <li>
-                  <h4>
-                    <a [routerLink]="['/project-info/', follow.project_id]">{{follow.project_name}}</a>
-                    <button  type="button" class="btn btn-xs btn-danger ml-3" (click)="deleteFollow(follow)">Unfollow</button>
-                  </h4>
-                </li>
-              </div>
-            </ol>
+            <div *ngIf="profile_info?.follows.length != 0">
+              <ol>
+                <div *ngFor="let follow of profile_info?.follows">
+                  <hr>
+                  <li>
+                    <h4>
+                      <a [routerLink]="['/project-info/', follow.project_id]">{{follow.project_name}}</a>
+                      <button  type="button" class="btn btn-xs btn-danger ml-3" (click)="deleteFollow(follow)">Unfollow</button>
+                    </h4>
+                  </li>
+                </div>
+              </ol>
+            </div>
+            <div *ngIf="profile_info?.follows.length == 0">
+              <p>you are not following any projects</p>
+            </div>
           </tab> 
         </tabset>
       </div>
