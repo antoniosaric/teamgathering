@@ -26,7 +26,7 @@ try {
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
 
-    $sql = "SELECT DISTINCT project_id, project_name FROM projects WHERE owner_id = ".$profile_id;
+    $sql = "SELECT DISTINCT project_id, project_name FROM projects WHERE owner_id = ".$profile_id." AND project_status != 'deleted'";
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();

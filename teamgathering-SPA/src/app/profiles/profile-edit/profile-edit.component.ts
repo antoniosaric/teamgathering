@@ -15,6 +15,7 @@ import { FollowService } from 'src/app/_services/follow.service';
 export class ProfileEditComponent implements OnInit {
   @ViewChild('editForm', {static:true}) editForm: FormGroup;
   profile_info: any;
+  current_project_array = [];
   state = 'profile';
   image: string = '';
   page = 'profile';
@@ -43,6 +44,8 @@ export class ProfileEditComponent implements OnInit {
       this.image = this.profile_info.image;
     })
     this.createEditForm();
+    // this.setProjectForTeamArray();
+
   }
 
   createEditForm(){
@@ -54,6 +57,20 @@ export class ProfileEditComponent implements OnInit {
       looking_for: [this.profile_info.looking_for ]
     })
   }
+
+  // setProjectForTeamArray(){
+  //   for(var i = 0 ; i < this.profile_info.teams.length ; i++){
+  //     if(this.profile_info.teams.owner_id == this.profile_info.profile_id){
+  //       if( this.current_project_array.includes( project_id ) ){
+  //         this.current_project_array.push( project_id ) ;
+  //         return true;
+  //       }else{
+  //         this.current_project_array.push( project_id ) ;
+  //         return false;
+  //       }
+  //     }
+  //   }
+  // }
 
   updateProfile(){
     this.authService.checkToken();
@@ -74,7 +91,6 @@ export class ProfileEditComponent implements OnInit {
   }
 
   changeState(state){
-    console.log('@@@@@@@@')
     this.state = state;
   }
 
@@ -156,6 +172,29 @@ export class ProfileEditComponent implements OnInit {
 
   onEnter(){
     return false;
+  }
+
+  projectIdCheck(project_id){
+    if( this.current_project_array.includes( project_id ) ){
+      this.current_project_array.push( project_id ) ;
+      return true;
+    }else{
+      this.current_project_array.push( project_id ) ;
+      return false;
+    }
+  }
+
+  ownerCheck( profile_id , owner_id ){
+    if( parseInt(profile_id) == parseInt(owner_id) ){
+      return true;
+    }else{
+      return false;
+    } 
+  }
+
+  resetIdCheck(event){
+    console.log(event)
+    this.current_project_array = [];
   }
 
 }

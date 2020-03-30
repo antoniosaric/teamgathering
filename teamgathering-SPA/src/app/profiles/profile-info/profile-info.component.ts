@@ -13,6 +13,7 @@ export class ProfileInfoComponent implements OnInit {
   profile_info: any;
   modalState = false;
   associate = [];
+  current_project_array = [];
 
   constructor(
     private alertify: AlertifyService, 
@@ -55,6 +56,22 @@ export class ProfileInfoComponent implements OnInit {
 //     this.selected_index = index;
 //     this.selected_id = profile_id;
 //     this.set_thread(this.messages[index], index);
+  }
+
+  projectIdCheck(project_id){
+    console.log(this.current_project_array)
+    if( this.current_project_array.includes( project_id ) ){
+      this.current_project_array.push( project_id ) ;
+      return true;
+    }else{
+      this.current_project_array.push( project_id ) ;
+      return false;
+    }
+  }
+
+  resetIdCheck(event){
+    console.log(event)
+    this.current_project_array = [];
   }
 
 

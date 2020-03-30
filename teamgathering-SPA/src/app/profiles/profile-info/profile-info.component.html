@@ -43,7 +43,7 @@
       </div>
       <div class="col-sm-8">
         <div class="tab-panel">
-          <tabset class="profile-tabset">
+          <tabset class="profile-tabset" (click)="resetIdCheck($event)">
             <tab heading="About">
               <hr>
               <h4>About Me</h4>
@@ -69,22 +69,23 @@
                   <h5>Role: {{project.project_role}}</h5>
                   <h5>Status: {{project.project_status}}</h5>
                   <h5>Created: {{project.created_date | date: 'mediumDate' }}</h5>
-                  <hr>
                 </div>
               </tab> 
             <tab heading="Teams">
               <div *ngFor="let team of profile_info?.teams">
-                <hr>
-                <h4>{{team.team_name}}</h4>
-                <h5>Role: {{team.role}}</h5>
-                <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
-                <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
-                <hr>
+                <div *ngIf="!projectIdCheck(team.project_id)">
+                  <h4 class="mr-2">Project: <a [routerLink]="['/project/edit/', team.project_id]">{{team.project_name}}</a></h4>
+                  <hr>
+                </div>            
+                <div>
+                  <h4>{{team.team_name}}</h4>
+                  <h5>Role: {{team.role}}</h5>
+                  <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
+                  <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
+                  <hr>               
+                </div>
               </div>
             </tab> 
-            <!-- <tab heading="Messages">
-                <h5>Messages</h5>
-            </tab>  -->
           </tabset>
         </div>
       </div>

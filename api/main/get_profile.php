@@ -44,6 +44,9 @@ try {
         while( $row2 = $result2->fetch_assoc() ){
             $team_object = new stdClass(); 
             if( !!$row2["team_id"] && ( $row2["profile_team_status"] != 'deleted' || $row2["team_status"] != 'deleted' ) ){ 
+                    $team_object->project_id = $row2['project_id'];
+                    $team_object->project_name = $row2['project_name'];
+                    $team_object->owner_id = $row2['owner_id'];
                     $team_object->team_id = $row2['team_id'];
                     $team_object->team_name = $row2['team_name'];
                     $team_object->role = $row2['role'];
