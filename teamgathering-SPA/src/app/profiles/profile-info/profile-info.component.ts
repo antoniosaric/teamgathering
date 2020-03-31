@@ -13,7 +13,7 @@ export class ProfileInfoComponent implements OnInit {
   profile_info: any;
   modalState = false;
   associate = [];
-  current_project_array = [];
+  projects_array = [];
 
   constructor(
     private alertify: AlertifyService, 
@@ -27,6 +27,16 @@ export class ProfileInfoComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.profile_info = data['profile'];
     })
+    this.setTeamArray();
+  }
+
+  setTeamArray(){
+    for(var i = 0 ; i < this.profile_info.teams.length ; i++){
+      var project_object = { 'project_name': this.profile_info.teams[i].project_name, 'project_id': this.profile_info.teams[i].project_id };
+      if ( !this.projects_array.some(e => e.project_id === project_object.project_id)) {
+        this.projects_array.push( project_object ) ;
+      }
+    }
   }
 
   statusClassCheck(data){
@@ -57,23 +67,6 @@ export class ProfileInfoComponent implements OnInit {
 //     this.selected_id = profile_id;
 //     this.set_thread(this.messages[index], index);
   }
-
-  projectIdCheck(project_id){
-    console.log(this.current_project_array)
-    if( this.current_project_array.includes( project_id ) ){
-      this.current_project_array.push( project_id ) ;
-      return true;
-    }else{
-      this.current_project_array.push( project_id ) ;
-      return false;
-    }
-  }
-
-  resetIdCheck(event){
-    console.log(event)
-    this.current_project_array = [];
-  }
-
 
 
 }

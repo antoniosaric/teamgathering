@@ -15,7 +15,7 @@ import { FollowService } from 'src/app/_services/follow.service';
 export class ProfileEditComponent implements OnInit {
   @ViewChild('editForm', {static:true}) editForm: FormGroup;
   profile_info: any;
-  current_project_array = [];
+  projects_array = [];
   state = 'profile';
   image: string = '';
   page = 'profile';
@@ -44,7 +44,7 @@ export class ProfileEditComponent implements OnInit {
       this.image = this.profile_info.image;
     })
     this.createEditForm();
-    // this.setProjectForTeamArray();
+    this.setTeamArray();
 
   }
 
@@ -58,19 +58,16 @@ export class ProfileEditComponent implements OnInit {
     })
   }
 
-  // setProjectForTeamArray(){
-  //   for(var i = 0 ; i < this.profile_info.teams.length ; i++){
-  //     if(this.profile_info.teams.owner_id == this.profile_info.profile_id){
-  //       if( this.current_project_array.includes( project_id ) ){
-  //         this.current_project_array.push( project_id ) ;
-  //         return true;
-  //       }else{
-  //         this.current_project_array.push( project_id ) ;
-  //         return false;
-  //       }
-  //     }
-  //   }
-  // }
+  setTeamArray(){
+    for(var i = 0 ; i < this.profile_info.teams.length ; i++){
+      var project_object = { 'project_name': this.profile_info.teams[i].project_name, 'project_id': this.profile_info.teams[i].project_id };
+      if( this.profile_info.teams[i].owner_id == this.profile_info.profile_id ){
+        if ( !this.projects_array.some(e => e.project_id === project_object.project_id)) {
+          this.projects_array.push( project_object ) ;
+        }
+      }
+    }
+  }
 
   updateProfile(){
     this.authService.checkToken();
@@ -174,15 +171,15 @@ export class ProfileEditComponent implements OnInit {
     return false;
   }
 
-  projectIdCheck(project_id){
-    if( this.current_project_array.includes( project_id ) ){
-      this.current_project_array.push( project_id ) ;
-      return true;
-    }else{
-      this.current_project_array.push( project_id ) ;
-      return false;
-    }
-  }
+  // projectIdCheck(project_id){
+  //   if( this.current_project_array.includes( project_id ) ){
+  //     this.current_project_array.push( project_id ) ;
+  //     return true;
+  //   }else{
+  //     this.current_project_array.push( project_id ) ;
+  //     return false;
+  //   }
+  // }
 
   ownerCheck( profile_id , owner_id ){
     if( parseInt(profile_id) == parseInt(owner_id) ){
@@ -192,9 +189,9 @@ export class ProfileEditComponent implements OnInit {
     } 
   }
 
-  resetIdCheck(event){
-    console.log(event)
-    this.current_project_array = [];
-  }
+  // resetIdCheck(event){
+  //   console.log(event)
+  //   this.current_project_array = [];
+  // }
 
 }

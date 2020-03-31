@@ -43,7 +43,7 @@
       </div>
       <div class="col-sm-8">
         <div class="tab-panel">
-          <tabset class="profile-tabset" (click)="resetIdCheck($event)">
+          <tabset class="profile-tabset">
             <tab heading="About">
               <hr>
               <h4>About Me</h4>
@@ -72,17 +72,21 @@
                 </div>
               </tab> 
             <tab heading="Teams">
-              <div *ngFor="let team of profile_info?.teams">
-                <div *ngIf="!projectIdCheck(team.project_id)">
-                  <h4 class="mr-2">Project: <a [routerLink]="['/project/edit/', team.project_id]">{{team.project_name}}</a></h4>
-                  <hr>
-                </div>            
-                <div>
-                  <h4>{{team.team_name}}</h4>
-                  <h5>Role: {{team.role}}</h5>
-                  <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
-                  <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
-                  <hr>               
+              <div *ngIf="profile_info?.teams.length != 0" class="mt-2">
+                <div *ngFor="let project_from_array of projects_array" >
+                  <div>
+                    <h4 class="mr-2">Project: <a [routerLink]="['/project/edit/', project_from_array.project_id]">{{project_from_array.project_name}}</a></h4>
+                    <hr>
+                  </div>
+                  <div *ngFor="let team of profile_info?.teams;let i=index">
+                    <div *ngIf="team.project_id == project_from_array.project_id">
+                      <h4>{{team.team_name}}</h4>
+                      <h5>Role: {{team.role}}</h5>
+                      <h5>Joined: {{team.joined_date | date: 'mediumDate'}}</h5>
+                      <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
+                      <hr>    
+                    </div>              
+                  </div>
                 </div>
               </div>
             </tab> 
