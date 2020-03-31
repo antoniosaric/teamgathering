@@ -39,11 +39,22 @@ export class ProfileListComponent implements OnInit {
   setTeamArray(){
     for(var i = 0 ; i < this.profiles.length ; i++){
       var team_object = { 'team_name': this.profiles[i].team_name, 'team_id': this.profiles[i].team_id, 'project_name': this.profiles[i].project_name, 'project_id': this.profiles[i].project_id };
-      if( this.teams_array.includes( team_object ) ){
-      }else{
+      if ( !this.teams_array.some(e => e.team_id === team_object.team_id)) {
         this.teams_array.push( team_object ) ;
       }
     }
+
+
+
+
+
+    // for(var i = 0 ; i < this.profiles.length ; i++){
+    //   var team_object = { 'team_name': this.profiles[i].team_name, 'team_id': this.profiles[i].team_id, 'project_name': this.profiles[i].project_name, 'project_id': this.profiles[i].project_id };
+    //   if( this.teams_array.includes( team_object ) ){
+    //   }else{
+    //     this.teams_array.push( team_object ) ;
+    //   }
+    // }
   }
 
   // teamIdCheck(team_id){

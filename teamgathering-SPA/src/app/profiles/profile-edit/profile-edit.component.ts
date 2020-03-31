@@ -171,16 +171,6 @@ export class ProfileEditComponent implements OnInit {
     return false;
   }
 
-  // projectIdCheck(project_id){
-  //   if( this.current_project_array.includes( project_id ) ){
-  //     this.current_project_array.push( project_id ) ;
-  //     return true;
-  //   }else{
-  //     this.current_project_array.push( project_id ) ;
-  //     return false;
-  //   }
-  // }
-
   ownerCheck( profile_id , owner_id ){
     if( parseInt(profile_id) == parseInt(owner_id) ){
       return true;
@@ -188,10 +178,5 @@ export class ProfileEditComponent implements OnInit {
       return false;
     } 
   }
-
-  // resetIdCheck(event){
-  //   console.log(event)
-  //   this.current_project_array = [];
-  // }
 
 }
