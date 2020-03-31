@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProfileListComponent implements OnInit {
   profiles: Profile[];
+  teams_array = [];
 
   constructor(
     private profileService: ProfileService, 
@@ -22,6 +23,8 @@ export class ProfileListComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.profiles = data['profiles'];
     })
+
+    this.setTeamArray();
     // this.getAssociateProfiles();
   }
 
@@ -32,5 +35,27 @@ export class ProfileListComponent implements OnInit {
   //     this.alertify.error(error);
   //   })
   // }
+
+  setTeamArray(){
+    for(var i = 0 ; i < this.profiles.length ; i++){
+      var team_object = { 'team_name': this.profiles[i].team_name, 'team_id': this.profiles[i].team_id, 'project_name': this.profiles[i].project_name, 'project_id': this.profiles[i].project_id };
+      if( this.teams_array.includes( team_object ) ){
+      }else{
+        this.teams_array.push( team_object ) ;
+      }
+    }
+  }
+
+  // teamIdCheck(team_id){
+  //   if( this.teams_array.includes( team_id ) ){
+  //     this.teams_array.push( team_id ) ;
+  //     return true;
+  //   }else{
+  //     this.teams_array.push( team_id ) ;
+  //     return false;
+  //   }
+  // }
+
+
 
 }
