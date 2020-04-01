@@ -15,13 +15,14 @@
           <input type="text" 
           [ngClass]="{'is-invalid': teamInfoForm.get('team_name').errors && teamInfoForm.get('team_name').touched }"
           class="form-control mb-2" 
+          maxlength="255"
           formControlName="team_name" 
           placeholder="team_name">
           <div class="invalid-feedback" *ngIf="teamInfoForm.get('team_name').hasError('required') && teamInfoForm.get('team_name').touched">title cannot be empty</div>
         </div> 
         <div class="form-group mb-4">
             <h4>Team Description</h4>
-            <textarea name="team_description" id="team_description" cols="30" rows="6" class="form-control" formControlName="team_description"></textarea>
+            <textarea name="team_description" id="team_description" cols="30" rows="6" class="form-control" formControlName="team_description" maxlength="255"></textarea>
           <div class="invalid-feedback" *ngIf="teamInfoForm.get('team_description').hasError('required') && teamInfoForm.get('team_description').touched">title cannot be empty</div>
         </div> 
       </div>

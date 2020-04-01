@@ -3,6 +3,7 @@ import { ProjectService } from '../../_services/project.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Project } from 'src/app/_models/project';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-project-list',
@@ -15,12 +16,16 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private projectService: ProjectService, 
     private alertify: AlertifyService,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private authService: AuthService ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data=> {
       this.projects = data['projects'];
     })
+    if(!this.authService.loggedIn){
+      this.projects = this.projects.slice(0, 8);
+    }
     // this.getProjects();
   }
 

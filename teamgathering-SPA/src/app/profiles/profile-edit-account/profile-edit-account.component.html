@@ -20,6 +20,7 @@
             <input type="text" 
               [ngClass]="{'is-invalid': emailForm.get('email').errors && emailForm.get('email').touched }"
               class="form-control mb-2" 
+              maxlength="255"
               formControlName="email" 
               placeholder="{{email}}">
               <div class="invalid-feedback" *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">email cannot be empty</div>

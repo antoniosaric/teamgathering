@@ -67,7 +67,7 @@
         <div class="type-msg">
           <div class="input-msg-write">
             <form #message="ngForm" (ngSubmit)="postMessage()">
-              <input id="message" class="write-msg" type="text" name="message" placeholder="Type a message" required [(ngModel)]="model.message"/>
+              <input id="message" class="write-msg" type="text" name="message" placeholder="Type a message" required [(ngModel)]="model.message" maxlength="500"/>
               <button class="msg-send-btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
             </form>
           </div>

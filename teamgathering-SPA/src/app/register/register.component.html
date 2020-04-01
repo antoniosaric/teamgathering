@@ -1,10 +1,67 @@
-<div *ngIf="!registerMode" id="register-div" class="change padding4em">
-    <h1>Create Or Join A Project</h1>
-    <p> Want to change the world? Sign up!</p>
-    <div class="text-center">
-      <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
-      <a [routerLink]="['/about']" routerLinkActive="router-link-active" ><button class="btn btn-info btn-lg">Learn More</button></a>
-    </div>
+  <div *ngIf="!registerMode" id="register-div">
+    <div class="site-blocks-cover overlay" style="background-image: url(../../../../assets/site-images/hero_3.jpg);">
+      <div class="container wrapper">
+        <div class="row align-items-center justify-content-center text-center">
+          <div>   
+            <div class="row justify-content-center mb-2">
+              <header class="text-center">       
+                <h1>Change The World </h1>
+                <p style="overflow: visible;white-space: nowrap;">Make Projects &nbsp;&bull;&nbsp; Join Projects &nbsp;&bull;&nbsp; Make Connections</p>
+                <div>
+                  <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
+                  <a [routerLink]="['/about']" routerLinkActive="router-link-active" ><button class="btn btn-info btn-lg">Learn More</button></a>
+                </div>
+              </header>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <section class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 box-with-humber">
+              <!-- <div class="number-behind">01.</div> -->
+              <h2 class="text-primary">Make Profile</h2>
+              <p class="mb-4">Create a profile with a little bit about yourself and what you are looking for. If you add skills, you will be recommended projects under the explore tab.</p>
+              <ul class="list-unstyled primary">
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Create Profile</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Add Skills</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Make Connections</li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 box-with-humber">
+              <!-- <div class="number-behind">02.</div> -->
+              <h2 class="text-primary">Make Project</h2>
+              <p class="mb-4">Create a project an create a team for the project. Public project share the full description, private projects share the short descriptions. If you add stacks, you will be recommended profiles in the explore tab.</p>
+              <ul class="list-unstyled primary">
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Create Project</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Create Team</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Add Stacks</li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 box-with-humber">
+              <!-- <div class="number-behind">03.</div> -->
+              <h2 class="text-primary">Join Project</h2>
+              <p class="mb-4">When you find a project you want to join, you should message the owner and introduce yourself. You will have to request to join from the project page and be approved by the owner. .</p>
+              <ul class="list-unstyled primary">
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Message Owner</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Request Join</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Get Approved</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 
   <div *ngIf="registerMode" class="change container padding1em">
@@ -18,6 +75,7 @@
                   <input type="text" 
                   [ngClass]="{'is-invalid': registerForm.get('first_name').errors && registerForm.get('first_name').touched }"
                   class="form-control" 
+                  maxlength="255"
                   formControlName="first_name" 
                   placeholder="first name">
                   <div class="invalid-feedback" *ngIf="registerForm.get('first_name').hasError('required') && registerForm.get('first_name').touched">Please enter a first name</div>
@@ -27,6 +85,7 @@
                   <input type="text" 
                   [ngClass]="{'is-invalid': registerForm.get('last_name').errors && registerForm.get('last_name').touched }"
                   class="form-control" 
+                  maxlength="255"
                   formControlName="last_name" 
                   placeholder="last name">
                   <div class="invalid-feedback" *ngIf="registerForm.get('last_name').hasError('required') && registerForm.get('last_name').touched">Please enter a last name</div>
@@ -36,6 +95,7 @@
                     <input type="text" 
                     [ngClass]="{'is-invalid': registerForm.get('zip_code').errors && registerForm.get('zip_code').touched }"
                     class="form-control" 
+                    maxlength="10"
                     formControlName="zip_code" 
                     placeholder="zip code">
                     <div class="invalid-feedback" *ngIf="registerForm.get('zip_code').hasError('required') && registerForm.get('zip_code').touched">Please enter a zip code</div>
@@ -46,6 +106,7 @@
                   <input type="text" 
                   [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched }"
                   class="form-control" 
+                  maxlength="255"
                   formControlName="email" 
                   placeholder="email">
                   <div class="invalid-feedback" *ngIf="registerForm.get('email').errors && registerForm.get('email').touched">Please enter an email</div>

@@ -21,6 +21,7 @@
                 <input type="text" 
                 [ngClass]="{'is-invalid': editForm.get('first_name').errors && editForm.get('first_name').touched }"
                 class="form-control mb-2" 
+                maxlength="255"
                 formControlName="first_name" 
                 placeholder="first name"
                 >
@@ -31,6 +32,7 @@
                 <input type="text" 
                 [ngClass]="{'is-invalid': editForm.get('last_name').errors && editForm.get('last_name').touched }"
                 class="form-control mb-2" 
+                maxlength="255"
                 formControlName="last_name" 
                 placeholder="last name"
                 >
@@ -42,6 +44,7 @@
                   [ngClass]="{'is-invalid': editForm.get('zip_code').errors && editForm.get('zip_code').touched }"
                   class="form-control mb-2" 
                   formControlName="zip_code" 
+                  maxlength="10"
                   placeholder="zip code"
                   >
                   <div class="invalid-feedback" *ngIf="editForm.get('zip_code').hasError('required') && editForm.get('zip_code').touched">zip code cannot be empty</div>

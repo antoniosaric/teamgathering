@@ -21,6 +21,7 @@
               <input type="text" 
               [ngClass]="{'is-invalid': editForm.get('project_name').errors && editForm.get('project_name').touched }"
               class="form-control mb-2" 
+              maxlength="255"
               formControlName="project_name" 
               placeholder="project_name"
               >
@@ -65,9 +66,9 @@
               <hr>
               <h4>About</h4>
               <h5 class="mt-3">description</h5>
-              <textarea name="description" id="description" cols="30" rows="10" class="form-control" formControlName="description"></textarea>
+              <textarea name="description" id="description" cols="30" rows="10" class="form-control" formControlName="description" maxlength="500"></textarea>
               <h5 class="mt-3">short description</h5>
-              <textarea name="short_description" id="short_description" cols="30" rows="6" class="form-control" formControlName="short_description"></textarea>
+              <textarea name="short_description" id="short_description" cols="30" rows="6" class="form-control" formControlName="short_description" maxlength="255"></textarea>
               <hr>
             </tab> 
             <tab heading="Teams" *ngIf="project_info?.teams.length > 0">

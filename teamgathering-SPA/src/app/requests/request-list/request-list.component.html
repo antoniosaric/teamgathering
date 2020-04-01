@@ -43,6 +43,7 @@
                     <input type="text" 
                     [ngClass]="{'is-invalid': updateRequestForm.get('role').errors && updateRequestForm.get('role').touched }"
                     class="form-control mb-2" 
+                    maxlength="255"
                     formControlName="role" 
                     placeholder="Role">
                     <div class="invalid-feedback" *ngIf="updateRequestForm.get('role').hasError('required') && updateRequestForm.get('role').touched">role cannot be empty</div>

@@ -33,9 +33,9 @@ try {
   if(!!$token){
     $pro_info = returnTokenProfileId($token);
     $profile_id = intval($pro_info->profile_id);
-    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND projects.owner_id != ".$profile_id;
+    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'private' OR projects.project_status = 'public' ) AND projects.owner_id != ".$profile_id ." ORDER BY projects.project_id";
   }else{
-    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'public' AND projects.project_status != 'private' ) ";
+    $sql .= " WHERE ( projects.project_status != 'deleted' ) AND ( projects.project_status = 'public' AND projects.project_status != 'private' ) ORDER BY projects.project_id";
   }
 
   $stmt = $conn->prepare($sql);
