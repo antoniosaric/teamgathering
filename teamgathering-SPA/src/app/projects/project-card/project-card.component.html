@@ -1,6 +1,6 @@
 <div class="card mt-4">
   <div class="card-img-wrapper">
-  <img class="card-img-top" src="{{project.image}}" alt="{{project.project_name}}" onerror="this.src='./../../../assets/site-images/Default.jpg';">
+    <a class="card-link" [routerLink]="['/project-info/', project.project_id]"><img class="card-img-top" src="{{project.image}}" alt="{{project.project_name}}" onerror="this.src='./../../../assets/site-images/Default.jpg';"></a>
   </div>
   <div class="card-body p-1">
     <h5 class="card-title">{{project.project_name}}</h5>
