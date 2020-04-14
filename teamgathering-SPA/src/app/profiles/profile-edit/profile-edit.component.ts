@@ -6,6 +6,7 @@ import { ProfileService } from 'src/app/_services/profile.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { TagService } from 'src/app/_services/tag.service';
 import { FollowService } from 'src/app/_services/follow.service';
+import { StatusService } from 'src/app/_services/status.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -19,6 +20,7 @@ export class ProfileEditComponent implements OnInit {
   state = 'profile';
   image: string = '';
   page = 'profile';
+  project_page = 'edit';
   
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -35,7 +37,8 @@ export class ProfileEditComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private tagService: TagService,
-    private followService: FollowService
+    private followService: FollowService,
+    private statusService: StatusService
   ) { }
 
   ngOnInit() {
@@ -45,6 +48,8 @@ export class ProfileEditComponent implements OnInit {
     })
     this.createEditForm();
     this.setTeamArray();
+    this.statusService.searchStatus();
+    console.log(this.profile_info)
 
   }
 
@@ -177,6 +182,10 @@ export class ProfileEditComponent implements OnInit {
     }else{
       return false;
     } 
+  }
+
+  leaveTeam(team_id){
+    console.log(team_id)
   }
 
 }

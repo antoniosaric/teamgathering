@@ -3,6 +3,7 @@ import { ProfileService } from '../../_services/profile.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { Profile } from 'src/app/_models/profile';
 import { ActivatedRoute } from '@angular/router';
+import { StatusService } from 'src/app/_services/status.service';
 
 @Component({
   selector: 'app-profile-list',
@@ -16,7 +17,8 @@ export class ProfileListComponent implements OnInit {
   constructor(
     private profileService: ProfileService, 
     private alertify: AlertifyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private statusService: StatusService
   ) { }
 
   ngOnInit() {
@@ -25,6 +27,8 @@ export class ProfileListComponent implements OnInit {
     })
 
     this.setTeamArray();
+    this.statusService.searchStatus();
+    console.log(this.profiles)
     // this.getAssociateProfiles();
   }
 

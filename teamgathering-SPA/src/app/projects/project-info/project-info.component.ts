@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
 import { RequestService } from 'src/app/_services/request.service';
 import { FollowService } from 'src/app/_services/follow.service';
+import { StatusService } from 'src/app/_services/status.service';
 
 @Component({
   selector: 'app-project-info',
@@ -21,13 +22,16 @@ export class ProjectInfoComponent implements OnInit {
     private router: Router,
     public authService: AuthService,
     private requestService: RequestService,
-    private followService: FollowService
+    private followService: FollowService,
+    private statusService: StatusService
   ) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.project_info = data['project'];
     })
+    this.statusService.searchStatus();
+    console.log(this.project_info)
   }
 
   editAuthorizationCheck(){

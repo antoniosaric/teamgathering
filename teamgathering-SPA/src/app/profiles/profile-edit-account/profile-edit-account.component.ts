@@ -14,9 +14,6 @@ export class ProfileEditAccountComponent implements OnInit {
   emailForm: FormGroup;
   passwordForm: FormGroup;
   deleteAccountForm: FormGroup;
-  emailState = false;
-  passwordState = false;
-  deleteState = false;
   emailObject: any;
   passwordObject: any;
   deleteAccountObject: any;
@@ -111,19 +108,5 @@ export class ProfileEditAccountComponent implements OnInit {
     }
   }
 
-  changePasswordState(event){
-    this.passwordForm.reset(this.passwordState);
-    this.passwordState = event;
-  }
-
-  changeEmailState(event){
-    this.emailForm.reset(this.emailState);
-    this.emailState = event;
-  }
-
-  changeDeleteState(event){
-    this.deleteAccountForm.reset(this.deleteAccountObject);
-    this.deleteState = event;
-  }
 
 }

@@ -20,6 +20,7 @@ export interface Profile {
     teams?: Team[];
     tags?: Tag[];
     follows?: Follow[];
+    role?: string;
     team_name?: string;
     team_id?: number;
     project_name?: string;

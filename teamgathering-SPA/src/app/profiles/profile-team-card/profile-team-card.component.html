@@ -1,0 +1,10 @@
+<div class="card mt-4">
+  <div class="card-img-wrapper">
+    <a class="card-link" [routerLink]="['/profile-info/', profile?.profile_id]"><img class="card-img-top" src="{{profile?.image || './../../../assets/profile-images/Default_user.jpg'}}" alt="{{profile?.first_name}}"></a>
+  </div>
+  <div class="card-body p-1 text-center">
+    <h6 class="card-title">{{profile?.first_name || "member" }}  {{profile?.last_name || "" }}</h6>
+    <h6 class="card-subtitle mb-2 text-muted text-truncate">{{profile?.role}}</h6>
+  </div>
+</div>
+<div class="mb-2"></div>

@@ -6,6 +6,7 @@ import { AlertifyService } from '../_services/alertify.service';
 import { ActivatedRoute } from '@angular/router';
 import { Profile } from '../_models/profile';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { StatusService } from '../_services/status.service';
 
 @Component({
   selector: 'app-messages',
@@ -33,7 +34,8 @@ export class MessagesComponent implements OnInit {
     private profileService: ProfileService, 
     private alertify: AlertifyService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private statusService: StatusService
     ) { }
 
   ngOnInit() {
@@ -41,6 +43,8 @@ export class MessagesComponent implements OnInit {
     this.profile_id = this.authService.profile_id;
     this.getAssociates();
     this.getMessages();
+    
+    this.statusService.status = { message: false, requests: false};
   }
 
   ngOnDestroy() {

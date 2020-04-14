@@ -40,58 +40,52 @@
               <h4>About</h4>
               <p *ngIf="project_info?.view_status == 'authorized'" class="multiline">{{project_info?.description}}</p>
               <p *ngIf="project_info?.view_status == 'unathorized'" class="multiline">{{project_info?.short_description}}</p>
+              <h4>Stacks</h4>
+              <div class="container mt-2">
+                <div class="row">
+                  <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of project_info?.tags">
+                    <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
+                      <span>{{tag.tag_name}}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
               <hr>
             </tab> 
             <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
-              <div *ngFor="let team of project_info?.teams; let i = index">
-                <hr>
-                <h4>
-                  <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a> 
-                </h4>
-                <div>
-                  <p>Description: {{team.team_description}}</p>
-                </div>
-                <div *ngFor="let profile of team.profiles">
-                  <div *ngIf="profile.profile_team_status == 'active'">
-                    <hr>
-                    <h4 *ngIf="project_info?.owner_id == authService.profile_id">
-                      <p>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></p>
-                    </h4>
-                    <h5>Role: {{profile.role}}</h5>
-                    <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></h5>
-                    <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
-                    <h5 class="green">Status: {{profile.profile_team_status}}</h5>
-                    <hr>
+              <div class="container">
+                <div *ngFor="let team of project_info?.teams; let i = index">
+                  <hr>
+                  <a [routerLink]="['/teams/', team.team_id]">{{team.team_name}}</a>
+                  <a *ngIf="project_info?.owner_id == authService.profile_id" [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a>
+                  <div>
+                    <p>Description: {{team.team_description}}</p>
                   </div>
-                  <div *ngIf="profile.profile_team_status == 'inactive'">           
-                    <hr>
-                    <h5>Role: {{profile.role}}</h5>
-                    <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'memeber'}} {{profile.last_name}}</a></h5>
-                    <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
-                    <h5 class="red">Status: {{profile.profile_team_status}}</h5>
-                    <hr>
+                  <hr>
+                  <div class="row">
+                    <div *ngFor="let profile of team.profiles" class="col-lg-3 col-md-4 col-sm-6">
+                      <div *ngIf="profile.profile_team_status == 'active'">
+                        <app-profile-team-card [profile]='profile'></app-profile-team-card>
+                      </div>
+                      <!-- <div *ngIf="profile.profile_team_status == 'inactive'">           
+                        <app-profile-team-card [profile]='profile'></app-profile-team-card>
+                        <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
+                        <h5 class="red">Status: {{profile.profile_team_status}}</h5>
+                        <hr>
+                      </div> -->
+                    </div> 
+                    <div class="mb-4"></div>  
                   </div>
                 </div>
-                <hr>
               </div>
             </tab> 
             <tab heading="Additional">
-                <div>
-                  <hr>                    
-                  <h4>Looking For</h4>
-                  <p class="multiline">{{project_info?.looking_for}}</p>
-                  <h4>Stacks</h4>
-                  <div class="container mt-2">
-                    <div class="row">
-                      <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of project_info?.tags">
-                        <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
-                          <span>{{tag.tag_name}}</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <hr>
-                </div>
+              <div>
+                <hr>                    
+                <h4>Looking For</h4>
+                <p class="multiline">{{project_info?.looking_for}}</p>
+                <hr>
+              </div>
             </tab> 
           </tabset>
         </div>

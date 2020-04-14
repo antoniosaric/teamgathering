@@ -6,6 +6,7 @@ import { RequestService } from '../../_services/request.service';
 import { TeamService } from '../../_services/team.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { StatusService } from 'src/app/_services/status.service';
 
 @Component({
   selector: 'app-request-list',
@@ -27,13 +28,15 @@ export class RequestListComponent implements OnInit {
     private teamService: TeamService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private statusService: StatusService
   ) { }
 
   ngOnInit(){
     this.getRequests();
     this.getTeams();
     this.createRequestForm();
+    this.statusService.searchStatus();
   }
 
   createRequestForm(){

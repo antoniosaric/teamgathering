@@ -63,6 +63,9 @@ import { TagProfileComponent } from './modals/tag/tag-profile/tag-profile.compon
 import { TagProjectComponent } from './modals/tag/tag-project/tag-project.component';
 import { UpdateRoleComponent } from './modals/update-role/update-role.component';
 import { StartChatComponent } from './modals/start-chat/start-chat.component';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
+import { ProfileTeamCardComponent } from './profiles/profile-team-card/profile-team-card.component';
+import { ProfileProjectCardComponent } from './profiles/profile-project-card/profile-project-card.component';
 
 
 
@@ -86,6 +89,8 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
       ProfileInfoComponent,
       ProfileProjectComponent,
       ProfileCardComponent,
+      ProfileTeamCardComponent,
+      ProfileProjectCardComponent,
       ProjectCardComponent,
       ProjectInfoComponent,
       ProjectListComponent,
@@ -97,6 +102,7 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
       TeamEditComponent,
       TeamAddComponent,
       ExploreComponent,
+      SuggestionsComponent,
       TermsandconditionsComponent,
       ContactComponent,
       PrivacyComponent,
@@ -112,7 +118,8 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
       RequestListComponent,
       TagProjectComponent,
       TagProfileComponent,
-      UpdateRoleComponent
+      UpdateRoleComponent,
+      SuggestionsComponent
    ],
    imports: [
       RouterModule,

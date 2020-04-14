@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../_services/auth.service';
 import { SearchService } from '../_services/search.service';
 import { toInt } from 'ngx-bootstrap/chronos/utils/type-checks';
+import { StatusService } from '../_services/status.service';
 
 @Component({
   selector: 'app-explore',
@@ -19,11 +20,13 @@ export class ExploreComponent implements OnInit {
   constructor( 
       private alertify: AlertifyService, 
       private authService: AuthService,
-      private searchService: SearchService
+      private searchService: SearchService,
+      private statusService: StatusService
     ) { }
 
   ngOnInit() {
     this.authService.checkTokenExists() != null ? this.getSuggestions() : false;
+    this.statusService.searchStatus();
   }
 
   setSearchResults(data){

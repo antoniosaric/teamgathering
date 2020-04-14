@@ -1,0 +1,11 @@
+<div class="card mt-4">
+  <div class="card-img-wrapper">
+    <a class="card-link" [routerLink]="['/project/edit/', project.project_id]" *ngIf="page=='edit'"><img class="card-img-top" src="{{project.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_project.jpg'}}" alt="{{project?.project_name}}"></a>
+    <a class="card-link" [routerLink]="['/project-info/', project.project_id]" *ngIf="page=='info'"><img class="card-img-top" src="{{project.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_project.jpg'}}" alt="{{project?.project_name}}"></a>
+  </div>
+  <div class="card-body p-1 text-center">
+    <h6 class="card-title">{{project.project_name}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted text-truncate">{{project.project_role}}</h6>
+  </div>
+</div>
+<div class="mb-2"></div>

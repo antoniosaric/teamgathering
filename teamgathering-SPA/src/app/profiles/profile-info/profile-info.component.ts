@@ -3,6 +3,7 @@ import { AlertifyService } from '../../_services/alertify.service';
 import { ProfileService } from '../../_services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/_services/auth.service';
+import { StatusService } from 'src/app/_services/status.service';
 
 @Component({
   selector: 'app-profile-info',
@@ -14,6 +15,7 @@ export class ProfileInfoComponent implements OnInit {
   modalState = false;
   associate = [];
   projects_array = [];
+  project_page = 'info';
 
   constructor(
     private alertify: AlertifyService, 
@@ -21,6 +23,7 @@ export class ProfileInfoComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public authService: AuthService, 
+    private statusService: StatusService
   ) { }
 
   ngOnInit() {
@@ -28,6 +31,7 @@ export class ProfileInfoComponent implements OnInit {
       this.profile_info = data['profile'];
     })
     this.setTeamArray();
+    this.statusService.searchStatus();
   }
 
   setTeamArray(){

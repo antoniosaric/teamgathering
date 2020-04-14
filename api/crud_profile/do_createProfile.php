@@ -75,6 +75,7 @@ try {
             $data->message = "profile created";
             echo json_encode($data);
             status_return(200);
+            return;
         }else{
             $data->message = "something went wrong";
             echo json_encode($data);

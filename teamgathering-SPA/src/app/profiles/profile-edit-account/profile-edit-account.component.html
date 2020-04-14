@@ -1,46 +1,37 @@
 <div class="container mt-4 justify-content-center">
-    <div class="row">
-      <div class="col-md-6">
-        <h1>Edit Your Account</h1>
-      </div>
-      <div class="col-sm-8">
-        <div class="alert alert-info" *ngIf="emailForm.dirty || passwordForm.dirty || deleteAccountForm.dirty">
-          <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
-        </div>
-      </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Edit Your Account</h1>
     </div>
-    <div class="panel panel-default">
-      <div class="col-sm-4">
-        <button class="btn btn-success btn-block" (click)="changeEmailState(true)" *ngIf="emailState == false">change email</button>
-        <button class="btn btn-success btn-block" (click)="changeEmailState(false)" *ngIf="emailState == true">cancel</button>  
-      </div>
-      <div class="col-sm-4 mt-4" *ngIf="emailState == true">
-        <form [formGroup]="emailForm" (ngSubmit)="updateEmail()">
-          <div class="form-group mb-4">
-            <input type="text" 
-              [ngClass]="{'is-invalid': emailForm.get('email').errors && emailForm.get('email').touched }"
-              class="form-control mb-2" 
-              maxlength="255"
-              formControlName="email" 
-              placeholder="{{email}}">
-              <div class="invalid-feedback" *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">email cannot be empty</div>
+  </div>
+  <div class="tab-panel">
+    <tabset class="profile-tabset">
+      <tab heading="Update Email">
+        <div class="col-sm-4 mt-4">
+          <form [formGroup]="emailForm" (ngSubmit)="updateEmail()">
+            <div class="form-group mb-4">
               <input type="text" 
-              [ngClass]="{'is-invalid': emailForm.get('password').errors && emailForm.get('password').touched }"
-              class="form-control mb-2" 
-              formControlName="password" 
-              placeholder="password">
-              <div class="invalid-feedback" *ngIf="emailForm.get('password').hasError('required') && emailForm.get('password').touched">password cannot be empty</div>
-            </div> 
-            <button class="btn btn-success btn-block" [disabled]="!emailForm.valid">Save new Email</button>
-        </form>
-      </div>
-      <div class="col-sm-4 mt-2">
-        <button class="btn btn-success btn-block" (click)="changePasswordState(true)" *ngIf="passwordState == false">change password</button>
-        <button class="btn btn-success btn-block" (click)="changePasswordState(false)" *ngIf="passwordState == true">cancel</button>  
-      </div>
-      <div class="col-sm-4" *ngIf="passwordState == true">
-        <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
-            <div class="form-group">
+                [ngClass]="{'is-invalid': emailForm.get('email').errors && emailForm.get('email').touched }"
+                class="form-control mb-2" 
+                maxlength="255"
+                formControlName="email" 
+                placeholder="{{email}}">
+                <div class="invalid-feedback" *ngIf="emailForm.get('email').hasError('required') && emailForm.get('email').touched">email cannot be empty</div>
+                <input type="text" 
+                [ngClass]="{'is-invalid': emailForm.get('password').errors && emailForm.get('password').touched }"
+                class="form-control mb-2" 
+                formControlName="password" 
+                placeholder="password">
+                <div class="invalid-feedback" *ngIf="emailForm.get('password').hasError('required') && emailForm.get('password').touched">password cannot be empty</div>
+              </div> 
+              <button class="btn btn-success btn-block" [disabled]="!emailForm.valid">Save new Email</button>
+          </form>
+        </div>
+      </tab> 
+      <tab heading="Update Password">
+        <div class="col-sm-4">
+          <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+              <div class="form-group">
                 <input type="password" 
                 [ngClass]="{'is-invalid': passwordForm.get('password').errors && passwordForm.get('password').touched }"
                 class="form-control mt-4" 
@@ -49,8 +40,8 @@
                 <div class="invalid-feedback" *ngIf="passwordForm.get('password').hasError('required') && passwordForm.get('password').touched">Old password is required &nbsp;</div>
                 <div class="invalid-feedback" *ngIf="passwordForm.get('password').hasError('minlength') && passwordForm.get('password').touched">password must be at least 4 characters</div>
                 <div class="invalid-feedback" *ngIf="passwordForm.get('password').hasError('maxlength') && passwordForm.get('password').touched">password must be less than 16 characters</div>
-            </div> 
-            <div class="form-group">
+              </div> 
+              <div class="form-group">
                 <input type="password" 
                 [ngClass]="{'is-invalid': passwordForm.get('password').errors && passwordForm.get('password').touched }"
                 class="form-control mt-4" 
@@ -59,8 +50,8 @@
                 <div class="invalid-feedback" *ngIf="passwordForm.get('newPassword').hasError('required') && passwordForm.get('newPassword').touched">New password is required &nbsp;</div>
                 <div class="invalid-feedback" *ngIf="passwordForm.get('newPassword').hasError('minlength') && passwordForm.get('newPassword').touched">password must be at least 4 characters</div>
                 <div class="invalid-feedback" *ngIf="passwordForm.get('newPassword').hasError('maxlength') && passwordForm.get('newPassword').touched">password must be less than 16 characters</div>
-            </div> 
-            <div class="form-group">
+              </div> 
+              <div class="form-group">
                 <input type="password" 
                 [ngClass]="{'is-invalid': passwordForm.get('confirmPassword').errors 
                 && passwordForm.get('confirmPassword').touched
@@ -73,26 +64,24 @@
                   <span *ngIf="passwordForm.get('confirmPassword').hasError('required') && passwordForm.get('confirmPassword').touched">Repeat passwords is required &nbsp;</span>
                   <span *ngIf="passwordForm.hasError('mismatch')">passwords do not match</span>
                 </div>
+              </div> 
+            <button class="btn btn-success btn-block" [disabled]="!passwordForm.valid">Save Password</button>
+          </form>
+        </div>
+      </tab> 
+      <tab heading="Delete Account">
+        <div class="col-sm-4 mt-4">
+          <p class="warning">To Delete Account, Type DELETE.</p>
+          <form [formGroup]="deleteAccountForm" (ngSubmit)="deleteAccount()">
+            <div class="form-group mb-4">
+              <input type="text" 
+              [ngClass]="{'is-invalid': deleteAccountForm.get('deleteText').errors && deleteAccountForm.get('deleteText').touched }"
+              class="form-control mb-2" 
+              formControlName="deleteText" 
+              placeholder="type DELETE">
+              <div class="invalid-feedback" *ngIf="deleteAccountForm.get('deleteText').hasError('pattern') && deleteAccountForm.get('deleteText').touched">to delete account, type DELETE</div>
             </div> 
-          <button class="btn btn-success btn-block" [disabled]="!passwordForm.valid">Save Password</button>
-        </form>
-      </div>
-      <div class="col-sm-4 mt-2">
-        <button class="btn btn-warning btn-block" (click)="changeDeleteState(true)" *ngIf="deleteState == false">Delete Account</button>  
-        <button class="btn btn-success btn-block" (click)="changeDeleteState(false)" *ngIf="deleteState == true">cancel</button>  
-      </div>
-      <div class="col-sm-4 mt-4" *ngIf="deleteState == true">
-        <p class="warning">To Delete Account, Type DELETE.</p>
-        <form [formGroup]="deleteAccountForm" (ngSubmit)="deleteAccount()">
-          <div class="form-group mb-4">
-            <input type="text" 
-            [ngClass]="{'is-invalid': deleteAccountForm.get('deleteText').errors && deleteAccountForm.get('deleteText').touched }"
-            class="form-control mb-2" 
-            formControlName="deleteText" 
-            placeholder="type DELETE">
-            <div class="invalid-feedback" *ngIf="deleteAccountForm.get('deleteText').hasError('pattern') && deleteAccountForm.get('deleteText').touched">to delete account, type DELETE</div>
-          </div> 
-          <div class="form-group">
+            <div class="form-group">
               <input type="password" 
               [ngClass]="{'is-invalid': deleteAccountForm.get('password').errors && deleteAccountForm.get('password').touched }"
               class="form-control mt-4" 
@@ -101,11 +90,12 @@
               <div class="invalid-feedback" *ngIf="deleteAccountForm.get('password').hasError('required') && deleteAccountForm.get('password').touched">Password is required &nbsp;</div>
               <div class="invalid-feedback" *ngIf="deleteAccountForm.get('password').hasError('minlength') && deleteAccountForm.get('password').touched">password must be at least 4 characters</div>
               <div class="invalid-feedback" *ngIf="deleteAccountForm.get('password').hasError('maxlength') && deleteAccountForm.get('password').touched">password must be less than 16 characters</div>
-          </div> 
-          <button class="btn btn-warning btn-block" [disabled]="!deleteAccountForm.valid">Delete Account</button>
-        </form>
-      </div>
-    </div>
+            </div> 
+            <button class="btn btn-warning btn-block" [disabled]="!deleteAccountForm.valid">Delete Account</button>
+          </form>
+        </div>
+      </tab> 
+    </tabset>
   </div>
-
-  <div class="container mb-4"></div>
+</div>
+<div class="container mb-4"></div>

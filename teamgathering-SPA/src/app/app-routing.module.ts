@@ -32,12 +32,14 @@ import { TeamEditComponent } from './teams/team-edit/team-edit.component';
 import { TeamAddComponent } from './teams/team-add/team-add.component';
 import { TeamEditResolver } from './_resolvers/team-edit.resolver';
 import { ProfileProjectComponent } from './profiles/profile-project/profile-project.component';
+import { SuggestionsComponent } from './suggestions/suggestions.component';
 
 
 
 const routes: Routes = [
   { path: '', component: HomeComponent, resolve: {projects: ProjectListResolver} },
   { path: 'explore', component: ExploreComponent },
+  { path: 'suggestions', component: SuggestionsComponent },
   {
     path: '',
     runGuardsAndResolvers: 'always',

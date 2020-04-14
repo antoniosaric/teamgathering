@@ -5,6 +5,7 @@ include_once('../_authorization/assignVerifyJWT.php');
 include '../_general/status_returns.php';
 include '../_general/functions.php';
 include '../_crud/read.php';
+include '../_crud/update.php';
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
@@ -63,6 +64,10 @@ try {
             }
         }
     }
+
+    $set = 'IsRead=? ';
+    $clauseArray = [ 1, $profile_id ];
+    $return_update_teams = update_table( 'messages', $set, 'recipient_id', 'ii', $clauseArray );
 
     $data->message = "messages found";
     $data->messages = $messages;

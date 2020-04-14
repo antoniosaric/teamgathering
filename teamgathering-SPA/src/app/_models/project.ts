@@ -14,4 +14,5 @@ export interface Project {
 	count?: number;
 	teams?: Team[];
 	view_tatus?: string;
+	project_role?: string;
 }

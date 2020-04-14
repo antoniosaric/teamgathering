@@ -97,40 +97,60 @@
           </tab> 
           <tab heading="Edit Projects">
             <a [routerLink]="['/project/add']">Add Project</a>
-            <div *ngFor="let project of profile_info?.projects">
-              <hr>
-              <h4>
-                <a [routerLink]="['/project-info/', project.project_id]">{{project.project_name}}</a>
-                <a [routerLink]="['/project/edit/', project.project_id]" class="ml-4">Edit</a>
-              </h4>
-              <h5>Role: {{project.project_role}}</h5>
-              <h5>Status: {{project.project_status}}</h5>
-              <h5>Created: {{project.created_date | date: 'mediumDate'}}</h5>
-              <hr>
+            <div class="container">
+              <div class="row">
+                <div *ngFor="let project of profile_info?.projects" class="col-lg-3 col-md-4 col-sm-6">
+                  <hr>
+                  <div>
+                    <app-profile-project-card [project]='project' [page]='project_page'></app-profile-project-card>
+                  </div>
+                </div> 
+                <div class="mb-4"></div>  
+              </div>
             </div>
           </tab> 
           <tab heading="Edit Teams">
             <a [routerLink]="['/team/add']" *ngIf="profile_info?.teams.length != 0">Add Team</a>
             <p *ngIf="profile_info?.teams.length == 0">You need to add a project to add a team</p>
             <div *ngIf="profile_info?.teams.length != 0" class="mt-2">
-              <div *ngFor="let project_from_array of projects_array" >
+              <div *ngFor="let project_from_array of projects_array" class="mt-2">
+                <hr>
                 <div>
-                  <h4 class="mr-2">Project: <a [routerLink]="['/project/edit/', project_from_array.project_id]">{{project_from_array.project_name}}</a></h4>
+                  <h4 class="mr-2"><a [routerLink]="['/project/edit/', project_from_array.project_id]">{{project_from_array.project_name}}</a></h4>
                   <hr>
                 </div>
-                <div *ngFor="let team of profile_info?.teams;let i=index">
-                  <div *ngIf="ownerCheck( profile_info?.profile_id , team.owner_id )">
-                    <div *ngIf="team.project_id == project_from_array.project_id">
-                      <h4>
-                        {{team.team_name}} <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
-                      </h4>
-                      <h5>Role: {{team.role}}</h5>
-                      <h5>{{team.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(team.ended_date)"> {{team.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(team.ended_date)">Present</span></h5>
-                      <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
-                      <hr>   
-                    </div>              
+                <ul>
+                  <div *ngFor="let team of profile_info?.teams;let i=index">
+                    <div *ngIf="ownerCheck( profile_info?.profile_id , team.owner_id )">
+                      <div *ngIf="team.project_id == project_from_array.project_id">
+                        <li>
+                          <h4>
+                            {{team.team_name}} <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
+                          </h4>
+                        </li>
+                        <!-- <h5>Role: {{team.role}}</h5>
+                        <h5>{{team.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(team.ended_date)"> {{team.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(team.ended_date)">Present</span></h5>
+                        <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
+                        <hr>    -->
+                      </div>              
+                    </div>
+                    <div *ngIf="!ownerCheck( profile_info?.profile_id , team.owner_id )">
+                      <div *ngIf="team.project_id == project_from_array.project_id">
+                        <li>
+                          <h4>
+                            
+                            {{team.team_name}} <button class="btn btn-danger ml-2" type="button" (click)="leaveTeam(team.team_id)">Leave Team</button>
+
+                          </h4>
+                        </li>
+                        <!-- <h5>Role: {{team.role}}</h5>
+                        <h5>{{team.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(team.ended_date)"> {{team.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(team.ended_date)">Present</span></h5>
+                        <h5 [ngClass]="statusClassCheck(team)">Status: {{team.profile_team_status}}</h5>
+                        <hr>    -->
+                      </div>              
+                    </div>
                   </div>
-                </div>
+                </ul>
               </div>
             </div>
           </tab> 

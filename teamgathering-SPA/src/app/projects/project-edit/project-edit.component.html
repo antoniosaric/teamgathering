@@ -70,12 +70,36 @@
               <h5 class="mt-3">short description</h5>
               <textarea name="short_description" id="short_description" cols="30" rows="6" class="form-control" formControlName="short_description" maxlength="255"></textarea>
               <hr>
+              <h4>Stacks</h4>
+              <app-tag-project (returnTag)="addTag($event)" [project_id]="project_info.project_id" [page]="page"></app-tag-project>
+              <div class="container mt-2">
+                <div class="row">
+                  <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of project_info?.tags">
+                    <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
+                      <span>{{tag.tag_name}}</span>
+                    </button>
+                    <button  type="button" class="btn btn-danger button-radius-delete-badge default-cursor" (click)="deleteTagProject(tag)">X</button>
+                  </div>
+                </div>
+              </div>
+              <hr>
             </tab> 
-            <tab heading="Teams" *ngIf="project_info?.teams.length > 0">
-              <div *ngFor="let team of project_info?.teams">
+            <tab heading="Teams" class="mb-2">
+              <p *ngIf="project_info?.teams.length == 0">no teams for this project</p>
+              <ul>
+                <hr>
+                <div *ngFor="let team of project_info?.teams;let i=index" class="mt-2">
+                  <li>
+                    <h4>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></h4>
+                  </li>   
+                  <hr>                 
+                </div>
+              </ul>
+
+              <!-- <div *ngFor="let team of project_info?.teams">
                 <hr>
                 <h4>
-                  <!-- <a [routerLink]="['/team-info/', team.team_id]">{{team.team_name}}</a> -->
+                  
                   <p>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></p>
                   
                 </h4>
@@ -102,26 +126,13 @@
                   </div>
                 </div>
                 <hr>
-              </div>
+              </div> -->
             </tab> 
             <tab heading="Additional">
               <div>
                 <hr>                    
                 <h4>Looking For</h4>
                 <textarea name="looking_for" id="looking_for" cols="30" rows="6" class="form-control" formControlName="looking_for"></textarea>
-                <h4>Stacks</h4>
-                <h4>Skills</h4>
-                <app-tag-project (returnTag)="addTag($event)" [project_id]="project_info.project_id" [page]="page"></app-tag-project>
-                <div class="container mt-2">
-                  <div class="row">
-                    <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of project_info?.tags">
-                      <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
-                        <span>{{tag.tag_name}}</span>
-                      </button>
-                      <button  type="button" class="btn btn-danger button-radius-delete-badge default-cursor" (click)="deleteTagProject(tag)">X</button>
-                    </div>
-                  </div>
-                </div>
                 <hr>
               </div>
             </tab> 
@@ -129,7 +140,7 @@
         </div>
       </div>
     </div>
-    </form>
+  </form>
 
 
   <div class="col-sm-4 mt-2">
