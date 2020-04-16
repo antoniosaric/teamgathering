@@ -9,7 +9,12 @@ export class SearchService {
 
 constructor( private http: HttpClient ) { }
 
-  search( token: any, parameters: any ){
+  searchProjects( token: any, parameters: any ){
+    const params = { ...token, ...parameters };
+    return this.http.post( environment.apiUrl + 'main/get_searchResults.php', params )
+  }
+
+  searchProfiles( token: any, parameters: any ){
     const params = { ...token, ...parameters };
     return this.http.post( environment.apiUrl + 'main/get_searchResults.php', params )
   }

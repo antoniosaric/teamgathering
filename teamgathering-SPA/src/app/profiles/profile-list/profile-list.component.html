@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="teams_array.length > 0">
   <div *ngFor="let team of teams_array" >
     <hr>
     <h4 class="mr-2">{{team.team_name}}<span class="ml-2 mr-2">-</span>{{team.project_name}}</h4>
@@ -13,5 +13,9 @@
       </div>
     </div>
   </div>
+</div>
+<div class="container mt-4 text-center" *ngIf="teams_array.length == 0">
+  <h3>You are not on any projects.</h3>
+  <h3> Please join a project or create one and invite members to your team!</h3>
 </div>
 <div style="height:350px"></div>

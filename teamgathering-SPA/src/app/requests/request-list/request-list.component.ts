@@ -99,6 +99,14 @@ export class RequestListComponent implements OnInit {
     }
   }
 
+  assignName(data){
+    if(!!data.first_name){
+      return data.first_name + ' ' + data.last_name;
+    }else{
+      return 'member';
+    }
+  }
+
   // requestJoinProject(project_id){
   //   this.requestService.addRequest({ 'token': localStorage.getItem('token') }, {'project_id': project_id}).subscribe(next => {
   //     this.authService.setToken(next);

@@ -3,8 +3,8 @@
     <tabset class="profile-tabset">
       <tab heading="Search Projects">
         <div class="text-center container mt-2">
-          <form class="form-inline my-2 my-lg-0" #searchForm="ngForm" (ngSubmit)="search()">
-            <input class="form-control mr-sm-2" type="text" name="search" placeholder="search" required [(ngModel)]="model.search" >
+          <form class="form-inline my-2 my-lg-0" #searchForm="ngForm" (ngSubmit)="searchProjects()">
+            <input class="form-control mr-sm-2" type="text" name="searchProjects" placeholder="search" required [(ngModel)]="model_projects.searchProjects" >
             <!-- <button  type="button" class="btn btn-success" (click)="toggleSuggestions()" *ngIf="( !!suggestions ) && ( profiles.length > 0 || projects.length > 0 ) ">reload suggestions</button> -->
           </form>
         
@@ -26,11 +26,37 @@
             </div>
           </div> -->
         
-          <div *ngIf="searches.length > 0" class="mt-2 container">
+          <div *ngIf="searches_projects.length > 0" class="mt-2 container">
             <div class="row">
-              <div *ngFor="let project of searches" class="col-lg-3 col-md-4 col-sm-8">
+              <div *ngFor="let project of searches_projects" class="col-lg-3 col-md-4 col-sm-8">
                 <app-project-card [project]="project"></app-project-card>
               </div>
+            </div>
+          </div>
+          <div *ngIf="searches_projects.length == 0 && searched_projects == true" class="mt-2 container">
+            <div class="row">
+              <p>0 search results</p>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Search Profiles">
+        <div class="text-center container mt-2">
+          <form class="form-inline my-2 my-lg-0" #searchForm="ngForm" (ngSubmit)="searchProfiles()">
+            <input class="form-control mr-sm-2" type="text" name="searchProfiles" placeholder="search" required [(ngModel)]="model_profiles.searchProfiles" >
+          </form>
+        </div> 
+        <div class="mt-2 mb-2 container">
+          <div *ngIf="searches_profiles.length > 0" class="mt-2 container">
+            <div class="row">
+              <div *ngFor="let profile of searches_profiles" class="col-lg-3 col-md-4 col-sm-8">
+                <app-profile-team-card [profile]="profile"></app-profile-team-card>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="searches_profiles.length == 0 && searched_profiles == true" class="mt-2 container">
+            <div class="row">
+              <p>0 search results</p>
             </div>
           </div>
         </div>
@@ -39,7 +65,7 @@
         <div *ngIf="profiles.length > 0" class="mt-2 container">
           <div class="row">
             <div *ngFor="let profile of profiles" class="col-lg-2 col-md-4 col-sm-6">
-              <app-profile-card [profile]='profile'></app-profile-card>
+              <app-profile-team-card [profile]='profile'></app-profile-team-card>
             </div>
           </div>
         </div>
