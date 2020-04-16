@@ -47,7 +47,7 @@ try {
       }
     }
   }else{
-    $data->message = "project not found";
+    $data->message = "no projects added";
     status_return(400); 
     echo json_encode($data);
     $conn->close();
