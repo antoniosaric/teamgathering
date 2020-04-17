@@ -66,6 +66,7 @@ try {
                     profiles_team.profile_id AS owner_id, 
                     profiles.profile_id, 
                     profiles.first_name, 
+                    profiles.image, 
                     profiles.last_name,
                     profiles_team.joined_date,
                     profiles_team.profile_team_status

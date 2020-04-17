@@ -17,6 +17,7 @@ export class ProfileEditComponent implements OnInit {
   @ViewChild('editForm', {static:true}) editForm: FormGroup;
   profile_info: any;
   projects_array = [];
+  projects_array_non_owner = [];
   state = 'profile';
   image: string = '';
   page = 'profile';
@@ -69,6 +70,10 @@ export class ProfileEditComponent implements OnInit {
       if( this.profile_info.teams[i].owner_id == this.profile_info.profile_id ){
         if ( !this.projects_array.some(e => e.project_id === project_object.project_id)) {
           this.projects_array.push( project_object ) ;
+        }
+      }else{
+        if ( !this.projects_array_non_owner.some(e => e.project_id === project_object.project_id)) {
+          this.projects_array_non_owner.push( project_object ) ;
         }
       }
     }

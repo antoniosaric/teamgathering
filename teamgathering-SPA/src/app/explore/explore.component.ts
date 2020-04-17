@@ -50,8 +50,6 @@ export class ExploreComponent implements OnInit {
   }
 
   searchProjects(){
-    console.log('$$$$$$$$$')
-    console.log(this.model_projects)
     this.searched_projects = true;
     this.searched_profiles = false;
     this.searchService.searchProjects( { 'token': this.authService.checkTokenExists() }, this.model_projects).subscribe(next => {
@@ -62,8 +60,6 @@ export class ExploreComponent implements OnInit {
   }
 
   searchProfiles(){
-    console.log('%%%%%%%%')
-    console.log(this.model_profiles)
     this.searched_projects = false;
     this.searched_profiles = true;
     this.searchService.searchProfiles( { 'token': this.authService.checkTokenExists() }, this.model_profiles).subscribe(next => {

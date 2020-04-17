@@ -62,7 +62,6 @@ try {
                 $project_object->project_id = $row2['project_id'];
                 $project_object->project_name = $row2['project_name'];
                 $project_object->project_status = $row2['project_status']; 
-                $project_object->created_date = $row2['created_date']; 
                 $project_object->image = $row2['image']; 
                 $project_object->owner_id = $row2['owner_id']; 
                 $project_object->project_role = $row2['role'];
