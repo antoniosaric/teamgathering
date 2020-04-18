@@ -56,6 +56,33 @@ try {
             }
         }
     }
+
+    $sql3 = "SELECT DISTINCT 
+      projects.project_id AS project_id,
+      projects.project_name AS project_name,
+      projects.project_status AS project_status,
+      projects.short_description AS short_description,
+      projects.image AS image,
+      projects.owner_id AS owner_id,
+      profiles.first_name AS first_name,
+      profiles.last_name AS last_name
+      FROM projects 
+      LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
+      WHERE projects.owner_id = ".$profile_id." AND projects.project_status != 'deleted' ORDER BY projects.project_id";
+
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->execute();
+    $result3 = $stmt3->get_result();
+    $stmt3->close();
+
+    if(!!$result3 && $result3->num_rows > 0){  
+        while( $row3 = $result3->fetch_assoc() ){              
+            if( !in_array( $row3, $projects ) ){                   
+                array_push($projects, $row3);
+            }
+        }
+    }
+
     $data->projects = $projects;
     $data->message = "projects found";
     status_return(200); 

@@ -73,34 +73,29 @@ try {
         }
     }
 
-    // $sql3 = "SELECT DISTINCT * FROM projects 
-    // LEFT JOIN teams ON teams.project_id = projects.project_id
-    // LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-    // WHERE profiles_team.profile_id = ".$profile_id." AND projects.project_status != 'deleted' ORDER BY projects.project_id";
+    $sql3 = "SELECT DISTINCT * FROM projects 
+    WHERE owner_id = ".$profile_id." AND project_status != 'deleted' ORDER BY project_id";
 
-    // $stmt3 = $conn->prepare($sql3);
-    // $stmt3->execute();
-    // $result3 = $stmt3->get_result();
-    // $stmt3->close();
+    $stmt3 = $conn->prepare($sql3);
+    $stmt3->execute();
+    $result3 = $stmt3->get_result();
+    $stmt3->close();
 
-    // if(!!$result3 && $result3->num_rows > 0){  
-    //     while( $row3 = $result3->fetch_assoc() ){
-    //         $project_object = new stdClass(); 
-    //         if( !!$row3["project_id"] ){ 
-    //             $project_object->project_id = $row3['project_id'];
-    //             $project_object->project_name = $row3['project_name'];
-    //             $project_object->project_status = $row3['project_status']; 
-    //             $project_object->created_date = $row3['created_date']; 
-    //             $project_object->image = $row3['image']; 
-    //             $project_object->owner_id = $row3['owner_id']; 
-    //             $project_object->project_role = ( $row3['owner_id'] == $profile_id ) ? 'Owner': 'Member';
+    if(!!$result3 && $result3->num_rows > 0){  
+        while( $row3 = $result3->fetch_assoc() ){
+            $project_object = new stdClass(); 
+            $project_object->project_id = $row3['project_id'];
+            $project_object->project_name = $row3['project_name'];
+            $project_object->project_status = $row3['project_status']; 
+            $project_object->image = $row3['image']; 
+            $project_object->owner_id = $row3['owner_id']; 
+            $project_object->project_role = 'Owner';
                 
-    //             if( !in_array( $project_object, $projects ) ){                   
-    //                 array_push($projects, $project_object);
-    //             }
-    //         }
-    //     }
-    // }
+            if( !in_array( $project_object, $projects ) ){                   
+                array_push($projects, $project_object);
+            }
+        }
+    }
 
     $sql4 = "SELECT DISTINCT tags.tag_id, tags.tag_name FROM tags LEFT JOIN profiles_tag ON profiles_tag.tag_id = tags.tag_id WHERE profiles_tag.profile_id = ".$profile_id." ORDER BY tags.tag_id";
 
@@ -148,8 +143,8 @@ try {
         $profile->created_date = $row_profile['created_date'];
         $profile->looking_for = $row_profile['looking_for'];
         $profile->description = $row_profile['description'];
-        $profile->teams = $teams;
-        $profile->projects = $projects;
+        $profile->teams = array_values($teams);
+        $profile->projects = array_values($projects);
         $profile->tags = $tags;
         $profile->follows = $follows;
         $data->profile = $profile;

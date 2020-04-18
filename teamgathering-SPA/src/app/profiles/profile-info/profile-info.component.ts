@@ -30,18 +30,19 @@ export class ProfileInfoComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.profile_info = data['profile'];
     })
-    this.setTeamArray();
+    // this.setTeamArray();
     this.statusService.searchStatus();
+    console.log(this.profile_info )
   }
 
-  setTeamArray(){
-    for(var i = 0 ; i < this.profile_info.teams.length ; i++){
-      var project_object = { 'project_name': this.profile_info.teams[i].project_name, 'project_id': this.profile_info.teams[i].project_id };
-      if ( !this.projects_array.some(e => e.project_id === project_object.project_id)) {
-        this.projects_array.push( project_object ) ;
-      }
-    }
-  }
+  // setTeamArray(){
+  //   for(var i = 0 ; i < this.profile_info.teams.length ; i++){
+  //     var project_object = { 'project_name': this.profile_info.teams[i].project_name, 'project_id': this.profile_info.teams[i].project_id };
+  //     if ( !this.projects_array.some(e => e.project_id === project_object.project_id)) {
+  //       this.projects_array.push( project_object ) ;
+  //     }
+  //   }
+  // }
 
   statusClassCheck(data){
     if(data.profile_team_status == 'active' ){

@@ -123,7 +123,7 @@
             <div *ngIf="profile_info?.teams.length != 0" class="mt-2 mb-2">
               <tabset class="profile-tabset">
                 <tab heading="owner">
-                  <div *ngFor="let project_from_array of projects_array" class="mt-2 mb-4">
+                  <div *ngFor="let project_from_array of projects_array;let i=index" class="mt-2 mb-4">
                     <hr>
                     <div>
                       <h4 class="mr-2"><a [routerLink]="['/project/edit/', project_from_array.project_id]">{{project_from_array.project_name}}</a></h4>
@@ -156,7 +156,6 @@
                             <li>
                               <h4>
                                 {{team.team_name}} 
-                                <a (click)="leaveTeam(team.team_id)" class="ml-4" *ngIf="team.role != 'Owner'">Leave Team</a>
                                 <button class="btn btn-danger ml-2" type="button" (click)="leaveTeam(team.team_id)" *ngIf="team.role != 'Owner'">Leave Team</button>
                               </h4>
                             </li>

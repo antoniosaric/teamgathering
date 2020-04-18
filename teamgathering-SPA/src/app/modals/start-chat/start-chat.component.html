@@ -25,6 +25,16 @@
     </div>
   </form>
 </div>
+
 <div class="modal-content" *ngIf="!chatArrayCountCheck()">
-  <h2>You need to have associates to send messages</h2>
+  <div class="modal-header">
+    <div class="form-group">
+      <h2>You dont have team members to messages</h2>
+    </div>  
+  </div>
+  <div class="modal-footer">
+    <div class="modal-footer">
+      <button type="button" class="btn btn-warning" (click)="closeModal()">Close</button>
+    </div>  
+  </div>
 </div>

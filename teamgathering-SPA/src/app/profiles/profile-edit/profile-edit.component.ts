@@ -49,6 +49,14 @@ export class ProfileEditComponent implements OnInit {
     })
     this.createEditForm();
     this.setTeamArray();
+
+
+    this.projects_array.filter(function(){return true;});
+
+    console.log('^^^^^^^')
+    console.log(this.projects_array)
+
+
     this.statusService.searchStatus();
     console.log(this.profile_info)
 
