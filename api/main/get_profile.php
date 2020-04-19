@@ -33,7 +33,9 @@ try {
     FROM projects 
     LEFT JOIN teams ON teams.project_id = projects.project_id
     LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-    WHERE profiles_team.profile_id = ".$profile_id." AND profiles_team.profile_team_status !='deleted' ORDER BY projects.project_id, teams.team_id";
+    WHERE profiles_team.profile_id = ".$profile_id." AND 
+    ( profiles_team.profile_team_status !='deleted' AND teams.team_status != 'deleted' ) 
+    ORDER BY projects.project_id, teams.team_id";
 
     $stmt2 = $conn->prepare($sql2);
     $stmt2->execute();
@@ -43,7 +45,7 @@ try {
     if(!!$result2 && $result2->num_rows > 0){  
         while( $row2 = $result2->fetch_assoc() ){
             $team_object = new stdClass(); 
-            if( !!$row2["team_id"] && ( $row2["profile_team_status"] != 'deleted' || $row2["team_status"] != 'deleted' ) ){ 
+            if( !!$row2["team_id"] ){ 
                     $team_object->project_id = $row2['project_id'];
                     $team_object->project_name = $row2['project_name'];
                     $team_object->owner_id = $row2['owner_id'];

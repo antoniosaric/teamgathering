@@ -75,4 +75,11 @@ export class TeamService {
     return this.http.post( environment.apiUrl + 'crud_profiles_team/do_deleteProfilesTeam.php', params )
   }
 
+  leaveTeam( token: any, parameters: any ){
+    const params = {...token, ...parameters }
+    return this.http.post( environment.apiUrl + 'crud_profiles_team/do_deleteProfileFromTeam.php', params )
+  }
+
+
+
 }

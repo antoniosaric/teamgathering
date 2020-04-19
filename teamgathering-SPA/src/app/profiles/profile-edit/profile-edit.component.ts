@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 import { TagService } from 'src/app/_services/tag.service';
 import { FollowService } from 'src/app/_services/follow.service';
 import { StatusService } from 'src/app/_services/status.service';
+import { TeamService } from 'src/app/_services/team.service';
 
 @Component({
   selector: 'app-profile-edit',
@@ -39,7 +40,8 @@ export class ProfileEditComponent implements OnInit {
     private router: Router,
     private tagService: TagService,
     private followService: FollowService,
-    private statusService: StatusService
+    private statusService: StatusService,
+    private teamService: TeamService
   ) { }
 
   ngOnInit() {
@@ -197,8 +199,39 @@ export class ProfileEditComponent implements OnInit {
     } 
   }
 
-  leaveTeam(team_id){
-    console.log(team_id)
+  removeProfileFromTeamObject(team_id){
+    this.profile_info.teams.splice(this.profile_info.teams.findIndex(v => v.team_id === team_id), 1);
+  }
+
+  leaveTeam(team_id, project_id){
+    this.authService.checkToken();
+    this.teamService.leaveTeam({ 'token': localStorage.getItem('token') }, {'team_id': team_id}).subscribe(next => {
+      this.authService.setToken(next);
+      this.project_from_array_non_owner_check(team_id, project_id);
+      this.removeProfileFromTeamObject(team_id);
+      this.alertify.success('you have left the team');
+    }, error => {
+      this.alertify.error(error);
+    }, () => {})
+  }
+
+  project_from_array_non_owner_check(team_id, project_id){
+    var count = 0;
+
+    console.log(this.profile_info.teams)
+    console.log(this.projects_array_non_owner)
+
+    for(var i = 0 ; i < this.profile_info.teams.length ; i++){
+      if( this.profile_info.teams[i].project_id == project_id ){
+        count++;
+      }
+    }
+
+    if(count == 1){
+      console.log('erased')
+      this.projects_array_non_owner.splice(this.projects_array_non_owner.findIndex(v => v.project_id === project_id), 1);
+    }
+
   }
 
 }

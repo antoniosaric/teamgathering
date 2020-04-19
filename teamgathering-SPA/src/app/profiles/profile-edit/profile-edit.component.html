@@ -154,10 +154,10 @@
                       <div *ngFor="let team of profile_info?.teams;let i=index">
                           <div *ngIf="team.project_id == project_from_array_non_owner.project_id">
                             <li>
-                              <h4>
-                                {{team.team_name}} 
-                                <button class="btn btn-danger ml-2" type="button" (click)="leaveTeam(team.team_id)" *ngIf="team.role != 'Owner'">Leave Team</button>
-                              </h4>
+                              <h5 class="mb-2">
+                                {{team.team_name}} - <strong>{{team.role}}</strong>
+                                <button class="btn btn-danger ml-3" type="button" (click)="leaveTeam( team.team_id, team.project_id )" *ngIf="team.role != 'Owner'">Leave Team</button>
+                              </h5>
                             </li>
                           </div>              
                       </div>
