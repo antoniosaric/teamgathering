@@ -22,6 +22,7 @@ export class ProjectEditComponent implements OnInit {
   deleteState = false;
   deleteProjectForm: FormGroup;
   deleteProjectObject: any;
+  project_object: any;
   
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -46,6 +47,7 @@ export class ProjectEditComponent implements OnInit {
       this.image = this.project_info.image;
       this.project_id = this.project_info.project_id;
     })
+    this.setProjectInfoToAddTeam();
     this.createEditForm();
   }
 
@@ -180,5 +182,11 @@ export class ProjectEditComponent implements OnInit {
   }
 
 
+  setProjectInfoToAddTeam(){
+    this.project_object = [{
+      'project_id': this.project_info.project_id,
+      'project_name': this.project_info.project_name
+    }];
+  }
 
 }

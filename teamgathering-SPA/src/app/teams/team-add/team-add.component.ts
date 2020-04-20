@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { TeamService } from '../../_services/team.service';
 import { AlertifyService } from '../../_services/alertify.service';
 import { ProjectService } from '../../_services/project.service';
@@ -17,6 +17,7 @@ export class TeamAddComponent implements OnInit {
   teamInfoForm: FormGroup;
   project_list = [];
   selectProject = false;
+  @Input() start_project_object: any;
 
   constructor(
     private alertify: AlertifyService,
@@ -28,7 +29,11 @@ export class TeamAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getProjectsList();
+    if( this.start_project_object === undefined || this.start_project_object.length == 0 ){
+      this.getProjectsList();
+    }else{
+      this.project_list = this.start_project_object;
+    }
     this.createForm();
   }
 
@@ -88,4 +93,10 @@ export class TeamAddComponent implements OnInit {
       this.router.navigate(['/profile/edit']);
     }
   }
+
+
+
+
+
+
 }

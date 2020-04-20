@@ -10,12 +10,22 @@
         <div class="form-group">
           <div class="group">
             <strong>For Project</strong>
+
+
+
+            <!-- <select class="ml-5" *ngIf="project_list.length == 1" formControlName="project_id">        
+              <option *ngFor="let project of project_list" [ngValue]="project.project_id">
+              {{ project.project_name }}
+              </option>
+            </select> -->
             <select class="ml-5" formControlName="project_id">        
               <option disabled>select project</option>
               <option *ngFor="let project of project_list" [ngValue]="project.project_id">
               {{ project.project_name }}
               </option>
             </select>
+
+
             <div class="red" *ngIf="selectProject == true">you need to select a project</div>
           </div>
         </div> 

@@ -14,21 +14,23 @@ $request = json_decode($postdata);
 $full_name = trim(strtolower($request->full_name));
 $email = trim(strtolower($request->email));
 $message = trim($request->message);
+$data = new stdClass;
 
 try{
+    $saric = "saric.tony@gmail.com";
 
     $headers = array(
-    "From: LevelPlay Sports <share@levelplaysports.com>",
+    "From: suggestions@teamgathering.com",
     "MIME-Version: 1.0",
     "Content-Type: text/html;charset=utf-8; charset=iso-8859-1",
-    "Reply-To: info@levelplaysports.com",
+    "Reply-To: ".$email,
 	"X-Mailer: PHP/" . phpversion()
     );
 
-    $subject = "A friend is sharing a LevelPlay Sports ".$pathArray[3]." profile with you...";
-    $txt = " Hello! Check out this LevelPlay Sports ".$pathArray[3]." profile I've shared with you.  Here is the link:"."<br>"." <a href='".$path."'>".$profileName."  </a>"."<br><br><br>"." <span style='font-size:17px;'><strong>LevelPlay</strong></span>"."<br>"." <span style='font-size:13px;'>Watch. Share. Elevate</span>"."<br><br>"." <span style='font-size:11px;'>If you have any questions, email us at info@levelplaysports.com</span>";
+    $subject = "Team Gathering Suggestion";
+    $txt = $message;
 
-    mail($email,$subject,$txt,implode("\r\n", $headers));
+    mail( $saric, $subject,$txt,implode("\r\n", $headers));
 
     $data->message = "suggestion sent";
     echo json_encode($data);

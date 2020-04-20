@@ -116,7 +116,7 @@ try {
         }
     }
 
-    $sql5 = "SELECT DISTINCT projects.project_id, projects.project_name, follows.follow_id FROM follows LEFT JOIN projects ON projects.project_id = follows.project_id WHERE follows.profile_id = ".$profile_id." ORDER BY follows.created_date DESC";
+    $sql5 = "SELECT DISTINCT projects.project_id, projects.project_name, follows.follow_id, projects.image FROM follows LEFT JOIN projects ON projects.project_id = follows.project_id WHERE follows.profile_id = ".$profile_id." ORDER BY follows.created_date DESC";
 
     $stmt5 = $conn->prepare($sql5);
     $stmt5->execute();

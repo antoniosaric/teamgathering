@@ -168,10 +168,6 @@
                   <app-team-add></app-team-add>
                 </tab>
               </tabset>
-
-
-
-
               <!-- <h3 class="text-center">OWNER</h3>
               <div *ngFor="let project_from_array of projects_array" class="mt-2 mb-4">
                 <hr>
@@ -213,29 +209,25 @@
                   </div>
                 </ul>
               </div> -->
-
             </div>
-
-
-
-
-
-
-
           </tab> 
           <tab heading="Following">
             <div *ngIf="profile_info?.follows.length != 0">
-              <ol>
-                <div *ngFor="let follow of profile_info?.follows">
-                  <hr>
-                  <li>
-                    <h4>
-                      <a [routerLink]="['/project-info/', follow.project_id]">{{follow.project_name}}</a>
-                      <button  type="button" class="btn btn-xs btn-danger ml-3" (click)="deleteFollow(follow)">Unfollow</button>
-                    </h4>
-                  </li>
+              <div class="container mb-2">
+                <div class="row">
+                  <div *ngFor="let follow of profile_info?.follows" class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card mt-4">
+                      <div class="card-img-wrapper">
+                        <a class="card-link" [routerLink]="['/project-info/', follow.project_id]"><img class="card-img-top" src="{{follow.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_project.jpg'}}" alt="{{follow?.project_name}}"></a>
+                      </div>
+                      <div class="card-body p-1 text-center">
+                        <h6 class="card-title text-truncate mt-1">{{follow.project_name}}</h6>
+                        <button  type="button" class="btn btn-danger" style="width:100%" (click)="deleteFollow(follow)">Unfollow</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </ol>
+              </div>
             </div>
             <div *ngIf="profile_info?.follows.length == 0">
               <p>you are not following any projects</p>

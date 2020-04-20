@@ -85,16 +85,27 @@
               <hr>
             </tab> 
             <tab heading="Teams" class="mb-2">
-              <p *ngIf="project_info?.teams.length == 0">no teams for this project</p>
-              <ul>
-                <hr>
-                <div *ngFor="let team of project_info?.teams;let i=index" class="mt-2">
-                  <li>
-                    <h4>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></h4>
-                  </li>   
-                  <hr>                 
-                </div>
-              </ul>
+              <div class="mt-2 mb-2">
+                <tabset class="profile-tabset" >
+                  <tab heading="teams">
+                    <p *ngIf="project_info?.teams.length == 0">no teams for this project</p>
+                    <ul>
+                      <hr>
+                      <div *ngFor="let team of project_info?.teams;let i=index" class="mt-2">
+                        <li>
+                          <h4>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></h4>
+                        </li>   
+                        <hr>                 
+                      </div>
+                    </ul>
+                  </tab>
+                  <tab heading="add team">
+                    <app-team-add [start_project_object]="project_object"></app-team-add>
+                  </tab>
+                </tabset>
+              </div>
+
+
 
               <!-- <div *ngFor="let team of project_info?.teams">
                 <hr>
