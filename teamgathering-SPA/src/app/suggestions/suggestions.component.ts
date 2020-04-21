@@ -26,6 +26,8 @@ export class SuggestionsComponent implements OnInit {
   onSubmit(form: NgForm) {
     if(!!form.valid){
       this.sendSuggestion( { ...form.value } ).subscribe(next => {
+        this.alertify.success('suggestion sent');
+        form.resetForm();
       }, error => {
         this.alertify.error(error);
       })
