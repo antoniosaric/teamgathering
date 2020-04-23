@@ -21,6 +21,8 @@ $data = new stdClass();
 $team = new stdClass();
 $team_profile = [];
 $deleted = "deleted";
+$team->tags = [];
+$tags = [];
 
 try {
     mysqli_check();
@@ -81,7 +83,26 @@ try {
             }
         }
 
-        if(!!isset($team_info_name)){    
+
+        $sql4 = "SELECT DISTINCT tags.tag_id, tags.tag_name FROM tags LEFT JOIN teams_tag ON teams_tag.tag_id = tags.tag_id WHERE teams_tag.team_id = ".$team_id." ORDER BY tags.tag_id";
+
+        $stmt4 = $conn->prepare($sql4);
+        $stmt4->execute();
+        $result4 = $stmt4->get_result();
+        $stmt4->close();
+    
+        if(!!$result4 && $result4->num_rows > 0){  
+            while( $row4 = $result4->fetch_assoc() ){
+                if( !!$row4["tag_id"] ){ 
+                    if( !in_array( $row4, $tags) ){                   
+                        array_push( $tags, $row4 );
+                    }
+                }
+            }
+        }
+
+        if(!!isset($team_info_name)){   
+            $team->tags = $tags; 
             $team->team_name = $team_info_name;
             $team->team_description = $team_info_description;
             $team->team_id = $team_info_id;

@@ -5,6 +5,7 @@ import { AuthService } from '../../_services/auth.service';
 import { Team } from 'src/app/_models/team';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { TagService } from 'src/app/_services/tag.service';
 
 @Component({
   selector: 'app-team-edit',
@@ -12,6 +13,7 @@ import { NgForm, Validators, FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./team-edit.component.css']
 })
 export class TeamEditComponent implements OnInit {
+  page = 'team';
   team_info: any;
   team_update_info: any;
   team_profiles = [];
@@ -31,7 +33,8 @@ export class TeamEditComponent implements OnInit {
     private teamService: TeamService, 
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private tagService: TagService
   ) { }
 
   ngOnInit() {
@@ -136,6 +139,44 @@ export class TeamEditComponent implements OnInit {
 
   closeModal(){
     this.modalState = 0;
+  }
+
+
+  removeTagFromTeamObject(tag){
+    this.team_info.tags.splice(this.team_info.tags.findIndex(v => v.tag_id === tag.tag_id), 1);
+  }
+
+  addTagToTeamObject(next, tag_name){
+    this.team_info.tags.push({ 'tag_name': tag_name, 'tag_id': next.tag_id });
+  }
+
+  deleteTagTeam(tag){
+    this.alertify.confirm('Are you sure you want to remove this stack?', () => {
+      this.authService.checkToken();
+      this.tagService.deleteTagTeam({ 'token': localStorage.getItem('token') }, { 'tag_id': tag.tag_id, 'team_id': this.team_info.team_id } ).subscribe(next => {
+        this.authService.setToken(next);
+        this.removeTagFromTeamObject(tag);
+        this.alertify.success('Profile update successful');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+      })
+    })
+  }
+
+  addTag(tag){
+    console.log(tag)
+    if( tag != '' && tag != null && tag != undefined){
+      this.tagService.addTagTeam({ 'token': localStorage.getItem('token') }, tag ).subscribe(next => {
+        this.authService.setToken(next);
+        this.addTagToTeamObject( next, tag.tag_name )
+        this.alertify.success('skill added successfully');
+      }, error => {
+        this.alertify.error(error);
+      }, () => {
+        this.router.navigate(['/team/edit/'+this.team_info.team_id]);
+      })
+    }
   }
 
 

@@ -72,8 +72,9 @@ try {
         profiles.last_name AS last_name
         FROM projects
         LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
-        LEFT JOIN projects_tag ON projects_tag.project_id = projects.project_id
-        LEFT JOIN tags ON tags.tag_id = projects_tag.tag_id 
+        LEFT JOIN teams ON teams.project_id = projects.project_id 
+        LEFT JOIN teams_tag ON teams_tag.team_id = teams.team_id
+        LEFT JOIN tags ON tags.tag_id = teams_tag.tag_id 
         WHERE {$sql_string} 
         AND ( LOWER( tags.tag_name ) LIKE ?
         OR LOWER( projects.description ) LIKE ? 

@@ -66,6 +66,7 @@ import { StartChatComponent } from './modals/start-chat/start-chat.component';
 import { SuggestionsComponent } from './suggestions/suggestions.component';
 import { ProfileTeamCardComponent } from './profiles/profile-team-card/profile-team-card.component';
 import { ProfileProjectCardComponent } from './profiles/profile-project-card/profile-project-card.component';
+import { TagTeamComponent } from './modals/tag/tag-team/tag-team.component';
 
 
 
@@ -118,6 +119,7 @@ import { ProfileProjectCardComponent } from './profiles/profile-project-card/pro
       RequestListComponent,
       TagProjectComponent,
       TagProfileComponent,
+      TagTeamComponent,
       UpdateRoleComponent,
       SuggestionsComponent
    ],

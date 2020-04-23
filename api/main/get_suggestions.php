@@ -37,11 +37,12 @@ try {
         projects.owner_id AS owner_id,
         profiles.first_name AS first_name,
         profiles.last_name AS last_name
-        FROM projects LEFT JOIN projects_tag ON projects_tag.project_id = projects.project_id 
+        FROM projects 
         LEFT JOIN profiles ON profiles.profile_id = projects.owner_id 
         LEFT JOIN teams ON teams.project_id = projects.project_id
         LEFT JOIN profiles_team ON profiles_team.team_id = teams.team_id
-        WHERE projects_tag.tag_id 
+        LEFT JOIN teams_tag ON teams_tag.team_id = teams.team_id 
+        WHERE teams_tag.tag_id 
         IN ( SELECT DISTINCT tag_id FROM profiles_tag WHERE profile_id = {$profile_id}) 
         AND projects.project_status !='deleted' AND projects.owner_id != {$profile_id}";     
         
@@ -67,7 +68,11 @@ try {
         profiles.created_date AS created_date
         FROM profiles LEFT JOIN profiles_tag ON profiles_tag.profile_id = profiles.profile_id 
         WHERE profiles_tag.tag_id 
-        IN ( SELECT DISTINCT tag_id FROM projects_tag LEFT JOIN projects on projects.project_id =  projects_tag.project_id WHERE projects.owner_id = {$profile_id}) 
+        IN ( SELECT DISTINCT tag_id 
+            FROM teams_tag 
+            LEFT JOIN teams ON teams.team_id =  teams_tag.team_id 
+            LEFT JOIN projects ON projects.project_id = teams.project_id 
+            WHERE projects.owner_id = {$profile_id}) 
         AND profiles.profile_id != {$profile_id}";     
         
         $stmt2 = $conn->prepare($sql2);

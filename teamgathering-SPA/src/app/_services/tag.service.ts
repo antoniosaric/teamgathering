@@ -39,4 +39,15 @@ constructor(private http: HttpClient) { }
     return this.http.post( environment.apiUrl + 'crud_tag/do_deleteProjectTag.php', params )
   }
 
+  addTagTeam( token: any, tag_object: any ){
+    const params = {...token, ...tag_object };
+    return this.http.post( environment.apiUrl + 'crud_tag/do_createTeamTag.php', params )
+  }
+
+  deleteTagTeam( token: any, tag_object: any ){
+    const params = {...token, ...tag_object };
+    return this.http.post( environment.apiUrl + 'crud_tag/do_deleteTeamTag.php', params )
+  }
+
+
 }

@@ -97,7 +97,12 @@ try {
         $project = $row_project;
         $project['teams'] = $teams;
 
-        $sql4 = "SELECT DISTINCT tags.tag_id, tags.tag_name FROM tags LEFT JOIN projects_tag ON projects_tag.tag_id = tags.tag_id WHERE projects_tag.project_id = ".$project_id." ORDER BY tags.tag_id";
+        $sql4 = "SELECT DISTINCT tags.tag_id, tags.tag_name 
+        FROM tags 
+        LEFT JOIN teams_tag ON teams_tag.tag_id = tags.tag_id 
+        LEFT JOIN teams ON teams.team_id = teams_tag.team_id 
+        LEFT JOIN projects ON projects.project_id = teams.project_id
+        WHERE projects.project_id = ".$project_id." ORDER BY tags.tag_id";
 
         $stmt4 = $conn->prepare($sql4);
         $stmt4->execute();

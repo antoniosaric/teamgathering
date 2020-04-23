@@ -27,7 +27,7 @@ export class ProjectListComponent implements OnInit {
       this.projects = data['projects'];
     })
     if(!this.authService.loggedIn){
-      this.projects = this.projects.slice(0, 8);
+      this.projects = this.projects.slice(0, 7);
     }
     this.statusService.searchStatus();
     // this.getProjects();
