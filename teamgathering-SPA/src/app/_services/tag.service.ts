@@ -14,9 +14,9 @@ constructor(private http: HttpClient) { }
     return this.http.post( environment.apiUrl + 'crud_tag/do_readTag.php', params )
   }
 
-  // getTags( token: any ){
-  //   return this.http.post( environment.apiUrl + 'crud_tag/do_getTags.php', token )
-  // }
+  getAllTags( token: any ){
+    return this.http.post( environment.apiUrl + 'crud_tag/do_getTags.php', token )
+  }
 
   addTag( token: any, tag_object: any ){
     const params = {...token, ...tag_object };
@@ -48,6 +48,8 @@ constructor(private http: HttpClient) { }
     const params = {...token, ...tag_object };
     return this.http.post( environment.apiUrl + 'crud_tag/do_deleteTeamTag.php', params )
   }
+
+  
 
 
 }

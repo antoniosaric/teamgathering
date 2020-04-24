@@ -102,7 +102,7 @@ try {
         LEFT JOIN teams_tag ON teams_tag.tag_id = tags.tag_id 
         LEFT JOIN teams ON teams.team_id = teams_tag.team_id 
         LEFT JOIN projects ON projects.project_id = teams.project_id
-        WHERE projects.project_id = ".$project_id." ORDER BY tags.tag_id";
+        WHERE projects.project_id = ".$project_id." ORDER BY tags.tag_name ";
 
         $stmt4 = $conn->prepare($sql4);
         $stmt4->execute();

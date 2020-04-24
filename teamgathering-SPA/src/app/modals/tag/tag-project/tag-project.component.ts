@@ -39,7 +39,7 @@ export class TagProjectComponent implements OnInit {
     
     this.searchTagsCtrl.valueChanges
       .pipe(
-        debounceTime(500),
+        debounceTime(5),
         tap(() => {
           this.errorMsg = "";
           this.filtered_tags = [];

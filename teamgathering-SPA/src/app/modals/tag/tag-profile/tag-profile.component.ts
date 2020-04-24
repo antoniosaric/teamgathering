@@ -36,7 +36,7 @@ export class TagProfileComponent implements OnInit {
     
     this.searchTagsCtrl.valueChanges
       .pipe(
-        debounceTime(500),
+        debounceTime(5),
         tap(() => {
           this.errorMsg = "";
           this.filtered_tags = [];
@@ -121,6 +121,21 @@ export class TagProfileComponent implements OnInit {
 
   returnFalse(){
     return false;
+  }
+
+  filteredTagsReturn(input){
+    // var return_array: any = [];
+    // var regex = new RegExp( input, "gi");
+    // // return this.all_tags.filter(   tag => tag.tag_name.match(regex)  );
+    // for (var i = 0; i < this.all_tags.length; i++) { 
+    //   // return this.all_tags.filter(   tag => tag.tag_name.match(regex)     );
+    //   // return this.all_tags.filter(   tag => console.log(tag.tag_name.match(regex))     );
+    //   var tag = this.all_tags[i];
+    //   if( tag.tag_name.match(regex) ){ 
+    //     return_array.push( tag );
+    //   } 
+    // } 
+    // return return_array; 
   }
 
 }
