@@ -1,0 +1,156 @@
+  <div *ngIf="!registerMode" id="register-div">
+    <div class="site-blocks-cover overlay" style="background-image: url(../../../../assets/site-images/hero_3.jpg);">
+      <div class="container wrapper">
+        <div class="row align-items-center justify-content-center text-center">
+          <div>   
+            <div class="row justify-content-center mb-2">
+              <header class="text-center">       
+                <h1>Projects For Everyone </h1>
+                <p style="overflow: visible;white-space: nowrap;">Make Projects &nbsp;&bull;&nbsp; Join Projects &nbsp;&bull;&nbsp; Make Connections</p>
+                <div>
+                  <button class="btn btn-primary btn-lg mr-2" (click)="registerToggle()">Register</button>
+                  <a [routerLink]="['/about']" routerLinkActive="router-link-active" ><button class="btn btn-info btn-lg">Learn More</button></a>
+                </div>
+              </header>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+
+    <section class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 box-with-humber">
+              <!-- <div class="number-behind">01.</div> -->
+              <h2 class="text-primary">Make Profile</h2>
+              <p class="mb-4">Create a profile with a little bit about yourself and what you are looking for. If you add skills, you will be recommended projects under the explore tab.</p>
+              <ul class="list-unstyled primary">
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Create Profile</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Add Skills</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Make Connections</li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 box-with-humber">
+              <!-- <div class="number-behind">02.</div> -->
+              <h2 class="text-primary">Make Project</h2>
+              <p class="mb-4">Create a project and create a team for the project. Public project share the full description, private projects share the short a description. If you add stacks, you will be recommended profiles under the explore tab.</p>
+              <ul class="list-unstyled primary">
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Create Project</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Create Team</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Add Stacks</li>
+              </ul>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4">
+            <div class="p-3 box-with-humber">
+              <!-- <div class="number-behind">03.</div> -->
+              <h2 class="text-primary">Join Project</h2>
+              <p class="mb-4">When you find a project you want to join, you should message the owner and introduce yourself. You will have to request to join the project and be approved by the owner.</p>
+              <ul class="list-unstyled primary">
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Message Owner</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Request Join</li>
+                <li><i class="fa fa-check-square-o fa-1x ul-checks mr-2" aria-hidden="true"></i>Get Approved</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div *ngIf="registerMode" class="change container padding1em">
+    <div class="row justify-content-center">
+        <div class="col-4"> 
+            <form [formGroup]="registerForm" (ngSubmit)="register()">
+                <h2 class="text-center text-primary"> Sign Up</h2>
+                <hr>
+
+                <div class="form-group">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': registerForm.get('first_name').errors && registerForm.get('first_name').touched }"
+                  class="form-control" 
+                  maxlength="255"
+                  formControlName="first_name" 
+                  placeholder="first name">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('first_name').hasError('required') && registerForm.get('first_name').touched">Please enter a first name</div>
+                </div> 
+
+                <div class="form-group">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': registerForm.get('last_name').errors && registerForm.get('last_name').touched }"
+                  class="form-control" 
+                  maxlength="255"
+                  formControlName="last_name" 
+                  placeholder="last name">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('last_name').hasError('required') && registerForm.get('last_name').touched">Please enter a last name</div>
+                </div> 
+
+                <div class="form-group">
+                    <input type="text" 
+                    [ngClass]="{'is-invalid': registerForm.get('zip_code').errors && registerForm.get('zip_code').touched }"
+                    class="form-control" 
+                    maxlength="10"
+                    formControlName="zip_code" 
+                    placeholder="zip code">
+                    <div class="invalid-feedback" *ngIf="registerForm.get('zip_code').hasError('required') && registerForm.get('zip_code').touched">Please enter a zip code</div>
+                    <div class="invalid-feedback" *ngIf="( registerForm.get('zip_code').hasError('minlength') ) || ( registerForm.get('zip_code').hasError('maxlength') || registerForm.get('zip_code').hasError('pattern') )">please enter correct zip code</div>
+                </div> 
+
+                <div class="form-group">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': registerForm.get('email').errors && registerForm.get('email').touched }"
+                  class="form-control" 
+                  maxlength="255"
+                  formControlName="email" 
+                  placeholder="email">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('email').errors && registerForm.get('email').touched">Please enter an email</div>
+                </div> 
+              
+                <div class="form-group">
+                  <input type="password" 
+                  [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched }"
+                  class="form-control" 
+                  formControlName="password" 
+                  placeholder="password">
+                  <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">Password is required &nbsp;</div>
+                  <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">password must be at least 4 characters</div>
+                  <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">password must be less than 16 characters</div>
+                </div> 
+            
+                <div class="form-group">
+                  <input type="password" 
+                  [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors 
+                  && registerForm.get('confirmPassword').touched
+                  || registerForm.get('confirmPassword').touched
+                  && registerForm.hasError('mismatch') }"
+                  class="form-control" 
+                  formControlName="confirmPassword" 
+                  placeholder=" confirm password">
+                  <div class="invalid-feedback">
+                    <span *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched">passwords is required &nbsp;</span>
+                    <span *ngIf="registerForm.hasError('mismatch')">passwords do not match</span>
+                  </div>
+                </div> 
+              
+                <div class="form-group text-center">
+                  <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Register</button>
+                  <button class="btn btn-default" type="button" (click)="cancelRegisterMode(false)">Cancel</button>
+                </div> 
+            </form>
+        </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+

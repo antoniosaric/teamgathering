@@ -1,0 +1,101 @@
+<div class="container mt-2">
+  <div class="tab-panel">
+    <tabset class="profile-tabset">
+      <tab heading="Search Projects">
+        <div class="text-center container mt-2">
+          <form class="form-inline my-2 my-lg-0" #searchForm="ngForm" (ngSubmit)="searchProjects()">
+            <input class="form-control mr-sm-2" type="text" name="searchProjects" placeholder="search" required [(ngModel)]="model_projects.searchProjects" >
+            <!-- <button  type="button" class="btn btn-success" (click)="toggleSuggestions()" *ngIf="( !!suggestions ) && ( profiles.length > 0 || projects.length > 0 ) ">reload suggestions</button> -->
+          </form>
+        
+          <!-- <div class="mt-3 ml-1 row">
+            <button  class="btn btn-success" (click)="toggleProfiles()" *ngIf="profiles.length > 0 || projects.length > 0"><span *ngIf="!!toggleProfile">hide profiles</span><span *ngIf="!toggleProfile">show profiles</span></button>
+            <button  class="btn btn-success ml-2" (click)="toggleProjects()" *ngIf="profiles.length > 0 || projects.length > 0"><span *ngIf="!!toggleProject">hide projects</span><span *ngIf="!toggleProject">show projects</span></button>
+          </div> -->
+        </div> 
+        
+        <div class="mt-2 mb-2 container">
+          <!-- <div *ngIf="profiles.length > 0">
+            <div>
+              <h5>Suggested Profiles</h5>
+              <div class="row">
+                <div *ngFor="let profile of profiles" class="col-lg-2 col-md-4 col-sm-6">
+                  <app-profile-card [profile]='profile'></app-profile-card>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        
+          <div *ngIf="searches_projects.length > 0" class="mt-2 container">
+            <div class="row">
+              <div *ngFor="let project of searches_projects" class="col-lg-3 col-md-4 col-sm-8">
+                <app-project-card [project]="project"></app-project-card>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="searches_projects.length == 0 && searched_projects == true" class="mt-2 container">
+            <div class="row">
+              <p>0 search results</p>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Search Profiles">
+        <div class="text-center container mt-2">
+          <form class="form-inline my-2 my-lg-0" #searchForm="ngForm" (ngSubmit)="searchProfiles()">
+            <input class="form-control mr-sm-2" type="text" name="searchProfiles" placeholder="search" required [(ngModel)]="model_profiles.searchProfiles" >
+          </form>
+        </div> 
+        <div class="mt-2 mb-2 container">
+          <div *ngIf="searches_profiles.length > 0" class="mt-2 container">
+            <div class="row">
+              <div *ngFor="let profile of searches_profiles" class="col-lg-3 col-md-4 col-sm-8">
+                <app-profile-team-card [profile]="profile"></app-profile-team-card>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="searches_profiles.length == 0 && searched_profiles == true" class="mt-2 container">
+            <div class="row">
+              <p>0 search results</p>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Suggested Profiles">
+        <div *ngIf="profiles.length > 0" class="mt-2 container">
+          <div class="row">
+            <div *ngFor="let profile of profiles" class="col-lg-2 col-md-4 col-sm-6">
+              <app-profile-team-card [profile]='profile'></app-profile-team-card>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="profiles.length == 0" class="mt-2 container">
+          <div class="row">
+            <p>You need to make a project and add a stack to get recommended profiles</p>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Suggested Projects">
+        <div *ngIf="projects.length > 0" class="mt-2 container">
+          <div class="row">
+            <div *ngFor="let project of projects" class="col-lg-3 col-md-4 col-sm-8">
+              <app-project-card [project]="project"></app-project-card>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="projects.length == 0" class="mt-2 container">
+          <div class="row">
+            <p>You need to add a skill to get recommended projects</p>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="height400px"></div>

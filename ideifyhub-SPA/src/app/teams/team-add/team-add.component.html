@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>Team Add</h1>
+    </div>
+  </div>
+  <div class="mb-4">
+    <form [formGroup]="teamInfoForm" (ngSubmit)="addTeamInfo()">
+      <div>
+        <div class="form-group">
+          <div class="group">
+            <strong>For Project</strong>
+
+
+
+            <!-- <select class="ml-5" *ngIf="project_list.length == 1" formControlName="project_id">        
+              <option *ngFor="let project of project_list" [ngValue]="project.project_id">
+              {{ project.project_name }}
+              </option>
+            </select> -->
+            <select class="ml-5" formControlName="project_id">        
+              <option disabled>select project</option>
+              <option *ngFor="let project of project_list" [ngValue]="project.project_id">
+              {{ project.project_name }}
+              </option>
+            </select>
+
+
+            <div class="red" *ngIf="selectProject == true">you need to select a project</div>
+          </div>
+        </div> 
+        <div class="form-group mb-4">
+          <h4>Team Name</h4>
+          <input type="text" 
+          [ngClass]="{'is-invalid': teamInfoForm.get('team_name').errors && teamInfoForm.get('team_name').touched }"
+          class="form-control mb-2" 
+          maxlength="255"
+          formControlName="team_name" >
+          <div class="invalid-feedback" *ngIf="teamInfoForm.get('team_name').hasError('required') && teamInfoForm.get('team_name').touched">team name cannot be empty</div>
+        </div> 
+        <div class="form-group mb-4">
+          <h4>Team Description</h4>
+          <textarea name="team_description" id="team_description" cols="30" rows="6" class="form-control" formControlName="team_description" maxlength="255"></textarea>
+          <div class="invalid-feedback" *ngIf="teamInfoForm.get('team_description').hasError('required') && teamInfoForm.get('team_description').touched">team description cannot be empty</div>
+        </div> 
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-success" type="submit" [disabled]="!teamInfoForm.valid">add team</button>
+      </div>
+      <div class="btn-group ml-2">
+        <button class="btn btn-danger" type="button" (click)="goBack()">Go Back</button>
+      </div>
+    </form>
+  </div>
+  </div>
+  <div class="container mb-4"></div>

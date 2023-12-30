@@ -1,0 +1,185 @@
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-sm-4">
+        <h1>Edit Project</h1>
+      </div>
+      <div class="col-sm-8">
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+          <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="editForm" (ngSubmit)="updateProject()">
+    <div class="row">
+      <div class="col-sm-4" *ngIf="state=='project'">
+        <div class="card">
+          <img class="card-img-top img-thumbnail" src="{{project_info?.image}}" alt="{{project_info?.project_name}}">
+          <p class="text-center"><button (click)="changeState('photo')">edit image</button>
+          </p>
+          <div class="card-body">
+            <div class="form-group mb-4">
+              <input type="text" 
+              [ngClass]="{'is-invalid': editForm.get('project_name').errors && editForm.get('project_name').touched }"
+              class="form-control mb-2" 
+              maxlength="255"
+              formControlName="project_name" 
+              placeholder="project_name"
+              >
+              <div class="invalid-feedback" *ngIf="editForm.get('project_name').hasError('required') && editForm.get('project_name').touched">title cannot be empty</div>
+            </div> 
+            <div class="form-group mb-4">
+                <strong>Status:</strong>
+                <select formControlName="project_status">
+                  <option disabled>Select Project Status</option>
+                  <option *ngFor="let status of status_options" [ngValue]="status">{{status}}</option>
+                </select>
+              </div>  
+            <div>
+              <strong>Number of Members:</strong>
+              <p>{{project_info?.count}}</p>
+            </div>  
+            <div>
+              <strong>Created:</strong>
+              <p>{{project_info?.created_date | date: 'mediumDate'}}</p>
+            </div>  
+          </div>
+          <div class="card-footer">
+            <div>
+              <button class="btn btn-success btn-block" [disabled]="!editForm.valid">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4" *ngIf="state=='photo'">
+        <div class="card">
+          <app-photos [image]="project_info?.image" 
+          (onPhotoSaveSetPhoto)="setPhoto($event)" 
+          (onPhotoSaveSetState)="changeState($event)"
+          [page]="page" 
+          [project_id]="project_id"></app-photos>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="tab-panel">
+          <tabset class="project-tabset">
+            <tab heading="About">
+              <hr>
+              <h4>About</h4>
+              <h5 class="mt-3">description</h5>
+              <textarea name="description" id="description" cols="30" rows="10" class="form-control" formControlName="description" maxlength="500"></textarea>
+              <h5 class="mt-3">short description</h5>
+              <textarea name="short_description" id="short_description" cols="30" rows="6" class="form-control" formControlName="short_description" maxlength="255"></textarea>
+              <hr>
+              <h4>Stacks</h4>
+              <div class="container mt-2">
+                <div class="row">
+                  <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of project_info?.tags">
+                    <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
+                      <span>{{tag.tag_name}}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </tab> 
+            <tab heading="Teams" class="mb-2">
+              <div class="mt-2 mb-2">
+                <tabset class="profile-tabset" >
+                  <tab heading="teams">
+                    <p *ngIf="project_info?.teams.length == 0">no teams for this project</p>
+                    <ul>
+                      <hr>
+                      <div *ngFor="let team of project_info?.teams;let i=index" class="mt-2">
+                        <li>
+                          <h4>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></h4>
+                        </li>   
+                        <hr>                 
+                      </div>
+                    </ul>
+                  </tab>
+                  <tab heading="add team">
+                    <app-team-add [start_project_object]="project_object"></app-team-add>
+                  </tab>
+                </tabset>
+              </div>
+
+
+
+              <!-- <div *ngFor="let team of project_info?.teams">
+                <hr>
+                <h4>
+                  
+                  <p>{{team.team_name}}  <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4">Edit</a></p>
+                  
+                </h4>
+                <div *ngFor="let profile of team.profiles">
+                  <div *ngIf="profile.profile_team_status == 'active'">
+                    <hr>
+                    <h5>Role: {{profile.role}}</h5>
+                    <h5>Name: <a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'member'}} {{profile.last_name}}</a></h5>
+                    <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
+                    <h5 class="green">Status: {{profile.profile_team_status}}</h5>
+                    <hr>
+                  </div>
+                  <div *ngIf="profile.profile_team_status == 'inactive'">           
+                    <hr>
+                    <h5>Role</h5>
+                    <p>{{profile.role}}</p>
+                    <h5>Name</h5>
+                    <p><a [routerLink]="['/profile-info/', profile.profile_id]">{{profile.first_name || 'member'}} {{profile.last_name}}</a></p>
+                    <h5>Joined</h5>
+                    <h5>{{profile.joined_date | date: 'mediumDate' }} - <span *ngIf="!toPresentCheck(profile.ended_date)"> {{profile.joined_date | date: 'mediumDate' }}</span><span *ngIf="toPresentCheck(profile.ended_date)">Present</span></h5>
+                    <h5>Status</h5>
+                    <p class="red">{{profile.profile_team_status}}</p>
+                    <hr>
+                  </div>
+                </div>
+                <hr>
+              </div> -->
+            </tab> 
+            <tab heading="Additional">
+              <div>
+                <hr>                    
+                <h4>Looking For</h4>
+                <textarea name="looking_for" id="looking_for" cols="30" rows="6" class="form-control" formControlName="looking_for"></textarea>
+                <hr>
+              </div>
+            </tab> 
+          </tabset>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="col-sm-4 mt-2">
+    <button class="btn btn-warning btn-block" (click)="changeDeleteState(true)" *ngIf="deleteState == false">Delete Project</button>  
+    <button class="btn btn-success btn-block" (click)="changeDeleteState(false)" *ngIf="deleteState == true">cancel</button>  
+  </div>
+  <div class="col-sm-4 mt-4" *ngIf="deleteState == true">
+    <p class="warning">To Delete Project, Type DELETE.</p>
+    <form [formGroup]="deleteProjectForm" (ngSubmit)="deleteProject()">
+      <div class="form-group mb-4">
+        <input type="text" 
+        [ngClass]="{'is-invalid': deleteProjectForm.get('deleteText').errors && deleteProjectForm.get('deleteText').touched }"
+        class="form-control mb-2" 
+        formControlName="deleteText" 
+        placeholder="type DELETE">
+        <div class="invalid-feedback" *ngIf="deleteProjectForm.get('deleteText').hasError('pattern') && deleteProjectForm.get('deleteText').touched">to delete Project, type DELETE</div>
+      </div> 
+      <div class="form-group">
+          <input type="password" 
+          [ngClass]="{'is-invalid': deleteProjectForm.get('password').errors && deleteProjectForm.get('password').touched }"
+          class="form-control mt-4" 
+          formControlName="password" 
+          placeholder="password">
+          <div class="invalid-feedback" *ngIf="deleteProjectForm.get('password').hasError('required') && deleteProjectForm.get('password').touched">Password is required &nbsp;</div>
+          <div class="invalid-feedback" *ngIf="deleteProjectForm.get('password').hasError('minlength') && deleteProjectForm.get('password').touched">password must be at least 4 characters</div>
+          <div class="invalid-feedback" *ngIf="deleteProjectForm.get('password').hasError('maxlength') && deleteProjectForm.get('password').touched">password must be less than 16 characters</div>
+      </div> 
+      <button class="btn btn-warning btn-block" [disabled]="!deleteProjectForm.valid">Delete Project</button>
+    </form>
+  </div>
+  </div>
+  <div class="container mb-4"></div>
+

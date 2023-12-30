@@ -1,0 +1,212 @@
+<div class="container mt-4">
+  <div>
+    <div class="col-sm-8">
+      <h1>Requests</h1>
+    </div>
+    <div class="col-sm-8">
+      <div class="alert alert-info" *ngIf="updateRequestForm.dirty">
+        <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
+      </div>
+    </div>
+  </div>
+  <div class="tab-panel">
+    <tabset class="profile-tabset">
+      <tab heading="Project Requests" class="mb-3">
+        <tabset class="profile-tabset">
+          <tab heading="pending">
+            <div *ngFor="let request of requests_project['pending']"> 
+              <!-- <div *ngIf="request.request_status == 'pending'"> -->
+                <div class="container mt-2">
+                  <div class="row">
+                    <div class="card mt-4 col-lg-3 col-md-4 col-sm-6 mr-4" >
+                      <div class="card-img-wrapper">
+                        <a class="card-link" [routerLink]="['/profile-info/', request.profile_id]"><img class="card-img-top" src="{{request.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_profile.jpg'}}" alt="{{request?.first_name}}"></a>
+                      </div>
+                      <div class="card-body p-1 text-center">
+                        <h6 class="card-title">{{assignName(request)}}</h6>
+                      </div>
+                    </div>
+                    <form [formGroup]="updateRequestForm" (ngSubmit)="updateRequest(request)" class="mt-4">
+                      <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Request From:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                      <div class="form-group row">
+                        <div class="ml-3 group">
+                          <strong>Status:</strong>
+                          <select formControlName="status">
+                            <option [ngValue]="null" disabled>pending</option>
+                            <option *ngFor="let status of request_status_selectables" [ngValue]="status">
+                            {{ status }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="ml-4 group">
+                          <strong>Team:</strong>
+                          <select formControlName="team_id">
+                            <option [ngValue]="null" disabled>Select Assigned Team</option>
+                            <option *ngFor="let team of teams" [ngValue]="team.team_id">
+                            {{ team.team_name }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="group">
+                        <input type="text" 
+                        [ngClass]="{'is-invalid': updateRequestForm.get('role').errors && updateRequestForm.get('role').touched }"
+                        class="form-control mb-2" 
+                        maxlength="255"
+                        formControlName="role" 
+                        placeholder="Role">
+                        <div class="invalid-feedback" *ngIf="updateRequestForm.get('role').hasError('required') && updateRequestForm.get('role').touched">role cannot be empty</div>
+                      </div>  
+                      <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
+                      <div class="btn-group">
+                        <button class="btn btn-success" type="submit" [disabled]="!updateRequestForm.valid">Save</button>
+                      </div>
+                    </form> 
+                  </div>
+                </div>
+                <hr>
+            </div>
+          </tab>
+          <tab heading="approved">
+
+            <div *ngFor="let request of requests_project['approved']"> 
+
+              <!-- </div> -->
+              <!-- <div *ngIf="request.request_status == 'approved'"> -->
+                  <div class="container mt-2">
+
+                    <div class="row">
+                
+                      <div class="card mt-4 col-lg-3 col-md-4 col-sm-6 mr-4" >
+                        <div class="card-img-wrapper">
+                          <a class="card-link" [routerLink]="['/profile-info/', request.profile_id]"><img class="card-img-top" src="{{request.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_profile.jpg'}}" alt="{{request?.first_name}}"></a>
+                        </div>
+                        <div class="card-body p-1 text-center">
+                          <h6 class="card-title">{{request.project_name}}</h6>
+                        </div>
+                      </div>
+
+
+                      <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)" class="mt-4">
+                        <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                        <div class="form-group row">
+                          <div class="ml-3 group">
+                          <strong>Status: {{request.request_status}}</strong>
+                          </div>
+                        </div> 
+                        <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
+                        <div class="btn-group">
+                          <button class="btn btn-warning" type="submit">Delete</button>
+                          <!-- <button class="btn btn-warning" type="reset">Reset</button> -->
+                        </div>
+                      </form>  
+                    </div>
+                  </div>
+                  <hr>
+            </div>
+          </tab>
+            <!-- </div> -->
+            <!-- <div *ngIf="request.request_status == 'unapproved'"> -->
+          <tab heading="unapproved">
+            <div *ngFor="let request of requests_project['unapproved']"> 
+              <div class="container mt-2">
+                <div class="row">     
+                  <div class="card mt-4 col-lg-3 col-md-4 col-sm-6 mr-4" >
+                    <div class="card-img-wrapper">
+                      <a class="card-link" [routerLink]="['/profile-info/', request.profile_id]"><img class="card-img-top" src="{{request.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_profile.jpg'}}" alt="{{request?.first_name}}"></a>
+                    </div>
+                    <div class="card-body p-1 text-center">
+                      <h6 class="card-title">{{request.project_name}}</h6>
+                    </div>
+                  </div>
+                  <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)" class="mt-4">
+                    <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requester_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                    <div class="form-group row">
+                      <div class="ml-3 group">
+                      <strong>Status: {{request.request_status}}</strong>
+                      </div>
+                    </div> 
+                    <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
+                    <div class="btn-group">
+                      <button class="btn btn-warning" type="submit">Delete</button>
+                      <!-- <button class="btn btn-warning" type="reset">Reset</button> -->
+                    </div>
+                  </form>  
+                </div>
+              </div>
+              <hr>
+            </div>
+            <!-- </div> -->
+            <hr>
+          </tab>
+        </tabset>
+      </tab>
+      <tab heading="Your Requests">
+        <h3 class="mt-3 mb-3">Requests You Made</h3>
+        <div *ngFor="let request of requests_profile['pending']"> 
+          <!-- <div *ngIf="request.request_status == 'pending'"> -->
+          <div class="container row">
+            <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)" class="mt-4">
+              <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
+              <p><strong>Status:</strong> {{request.request_status}}</p>
+              <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
+              <div class="btn-group">
+                <button class="btn btn-warning" type="submit">Delete</button>
+                <!-- <button class="btn btn-warning" type="reset">Reset</button> -->
+              </div>
+            </form>  
+          </div>          
+          <hr>
+        </div>
+          <!-- </div> -->
+          <!-- <div *ngIf="request.request_status == 'approved'"> -->
+          <div *ngFor="let request of requests_profile['approved']"> 
+            <div class="container mt-2">
+              <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)" class="mt-4">
+                <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                <div class="form-group row">
+                  <div class="ml-3 group">
+                  <strong>Status: {{request.request_status}}</strong>
+                  </div>
+                </div> 
+                <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
+                <div class="btn-group">
+                  <button class="btn btn-warning" type="submit">Delete</button>
+                  <!-- <button class="btn btn-warning" type="reset">Reset</button> -->
+                </div>
+              </form>  
+            </div>
+            <hr>
+          </div>
+          <!-- </div> -->
+          <!-- <div *ngIf="request.request_status == 'unapproved'"> -->
+          <div *ngFor="let request of requests_profile['unapproved']"> 
+            <div class="container mt-2">
+              <form #deleteRequestForm="ngForm" (ngSubmit)="deleteRequest(request)" class="mt-4">
+                <p>Project:  <a [routerLink]="['/project-info/', request.project_id]"> {{request.project_name}}</a>, Requested To:  <a [routerLink]="['/profile-info/', request.requestee_id]">{{request.first_name}} {{request.last_name}}</a></p>
+                <div class="form-group row">
+                  <div class="ml-3 group">
+                  <strong>Status: {{request.request_status}}</strong>
+                  </div>
+                </div> 
+                <p>requested on: {{request.created_date | date: 'mediumDate' }}, changed on: {{request.updated_date | date: 'mediumDate' }}</p>
+                <div class="btn-group">
+                  <button class="btn btn-warning" type="submit">Delete</button>
+                </div>
+              </form>  
+            </div>
+            <hr>
+          </div>
+          <!-- </div> -->
+          <hr>
+      </tab>
+    </tabset>
+  </div>
+</div>
+<div class="container mb-4"></div>
+  
+  
+  
+  
+  
+  

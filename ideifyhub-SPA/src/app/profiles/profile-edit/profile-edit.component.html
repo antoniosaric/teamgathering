@@ -1,0 +1,242 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>Your Profile</h1>
+    </div>
+    <div class="col-sm-8">
+      <div class="alert alert-info" *ngIf="editForm.dirty">
+        <strong>Information: </strong>You have made changes. Any unsaved changes will be lost
+      </div>
+    </div>
+  </div>
+  <form [formGroup]="editForm" (ngSubmit)="updateProfile()">
+  <div class="row">
+    <div class="col-sm-4" *ngIf="state=='profile'">
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{profile_info?.image || './../../../assets/profile-images/Default_user.jpg' }}" alt="{{profile_info?.first_name}}">
+        <p class="text-center"><button (click)="changeState('photo')">edit image</button>
+        </p>
+        <div class="card-body">
+            <div class="form-group mb-4">
+                <input type="text" 
+                [ngClass]="{'is-invalid': editForm.get('first_name').errors && editForm.get('first_name').touched }"
+                class="form-control mb-2" 
+                maxlength="255"
+                formControlName="first_name" 
+                placeholder="first name"
+                >
+                <div class="invalid-feedback" *ngIf="editForm.get('first_name').hasError('required') && editForm.get('first_name').touched">first name cannot be empty</div>
+              </div> 
+
+              <div class="form-group mb-4">
+                <input type="text" 
+                [ngClass]="{'is-invalid': editForm.get('last_name').errors && editForm.get('last_name').touched }"
+                class="form-control mb-2" 
+                maxlength="255"
+                formControlName="last_name" 
+                placeholder="last name"
+                >
+                <div class="invalid-feedback" *ngIf="editForm.get('last_name').hasError('required') && editForm.get('last_name').touched">last name cannot be empty</div>
+              </div> 
+
+              <div class="form-group mb-4">
+                  <input type="text" 
+                  [ngClass]="{'is-invalid': editForm.get('zip_code').errors && editForm.get('zip_code').touched }"
+                  class="form-control mb-2" 
+                  formControlName="zip_code" 
+                  maxlength="10"
+                  placeholder="zip code"
+                  >
+                  <div class="invalid-feedback" *ngIf="editForm.get('zip_code').hasError('required') && editForm.get('zip_code').touched">zip code cannot be empty</div>
+                  <div class="invalid-feedback" *ngIf="( editForm.get('zip_code').hasError('minlength') ) || ( editForm.get('zip_code').hasError('maxlength') || editForm.get('zip_code').hasError('pattern') )">please enter correct zip code</div>
+              </div> 
+          <div>
+            <strong>Created:</strong>
+            <p>{{profile_info?.created_date | date: 'mediumDate'}}</p>
+          </div>  
+        </div>
+        <div class="card-footer">
+          <div>
+            <button class="btn btn-success btn-block" [disabled]="!editForm.valid">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4" *ngIf="state=='photo'">
+      <div class="card">
+        <app-photos [image]="profile_info.image" 
+        (onPhotoSaveSetPhoto)="setPhoto($event)" 
+        (onPhotoSaveSetState)="changeState($event)"
+        [page]="page" ></app-photos>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="tab-panel">
+        <tabset class="profile-tabset">
+          <tab heading="About {{ profile_info?.profile_name || 'profile'}}">
+            <hr>
+            <h4>About Me</h4>
+            <textarea name="description" id="description" cols="30" rows="6" class="form-control" formControlName="description"></textarea>
+            <!-- <p>{{profile_info?.description}}</p> -->
+            <h4>Looking For</h4>
+            <textarea name="looking_for" id="looking_for" cols="30" rows="6" class="form-control" formControlName="looking_for"></textarea>
+            <!-- <p>{{profile_info?.looking_for}}</p> -->
+            <h4>Skills</h4>
+            <app-tag-profile (returnTag)="addTag($event)" [page]="page" (enter)="onEnter()"></app-tag-profile>
+            <div class="container mt-2">
+              <div class="row">
+                <div class="col-lg-auto col-md-auto col-sm-auto mb-2" *ngFor="let tag of profile_info?.tags">
+                  <button type="button" class="btn btn-secondary button-radius-badge default-cursor">
+                    <span>{{tag.tag_name}}</span>
+                  </button>
+                  <button  type="button" class="btn btn-danger button-radius-delete-badge default-cursor" (click)="deleteTag(tag)">X</button>
+                </div>
+              </div>
+            </div>
+            <hr>
+          </tab> 
+          <tab heading="Edit Projects">
+            <!-- <a [routerLink]="['/project/add']">Add Project</a> -->
+            <tabset class="profile-tabset">
+              <tab heading="edit projects">
+                <div class="container">
+                  <div class="row">
+                    <div *ngFor="let project of profile_info?.projects" class="col-lg-3 col-md-4 col-sm-6">
+                      <div>
+                        <app-profile-project-card [project]='project' [page]='project_page'></app-profile-project-card>
+                      </div>
+                    </div> 
+                    <hr>
+                    <div class="mb-4"></div>  
+                  </div>
+                </div>
+              </tab>
+              <tab heading="add projects">
+                <div class="mb-2"></div>
+                <app-project-add></app-project-add>
+              </tab>
+            </tabset>
+          </tab> 
+          <tab heading="Edit Teams">
+            <!-- <a [routerLink]="['/team/add']" *ngIf="profile_info?.teams.length != 0">Add Team</a> -->
+            <p *ngIf="profile_info?.teams.length == 0">You need to add a project to add a team</p>
+            <div *ngIf="profile_info?.teams.length != 0" class="mt-2 mb-2">
+              <tabset class="profile-tabset">
+                <tab heading="owner">
+                  <div *ngFor="let project_from_array of projects_array;let i=index" class="mt-2 mb-4">
+                    <hr>
+                    <div>
+                      <h4 class="mr-2"><a [routerLink]="['/project/edit/', project_from_array.project_id]">{{project_from_array.project_name}}</a></h4>
+                      <hr>
+                    </div>
+                    <ul>
+                      <div *ngFor="let team of profile_info?.teams;let i=index">
+                        <div *ngIf="team.project_id == project_from_array.project_id">
+                          <li>
+                            <h4>
+                              {{team.team_name}} 
+                              <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
+                            </h4>
+                          </li>
+                        </div>              
+                      </div>
+                    </ul>
+                  </div>
+                </tab>
+                <tab heading="team member">
+                  <div *ngFor="let project_from_array_non_owner of projects_array_non_owner" class="mt-2">
+                    <hr>
+                    <div>
+                      <h4 class="mr-2"><a [routerLink]="['/project/edit/', project_from_array_non_owner.project_id]">{{project_from_array_non_owner.project_name}}</a></h4>
+                      <hr>
+                    </div>
+                    <ul>
+                      <div *ngFor="let team of profile_info?.teams;let i=index">
+                          <div *ngIf="team.project_id == project_from_array_non_owner.project_id">
+                            <li>
+                              <h5 class="mb-2">
+                                {{team.team_name}} - <strong>{{team.role}}</strong>
+                                <button class="btn btn-danger ml-3" type="button" (click)="leaveTeam( team.team_id, team.project_id )" *ngIf="team.role != 'Owner'">Leave Team</button>
+                              </h5>
+                            </li>
+                          </div>              
+                      </div>
+                    </ul>
+                  </div>
+                </tab>
+                <tab heading="add team">
+                  <app-team-add></app-team-add>
+                </tab>
+              </tabset>
+              <!-- <h3 class="text-center">OWNER</h3>
+              <div *ngFor="let project_from_array of projects_array" class="mt-2 mb-4">
+                <hr>
+                <div>
+                  <h4 class="mr-2"><a [routerLink]="['/project/edit/', project_from_array.project_id]">{{project_from_array.project_name}}</a></h4>
+                  <hr>
+                </div>
+                <ul>
+                  <div *ngFor="let team of profile_info?.teams;let i=index">
+                    <div *ngIf="team.project_id == project_from_array.project_id">
+                      <li>
+                        <h4>
+                          {{team.team_name}} 
+                          <a [routerLink]="['/team/edit/', team.team_id]" class="ml-4" *ngIf="team.role == 'Owner'">Edit</a>
+                        </h4>
+                      </li>
+                    </div>              
+                  </div>
+                </ul>
+              </div> -->
+              <!-- <h3 class="text-center">TEAM MEMBER</h3> -->
+              <!-- <div *ngFor="let project_from_array_non_owner of projects_array_non_owner" class="mt-2">
+                <hr>
+                <div>
+                  <h4 class="mr-2"><a [routerLink]="['/project/edit/', project_from_array_non_owner.project_id]">{{project_from_array_non_owner.project_name}}</a></h4>
+                  <hr>
+                </div>
+                <ul>
+                  <div *ngFor="let team of profile_info?.teams;let i=index">
+                      <div *ngIf="team.project_id == project_from_array_non_owner.project_id">
+                        <li>
+                          <h4>
+                            {{team.team_name}} 
+                            <a (click)="leaveTeam(team.team_id)" class="ml-4" *ngIf="team.role != 'Owner'">Leave Team</a>
+                            <button class="btn btn-danger ml-2" type="button" (click)="leaveTeam(team.team_id)" *ngIf="team.role != 'Owner'">Leave Team</button>
+                          </h4>
+                        </li>
+                      </div>              
+                  </div>
+                </ul>
+              </div> -->
+            </div>
+          </tab> 
+          <tab heading="Following">
+            <div *ngIf="profile_info?.follows.length != 0">
+              <div class="container mb-2">
+                <div class="row">
+                  <div *ngFor="let follow of profile_info?.follows" class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card mt-4">
+                      <div class="card-img-wrapper">
+                        <a class="card-link" [routerLink]="['/project-info/', follow.project_id]"><img class="card-img-top" src="{{follow.image || 'https:\/\/res.cloudinary.com\/dqd4ouqyf\/image\/upload\/v1579289397\/default_project.jpg'}}" alt="{{follow?.project_name}}"></a>
+                      </div>
+                      <div class="card-body p-1 text-center">
+                        <h6 class="card-title text-truncate mt-1">{{follow.project_name}}</h6>
+                        <button  type="button" class="btn btn-danger" style="width:100%" (click)="deleteFollow(follow)">Unfollow</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="profile_info?.follows.length == 0">
+              <p>you are not following any projects</p>
+            </div>
+          </tab> 
+        </tabset>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>
+<div class="container mb-4"></div>

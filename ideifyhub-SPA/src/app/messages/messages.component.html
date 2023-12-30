@@ -1,0 +1,78 @@
+<div class="bg-secondary chat round-corners" *ngIf="modalState==true">
+  <app-start-chat 
+    (onSetChatState)="onSetChatState($event)" 
+    (outputUpdateMessage)="outputUpdateMessage($event)" 
+    [start_chat_select_array]="associates">
+  </app-start-chat>
+</div>
+
+<div class="container mt-2">
+  <div class="messaging">
+    <div class="inbox-msg">
+      <div class="inbox-people">
+        <div class="headind-search">
+          <div class="search-bar">
+            <div class="stylish-input-group row">
+              <input type="text" class="search-bar"  placeholder="Search" >
+              <span class="input-group-addon float-left">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+              </span> 
+            </div>
+          </div>
+        </div>
+        <div class="border-bottom">
+          <button type="button btn-success" (click)="onSetChatState(true)"><i class="fa fa-envelope"></i>New Message</button>
+        </div>
+        <div class="inbox-chat">
+          <ul class="no-indent pointer">
+            <li *ngFor="let message of messages; let i = index">
+              <div class="chat-list" [ngClass]="{'active-chat': checkActive(i)}" *ngIf=true>
+                <!-- <div class="chat-list active-chat" *ngIf=true> -->
+                <div class="chat-people" (click)="set_thread(message, i)">
+                  <div class="chat-img" [ngClass]="(checkActive(i)) ? 'white' : 'black'"> <img src="{{message.image}}" alt="sunil"> </div>
+                  <div class="chat-ib">
+                    <h5 [ngClass]="{'black': !checkActive(i)}">{{ assignName(message) }}
+                      <!-- <span class="chat-date">Jan 1st</span> -->
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="mesgs">
+        <div class="msg-history">
+          <ul class="no-indent" *ngIf="message_state">
+            <li *ngFor="let thread of threads; let i = index">
+              <div class="incoming-msg" *ngIf="messageCheck(thread.state)">
+                <div class="incoming-msg-img"> <img src="{{selected_image}}" alt="sunil"> </div>
+                <div class="received-msg">
+                  <div class="received-withd-msg">
+                    <p>{{thread.message}}</p>
+                    <span class="time-date pull-left"> {{thread.created_date | date: 'mediumDate' }}</span></div>
+                </div>
+              </div>
+              <div class="outgoing-msg" *ngIf="!messageCheck(thread.state)">
+                <div class="sent-msg">
+                  <p>{{thread.message}}</p>
+                  <span class="time-date pull-right"> {{thread.created_date | date: 'mediumDate' }}</span> </div>
+              </div>
+            </li>
+          </ul>
+          <div *ngIf="!message_state" class="mt-2">
+            <p>No Messages Started</p>
+          </div>
+        </div>
+        <div class="type-msg">
+          <div class="input-msg-write">
+            <form #message="ngForm" (ngSubmit)="postMessage()">
+              <input id="message" class="write-msg" type="text" name="message" placeholder="Type a message" required [(ngModel)]="model.message" maxlength="500"/>
+              <button class="msg-send-btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

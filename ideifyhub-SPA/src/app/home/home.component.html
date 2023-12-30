@@ -1,0 +1,155 @@
+<div *ngIf="!loggedIn()">
+  <app-register (registerToggleSize)="changeRegisterMode($event)"></app-register>
+</div>
+
+<section class="site-section mt-2" id="work-section">
+  <div class="container">
+    <div class="row mb-1 justify-content-center">
+      <div class="col-md-8 text-center">
+        <h2 class="text-black h1 site-section-heading text-center">Newest Projects</h2>
+        <p class="lead">Latest projects made by Ideify Hub Members.</p>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid mb-4">
+    <app-project-list></app-project-list>
+  </div>
+</section>
+
+<div class="site-section" id="about-section">
+  <div class="container">
+    <div class="row mb-4">
+      <div class="col-md-5 ml-auto mb-4 order-md-2" data-aos="fade">
+        <img src="../../assets/site-images/hero_5.jpg" alt="Image" class="img-fluid rounded">
+      </div>
+      <div class="col-md-6 order-md-1" data-aos="fade">
+        <div class="row">
+          <div class="col-12">
+            <div class="text-left pb-1">
+              <h2 class="text-black h1 site-section-heading">About Us</h2>
+            </div>
+          </div>
+          <div class="col-12 mb-2">
+            <p class="lead">At Ideify hub, we understand how hard it is to get a project off the ground. Starting projects are not only limited by technical challenges but also by limited motivational energy. Projects have a much greater chance of completion in a team.</p>
+          </div>
+          <!-- <div class="col-md-12 mb-md-5 mb-0 col-lg-6">
+            <div class="unit-4">
+              <div class="unit-4-icon mr-4 mb-3"><span class="text-secondary icon-phonelink"></span></div>
+              <div>
+                <h3>Protect Your Ideas</h3>
+                <p><a href="https://app.legaltemplates.net/builder/documents/6360074/Disclosing%20Party/Who%20is%20disclosing%20the%20confidential%20information">Non-Disclosure Agreement</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 mb-md-5 mb-0 col-lg-6">
+            <div class="unit-4">
+              <div class="unit-4-icon mr-4 mb-3"><span class="text-secondary icon-extension"></span></div>
+              <div>
+                <h3></h3>
+                <p>Provided By: Legal Templates.</p>
+                <p class="mb-0"><a href="https://app.legaltemplates.net/builder/documents/6360074/Disclosing%20Party/Who%20is%20disclosing%20the%20confidential%20information">Sample Form</a>Provided By: Legal Templates</p>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-section mb-4" id="team-section">
+  <div class="container">
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-7 text-center">
+        <h2 class="text-black h1 site-section-heading">Our Team</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+        <div class="person text-center">
+          <img src="../../assets/site-images/chicken.jpg" alt="Image" class="img-fluid rounded-circle w-50 mb-4">
+          <h3>Tony Saric</h3>
+          <p class="position text-muted">Founder</p>
+          <p class="mb-4">I have no idea what I am doing!!!.</p>
+          <ul class="ul-social-circle">
+            <li><a href="#" class="fb-ic"><i class="fa fa-facebook-f fa-lg white-text icon-facebook"></i></a></li>
+            <li><a href="#" class="tw-ic"><i class="fa fa-twitter fa-lg white-text icon-twitter"> </i></a></li>
+            <!-- <li><a href="#" class="in-ic"><i class="fa fa-linkedin-in fa-lg white-text icon-linkedin"> </i></a></li> -->
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+        <div class="person text-center">
+          <img src="../../assets/site-images/frank_savino.png" alt="Image" class="img-fluid rounded-circle w-50 mb-4">
+          <h3>Frank Savino</h3>
+          <p class="position text-muted">Stay At Home Dad</p>
+          <p class="mb-4">Uhhh... I actually work for google...</p>
+          <ul class="ul-social-circle">
+            <li><a href="#" class="fb-ic"><i class="fa fa-facebook-f fa-lg white-text icon-facebook"></i></a></li>
+            <li><a href="#" class="tw-ic"><i class="fa fa-twitter fa-lg white-text icon-twitter"> </i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+        <div class="person text-center">
+          <img src="../../assets/site-images/nick_saric.jpeg" alt="Image" class="img-fluid rounded-circle w-50 mb-4">
+          <h3>Nick Saric</h3>
+          <p class="position text-muted">Lead Something Or Other</p>
+          <p class="mb-4">Mom said I could help Tony.</p>
+          <ul class="ul-social-circle">
+            <li><a href="#" class="fb-ic"><i class="fa fa-facebook-f fa-lg white-text icon-facebook"></i></a></li>
+            <li><a href="#" class="tw-ic"><i class="fa fa-twitter fa-lg white-text icon-twitter"> </i></a></li>
+          </ul>
+        </div>
+      </div>
+
+
+
+
+
+
+      <!-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
+        <div class="person text-center">
+          <img src="../../assets/site-images/person_3.jpg" alt="Image" class="img-fluid rounded-circle w-50 mb-4">
+          <h3>Tony Saric</h3>
+          <p class="position text-muted">Founder</p>
+          <p class="mb-4">I have no idea what I am doing!!!.</p>
+          <ul class="ul-social-circle">
+            <li><a href="#" class="fb-ic"><i class="fa fa-facebook-f fa-lg white-text icon-facebook"></i></a></li>
+            <li><a href="#" class="tw-ic"><i class="fa fa-twitter fa-lg white-text icon-twitter"> </i></a></li>
+            <li><a href="#" class="in-ic"><i class="fa fa-linkedin-in fa-lg white-text icon-linkedin"> </i></a></li>
+          </ul>
+        </div>
+      </div> -->
+      <!-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="200">
+        <div class="person text-center">
+          <img src="../../assets/site-images/frank_savino.png" alt="Image" class="img-fluid rounded-circle w-50 mb-4">
+          <h3>Frank Savino</h3>
+          <p class="position text-muted">Stay At Home Dad</p>
+          <p class="mb-4">Uhhh... I actually work for google...</p>
+          <ul class="ul-social-circle">
+            <li><a href="#"><span class="icon-facebook"></span></a></li>
+            <li><a href="#"><span class="icon-twitter"></span></a></li>
+            <li><a href="#"><span class="icon-linkedin"></span></a></li>
+            <li><a href="#"><span class="icon-instagram"></span></a></li>
+          </ul>
+        </div>
+      </div> -->
+      <!-- <div class="col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay="300">
+        <div class="person text-center">
+          <img src="../../assets/site-images/nick_saric.jpeg" alt="Image" class="img-fluid rounded-circle w-50 mb-4">
+          <h3>Nick Saric</h3>
+          <p class="position text-muted">Lead Something Or Other</p>
+          <p class="mb-4">Mom said I could help Tony.</p>
+          <ul class="ul-social-circle">
+            <li><a href="#"><span class="icon-facebook"></span></a></li>
+            <li><a href="#"><span class="icon-twitter"></span></a></li>
+            <li><a href="#"><span class="icon-linkedin"></span></a></li>
+            <li><a href="#"><span class="icon-instagram"></span></a></li>
+          </ul>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+
